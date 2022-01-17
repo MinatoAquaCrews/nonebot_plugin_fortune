@@ -8,8 +8,8 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.7.3"
-ujson = "*"
-pillow = "*"
+ujson = "^5.1.0"
+pillow = "^9.0.0"
 
 [tool.poetry.dev-dependencies]
 

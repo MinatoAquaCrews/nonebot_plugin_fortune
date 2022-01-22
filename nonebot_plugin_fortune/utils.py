@@ -2,7 +2,7 @@ import os
 import random
 from PIL import Image, ImageDraw, ImageFont
 from pathlib import Path
-from enum import Enum
+from typing import Optional
 
 try:
     import ujson as json
@@ -11,28 +11,38 @@ except ModuleNotFoundError:
 
 from .data_source import FORTUNE_PATH
 
-class MainTheme(Enum):
+MainThemeList = {
+    "random":   ["随机"],
+    "pcr":      ["公主链接", "公主连接", "PCR", "Pcr", "pcr"],
+    "genshin":  ["原神", "genshin", "Genshin"],
+    "vtuber":   ["VTB", "Vtb", "vtb", "管人"],
+    "touhou":   ["东方", "touhou", "Touhou"]
+}
 
-    RANDOM  = "_random"
-    PCR     = "_pcr"
-    GENSHIN = "_genshin"
-    VTUBER  = "_vtuber"
-    TOUHOU  = "_touhou" 
+SpecificTypeList = {
+    "随机":     ["random"],
+    "凯露":     ["pcr/frame_1.jpg", "pcr/frame_2.jpg"],
+    "臭鼬":     ["pcr/frame_1.jpg", "pcr/frame_2.jpg"],
+    "可可萝":   ["pcr/frame_41.jpg", "pcr/frame_42.jpg"],
+    "可莉":     ["genshin/frame_24.jpg"],
+    "刻晴":     ["genshin/frame_23.jpg"],
+    "芭芭拉":   ["genshin/frame_2.jpg"],
+    "行秋":     ["genshin/frame_5.jpg"],
+    "fbk":     ["vtuber/frame_17.png"],
+    "白上吹雪": ["vtuber/frame_17.png"],
+    "阿夸":     ["vtuber/frame_18.png"],
+    "tskk":     ["vtuber/frame_7.png"],
+    "桐生可可": ["vtuber/frame_7.png"],
+    "蛆皇":     ["vtuber/frame_7.png"],
+    "debu":     ["vtuber/frame_18.png"],
+    "灵梦":     ["touhou/frame_1.jpg"],
+    "魔理沙":   ["touhou/frame_2.jpg"],
+    "幽幽子":   ["touhou/frame_6.jpg"],
+    "妹红":     ["touhou/frame_15.jpg"],
+    "藤原妹红": ["touhou/frame_15.jpg"]
+}
 
-class SpecificType(Enum):
-
-    RANDOM = "_random"
-    KAILU   = "_kailu"
-    KEKELUO = "_kekeluo"
-    KLEE    = "_klee"
-    KEQING  = "_keqing"
-    BABALA  = "_babala"
-    FUBUKI  = "_fubuki"
-    AQUA    = "_aqua"
-    REIMU   = "_reimu"
-    MARISA  = "_marisa"
-
-def copywriting():
+def copywriting() -> str:
     p = f"{FORTUNE_PATH}/fortune/copywriting.json"
     if not os.path.exists(p):
         return False
@@ -55,56 +65,25 @@ def getTitle(structure):
             return i["name"]
     raise Exception("Configuration file error")
 
-def randomBasemap(theme, limit):
-    if theme == MainTheme.RANDOM:
-        if limit == SpecificType.AQUA:
-            p = f"{FORTUNE_PATH}/img/vtuber"
-            return p + "/" + "frame_18.png"
-        elif limit == SpecificType.BABALA:
-            p = f"{FORTUNE_PATH}/img/genshin"
-            return p + "/" + "frame_2.png"
-        elif limit == SpecificType.FUBUKI:
-            p = f"{FORTUNE_PATH}/img/vtuber"
-            return p + "/" + "frame_17.png"
-        elif limit == SpecificType.KAILU:
-            p = f"{FORTUNE_PATH}/img/pcr"
-            return p + "/" + random.choice(["frame_1.png", "frame_2.png"])
-        elif limit == SpecificType.KEKELUO:
-            p = f"{FORTUNE_PATH}/img/pcr"
-            return p + "/" + random.choice(["frame_41.png", "frame_42.png"])
-        elif limit == SpecificType.KEQING:
-            p = f"{FORTUNE_PATH}/img/genshin"
-            return p + "/" + "frame_23.png"
-        elif limit == SpecificType.KLEE:
-            p = f"{FORTUNE_PATH}/img/genshin"
-            return p + "/" + "frame_24.png"
-        elif limit == SpecificType.REIMU:
-            p = f"{FORTUNE_PATH}/img/touhou"
-            return p + "/" + "frame_1.png"
-        elif limit == SpecificType.MARISA:
-            p = f"{FORTUNE_PATH}/img/touhou"
-            return p + "/" + "frame_2.png"
-        else:
-            _p = f"{FORTUNE_PATH}/img"
-            p = _p + "/" + random.choice(os.listdir(_p))
-            return p + "/" + random.choice(os.listdir(p))
-
-    elif theme == MainTheme.PCR:
-        p = f"{FORTUNE_PATH}/img/pcr"
-        return p + "/" + random.choice(os.listdir(p))
-    elif theme == MainTheme.GENSHIN:
-        p = f"{FORTUNE_PATH}/img/genshin"
-        return p + "/" + random.choice(os.listdir(p))
-    elif theme == MainTheme.VTUBER:
-        p = f"{FORTUNE_PATH}/img/vtuber"
-        return p + "/" + random.choice(os.listdir(p))
-    elif theme == MainTheme.TOUHOU:
-        p = f"{FORTUNE_PATH}/img/touhou"
-        return p + "/" + random.choice(os.listdir(p))
+def randomBasemap(theme: str, limit: Optional[str]) -> str:
+    if limit:
+        _p = f"{FORTUNE_PATH}/img"
+        specific_path = random.choice(SpecificTypeList[limit])     
+        p = os.path.join(_p, specific_path)
+        
+        return p
     else:
-        raise Exception("Specific theme is undefined")
+        if theme == "random":
+            __p = f"{FORTUNE_PATH}/img"
+            _p = os.path.join(__p, random.choice(os.listdir(__p)))
+            p = os.path.join(_p, random.choice(os.listdir(_p)))
+        else:
+            _p = os.path.join(f"{FORTUNE_PATH}/img", theme)
+            p = os.path.join(_p, random.choice(os.listdir(_p)))
+        
+        return p
 
-def drawing(theme, limit, user_id: int, group_id: int):
+def drawing(theme: str, limit: Optional[str], user_id: int, group_id: int) -> Path:
     fontPath = {
         "title": f"{FORTUNE_PATH}/font/Mamelon.otf",
         "text": f"{FORTUNE_PATH}/font/sakura.ttf",
@@ -155,12 +134,12 @@ def drawing(theme, limit, user_id: int, group_id: int):
     img.save(outPath)
     return outPath
 
-def exportFilePath(originalFilePath, user_id: int, group_id: int):
-    outPath = str(Path(originalFilePath).parent.parent).replace("/img", "/out/") + f"{str(user_id)}_{str(group_id)}.png"
+def exportFilePath(originalFilePath: str, user_id: int, group_id: int) -> Path:
     dirPath = f"{FORTUNE_PATH}/out"
     if not os.path.exists(dirPath):
         os.makedirs(dirPath)
 
+    outPath = Path(originalFilePath).parent.parent.parent / "out" / f"{str(user_id)}_{str(group_id)}.png" 
     return outPath
 
 def decrement(text):
@@ -207,21 +186,3 @@ def vertical(str):
     for s in str:
         list.append(s)
     return "\n".join(list)
-
-def massage_reply(image_file, text):
-    msg = [
-        {
-            "type": "text",
-            "data": {
-                "text": text
-            }
-        }, 
-        {
-            "type": "image",
-            "data": {
-                "file": f"file:{Path(image_file).absolute()}",
-            }
-        }
-    ]
-
-    return msg

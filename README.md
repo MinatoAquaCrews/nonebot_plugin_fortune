@@ -32,7 +32,7 @@ v0.2.0
 
 ⚠ 适配nonebot2-2.0.0alpha.16！
 
-### v0.2.0 22/1/22:
+### v0.2.0 22/1/22：
 
 1. 移除`json`数据中不必要的`image_path`记录；
 
@@ -73,9 +73,9 @@ FORTUNE_PATH="your_path_to_resource"   # 默认位于os.path.join(os.path.dirnam
 2. 指定签底并抽签：指定[xxx]签，具体配置位于`utils.py`下`SpecificTypeList`；
 
 3. 配置抽签主题：
-  - 设置[原神/pcr/东方/vtb]签：设置抽签主题；
+    - 设置[原神/pcr/东方/vtb]签：设置抽签主题；
 
-  - 重置抽签：设置抽签主题为随机；
+    - 重置抽签：设置抽签主题为随机；
 
 4. 抽签设置：查看当前抽签主题的配置；
 

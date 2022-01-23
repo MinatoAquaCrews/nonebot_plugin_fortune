@@ -27,7 +27,7 @@ reference = "tencentyun"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7.3"
-content-hash = "b6e8d8cebf001e9bfeef085d82b598e580d4ad12db924f72e371600c3e9fbe67"
+content-hash = "0de3f5f87aa5a6594e6836db31341123d321f0b631415041aada7b8aa867a228"
 
 [metadata.files]
 pillow = [

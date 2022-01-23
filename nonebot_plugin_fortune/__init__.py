@@ -18,20 +18,9 @@ scheduler = require("nonebot_plugin_apscheduler").scheduler
 
 @show.handle()
 async def _(bot: Bot, event: GroupMessageEvent, state: T_State):
-    if fortune_manager.main_theme == "pcr":
-        theme = "PCR"
-    elif fortune_manager.main_theme == "genshin":
-        theme = "Genshin Impact"
-    elif fortune_manager.main_theme == "vtuber":
-        theme = "Vtuber"
-    elif fortune_manager.main_theme == "touhou":
-        theme = "东方"
-    elif fortune_manager.main_theme == "random":
-        theme = "随机"
-    else:
-        await show.finish(message="好像抽签主题设置有问题诶……")
-
-    await show.finish(message=f"当前抽签主题：{theme}")
+    theme = fortune_manager.get_setting(event)
+    show_theme = MainThemeList[theme][0]
+    await show.finish(message=f"当前群抽签主题：{show_theme}")
 
 @divine.handle()
 async def _(bot: Bot, event: GroupMessageEvent, state: T_State):
@@ -50,19 +39,19 @@ async def _(bot: Bot, event: GroupMessageEvent, state: T_State):
     setting_theme = is_theme.group(0)[2:-1] if is_theme is not None else None
 
     if setting_theme is None:
-        await theme_setting.finish(message="给个设置OK？")
+        await theme_setting.finish(message="指定抽签主题参数错误~")
     else:
         for theme in MainThemeList.keys():
             if setting_theme in MainThemeList[theme]:
-                fortune_manager.main_theme = theme 
-                await theme_setting.finish(message="已设置抽签主题~")
+                fortune_manager.divination_setting(theme, event) 
+                await theme_setting.finish(message="已设置当前群抽签主题~")
     
-        await theme_setting.finish(message="好像还没有这种签哦~")
+        await theme_setting.finish(message="还没有这种抽签主题哦~")
 
 @reset.handle()
 async def _(bot: Bot, event: GroupMessageEvent, state: T_State):
-    fortune_manager.main_theme = "random"
-    await reset.finish(message="已重置抽签主题为随机~")
+    fortune_manager.divination_setting("random", event)
+    await reset.finish(message="已重置当前群抽签主题为随机~")
 
 @limit_setting.handle()
 async def _(bot: Bot, event: GroupMessageEvent, state: T_State):
@@ -70,7 +59,7 @@ async def _(bot: Bot, event: GroupMessageEvent, state: T_State):
     limit = is_specific_type.group(0)[2:-1] if is_specific_type is not None else None
 
     if limit is None:
-        await limit_setting.finish("给个设置OK？")
+        await limit_setting.finish("指定签底参数错误~")
 
     if not SpecificTypeList.get(limit):
         await limit_setting.finish("还不可以指定这种签哦~")
@@ -87,6 +76,7 @@ async def _(bot: Bot, event: GroupMessageEvent, state: T_State):
         msg = MessageSegment.text("✨今日运势✨\n") + MessageSegment.image(image_file)
     
     await limit_setting.finish(message=msg, at_sender=True)          
+
 
 # 重置每日占卜
 @scheduler.scheduled_job(

@@ -11,14 +11,22 @@ except ModuleNotFoundError:
 
 from .data_source import FORTUNE_PATH
 
+'''
+    抽签主题对应表，第一键值为“抽签设置”展示的主题名称
+    Key-Value: 主题资源文件夹名-设置主题别名
+'''
 MainThemeList = {
     "random":   ["随机"],
-    "pcr":      ["公主链接", "公主连接", "PCR", "Pcr", "pcr"],
-    "genshin":  ["原神", "genshin", "Genshin"],
-    "vtuber":   ["VTB", "Vtb", "vtb", "管人"],
+    "pcr":      ["PCR", "公主链接", "公主连接", "Pcr", "pcr"],
+    "genshin":  ["Genshin Impact", "原神", "genshin", "Genshin"],
+    "vtuber":   ["Vtuber", "VTB", "Vtb", "vtb", "管人"],
     "touhou":   ["东方", "touhou", "Touhou"]
 }
 
+'''
+    指定特定签底对应表，应指定对应图片路径（./resource/img后）；random仅为标识
+    Key-Value: 签底别名-图片路径 
+'''
 SpecificTypeList = {
     "随机":     ["random"],
     "凯露":     ["pcr/frame_1.jpg", "pcr/frame_2.jpg"],
@@ -31,15 +39,20 @@ SpecificTypeList = {
     "fbk":     ["vtuber/frame_17.png"],
     "白上吹雪": ["vtuber/frame_17.png"],
     "阿夸":     ["vtuber/frame_18.png"],
+    "debu":     ["vtuber/frame_18.png"],
     "tskk":     ["vtuber/frame_7.png"],
     "桐生可可": ["vtuber/frame_7.png"],
     "蛆皇":     ["vtuber/frame_7.png"],
-    "debu":     ["vtuber/frame_18.png"],
     "灵梦":     ["touhou/frame_1.jpg"],
     "魔理沙":   ["touhou/frame_2.jpg"],
+    "妖梦":     ["touhou/frame_3.png"],
+    "芙兰朵露": ["touhou/frame_4.png"],
+    "二小姐":   ["touhou/frame_4.png"],
+    "大小姐":   ["touhou/frame_5.png"],
     "幽幽子":   ["touhou/frame_6.jpg"],
+    "八云紫":   ["touhou/frame_7.jpg"],
     "妹红":     ["touhou/frame_15.jpg"],
-    "藤原妹红": ["touhou/frame_15.jpg"]
+    "咲夜":     ["touhou/frame_16.png"],
 }
 
 def copywriting() -> str:

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nonebot_plugin_fortune"
-version = "0.2.1"
+version = "0.2.2"
 description = "Fortune divination!"
 authors = ["KafCoppelia <k740677208@gmail.com>"]
 license = "MIT"
@@ -10,9 +10,16 @@ readme = "README.md"
 python = "^3.7.3"
 ujson = "^5.1.0"
 pillow = "^9.0.0"
+nonebot2 = "^2.0.0-beta.1"
+nonebot-adapter-onebot = "^2.0.0-beta.1"
 
 [tool.poetry.dev-dependencies]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[[tool.poetry.source]]
+name = "tencentyun"
+url = "https://mirrors.tencent.com/pypi/simple"
+default = true

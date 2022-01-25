@@ -1,7 +1,8 @@
-from nonebot.adapters.cqhttp import GroupMessageEvent
-from typing import Optional, Union, List, Dict
+from nonebot.adapters.onebot.v11 import GroupMessageEvent
+from typing import Optional, Union, Dict
 from pathlib import Path
 import nonebot
+import os
 
 try:
     import ujson as json
@@ -9,7 +10,7 @@ except ModuleNotFoundError:
     import json
 
 _FORTUNE_PATH = nonebot.get_driver().config.fortune_path
-DEFAULT_PATH = "./data/fortune"
+DEFAULT_PATH = os.path.join(os.path.dirname(__file__), "resource")
 FORTUNE_PATH = DEFAULT_PATH if not _FORTUNE_PATH else _FORTUNE_PATH
 
 from .utils import drawing
@@ -138,4 +139,4 @@ class FortuneManager:
         with open(self.setting_file, 'w', encoding='utf-8') as f:
             json.dump(self.setting, f, ensure_ascii=False, indent=4)
 
-fortune_manager = FortuneManager(file=Path(FORTUNE_PATH))
+fortune_manager = FortuneManager(Path(FORTUNE_PATH))

@@ -19,7 +19,7 @@ _🙏 今日运势 🙏_
   </a>
   
   <a href="">
-    <img src="https://img.shields.io/badge/release-v0.2.1-orange">
+    <img src="https://img.shields.io/badge/release-v0.1.1-orange">
   </a>
   
 </p>
@@ -28,13 +28,13 @@ _🙏 今日运势 🙏_
 
 ## 版本
 
-v0.2.1
+v0.1.1
 
-⚠ 适配nonebot2-2.0.0alpha.16，适配beta.1版本将会放在dev分支。
+⚠ 适配nonebot2-2.0.0alpha.16；适配beta.1版本参见[beta.1分支](https://github.com/KafCoppelia/nonebot_plugin_fortune/tree/beta.1)
 
 ## 安装
 
-1. 通过`pip`或`nb`安装；
+1. 通过`pip`或`nb`安装；版本请指定`^0.1.1`；版号回归`0.1.x`，原`0.2.0`及`0.2.1`版本仅适配alpha.16；
 
 2. 抽签签底`img`、字体`font`、文案`fortune`等资源位于`./resource`下，可在`env`下设置`FORTUNE_PATH`更改；
 
@@ -60,7 +60,7 @@ FORTUNE_PATH="your_path_to_resource"   # 默认位于os.path.join(os.path.dirnam
 
 2. 指定签底并抽签：指定[xxx]签，具体配置位于`utils.py`下`SpecificTypeList`；
 
-3. 配置抽签主题（有权限）：
+3. [群管及群主及超管] 配置抽签主题：
     - 设置[原神/pcr/东方/vtb]签：设置群抽签主题；
 
     - 重置抽签：设置群抽签主题为随机；
@@ -73,7 +73,7 @@ FORTUNE_PATH="your_path_to_resource"   # 默认位于os.path.join(os.path.dirnam
 
 ![display](./display.jpg)
 
-## 本插件改自：
+## 本插件改自
 
 1. [opqqq-plugin](https://github.com/opq-osc/opqqq-plugin)，除功能函数外，由于要适配nonebot2，底层已大改；
 

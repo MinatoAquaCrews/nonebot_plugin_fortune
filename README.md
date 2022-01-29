@@ -19,7 +19,7 @@ _🙏 今日运势 🙏_
   </a>
   
   <a href="">
-    <img src="https://img.shields.io/badge/release-v0.2.3-alpha.0-orange">
+    <img src="https://img.shields.io/badge/release-v0.2.3alpha.0-orange">
   </a>
   
 </p>

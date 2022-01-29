@@ -61,7 +61,7 @@ async def _(bot: Bot, event: GroupMessageEvent, state: T_State):
     if limit is None:
         await limit_setting.finish("指定签底参数错误~")
 
-    if not SpecificTypeList.get(limit):
+    if not fortune_manager.limit_setting_check(limit):
         await limit_setting.finish("还不可以指定这种签哦~")
     else:
         if limit == "随机":

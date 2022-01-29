@@ -1,1 +1,76 @@
-{}
+{
+    "group_rule": {
+        "813854824": "random",
+        "161831838": "random",
+        "672076603": "random",
+        "450738880": "random",
+        "830322845": "random",
+        "434719132": "random",
+        "875944942": "touhou",
+        "974414730": "random"
+    },
+    "specific_rule": {
+        "凯露": [
+            "pcr/frame_1.jpg",
+            "pcr/frame_2.jpg"
+        ],
+        "可可萝": [
+            "pcr/frame_41.jpg",
+            "pcr/frame_42.jpg"
+        ],
+        "可莉": [
+            "genshin/frame_24.jpg"
+        ],
+        "刻晴": [
+            "genshin/frame_23.jpg"
+        ],
+        "行秋": [
+            "genshin/frame_5.jpg"
+        ],
+        "白上吹雪": [
+            "vtuber/frame_17.jpg"
+        ],
+        "fbk": [
+            "vtuber/frame_17.jpg"
+        ],
+        "阿夸": [
+            "vtuber/frame_18.jpg"
+        ],
+        "桐生可可": [
+            "vtuber/frame_7.jpg"
+        ],
+        "tskk": [
+            "vtuber/frame_7.jpg"
+        ],
+        "灵梦": [
+            "touhou/frame_1.jpg"
+        ],
+        "魔理沙": [
+            "touhou/frame_2.jpg"
+        ],
+        "妖梦": [
+            "touhou/frame_3.jpg"
+        ],
+        "芙兰朵露": [
+            "touhou/frame_4.jpg"
+        ],
+        "二小姐": [
+            "touhou/frame_4.jpg"
+        ],
+        "大小姐": [
+            "touhou/frame_5.jpg"
+        ],
+        "幽幽子": [
+            "touhou/frame_6.jpg"
+        ],
+        "八云紫": [
+            "touhou/frame_7.jpg"
+        ],
+        "妹红": [
+            "touhou/frame_15.jpg"
+        ],
+        "咲夜": [
+            "touhou/frame_16.jpg"
+        ]
+    }
+}

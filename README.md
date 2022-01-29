@@ -56,19 +56,19 @@ PCR_FLAG = true               # 公主链接
 TOUHOU_FLAG = true            # 东方
 TOUHOU_OLD_FLAG = false       # 东方旧版
 VTUBER_FLAG = true            # Vtuber
-PUNISHING_FLAG = false		  # 战双帕弥什
+PUNISHING_FLAG = false        # 战双帕弥什
 GRANBLUE_FANTASY_FLAG = false # 碧蓝幻想
-PRETTY_DERBY_FLAG = true	  # 赛马娘
+PRETTY_DERBY_FLAG = true      # 赛马娘
 ```
 
 4. **新增** 在`./resource/fortune_setting.json`内配置**指定抽签**规则，例如：
 
 ```json
 "specific_rule": {
-	"凯露": [
-		"pcr/frame_1.jpg",
-		"pcr/frame_2.jpg"
-	],
+  "凯露": [
+    "pcr/frame_1.jpg",
+    "pcr/frame_2.jpg"
+  ],
 ```
 
 指定凯露签，由于存在两张凯露的签底，配置凯露签的路径列表即可，其余类似；目前仅能通过`json`配置规则；

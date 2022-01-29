@@ -56,7 +56,7 @@ PCR_FLAG = true               # 公主链接
 TOUHOU_FLAG = true            # 东方
 TOUHOU_OLD_FLAG = false       # 东方旧版
 VTUBER_FLAG = true            # Vtuber
-PUNISHING_FLAG = false        # 战双帕弥什
+PUNISHING_FLAG = false		  # 战双帕弥什
 GRANBLUE_FANTASY_FLAG = false # 碧蓝幻想
 PRETTY_DERBY_FLAG = true	  # 赛马娘
 ```

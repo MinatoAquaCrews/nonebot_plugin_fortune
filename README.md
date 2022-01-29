@@ -44,7 +44,7 @@ v0.2.3-alpha.0 **开发版**
 FORTUNE_PATH="your_path_to_resource"   # 默认位于os.path.join(os.path.dirname(__file__), "resource")，具体查看data_source.py
 ```
 
-3. **新增** 更多抽签主题，在`env`下设置`xxx_FLAG`以启用或关闭抽签随机主题，例如:
+3. **新增** 更多抽签主题，在`env`下设置`xxx_FLAG`以启用或关闭抽签随机主题，例如：
 
 ```python
 ARKNIGHTS_FLAG = true         # 明日方舟

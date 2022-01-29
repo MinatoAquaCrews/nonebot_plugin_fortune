@@ -65,10 +65,10 @@ PRETTY_DERBY_FLAG = true      # 赛马娘
 
 ```json
 "specific_rule": {
-  "凯露": [
-    "pcr/frame_1.jpg",
-    "pcr/frame_2.jpg"
-  ],
+	"凯露": [
+		"pcr/frame_1.jpg",
+		"pcr/frame_2.jpg"
+	],
 ```
 
 指定凯露签，由于存在两张凯露的签底，配置凯露签的路径列表即可，其余类似；目前仅能通过`json`配置规则；

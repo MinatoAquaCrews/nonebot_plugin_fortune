@@ -96,7 +96,7 @@ def randomBasemap(theme: str, limit: Optional[str]) -> str:
         
         return p
 
-def drawing(theme: str, limit: Optional[str], user_id: int, group_id: int) -> Path:
+def drawing(theme: str, limit: Optional[str], user_id: str, group_id: str) -> Path:
     fontPath = {
         "title": f"{FORTUNE_PATH}/font/Mamelon.otf",
         "text": f"{FORTUNE_PATH}/font/sakura.ttf",
@@ -147,12 +147,12 @@ def drawing(theme: str, limit: Optional[str], user_id: int, group_id: int) -> Pa
     img.save(outPath)
     return outPath
 
-def exportFilePath(originalFilePath: str, user_id: int, group_id: int) -> Path:
+def exportFilePath(originalFilePath: str, user_id: str, group_id: str) -> Path:
     dirPath = f"{FORTUNE_PATH}/out"
     if not os.path.exists(dirPath):
         os.makedirs(dirPath)
 
-    outPath = Path(originalFilePath).parent.parent.parent / "out" / f"{str(user_id)}_{str(group_id)}.png" 
+    outPath = Path(originalFilePath).parent.parent.parent / "out" / f"{user_id}_{group_id}.png" 
     return outPath
 
 def decrement(text):

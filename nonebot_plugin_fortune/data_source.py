@@ -50,7 +50,7 @@ class FortuneManager:
         theme = self.setting[str(event.group_id)]
 
         if not self.check(event):
-            image_file = drawing(theme, limit, event.user_id, event.group_id)
+            image_file = drawing(theme, limit, str(event.user_id), str(event.group_id))
             self._end_data_handle(event)
             return image_file, True
         else:

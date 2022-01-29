@@ -1,11 +1,10 @@
 from nonebot import require
 from nonebot import logger
 from nonebot import on_command, on_regex
-from nonebot.typing import T_State
 from nonebot.permission import SUPERUSER
-from nonebot.adapters.cqhttp import Bot, GROUP, GROUP_ADMIN, GROUP_OWNER, GroupMessageEvent, MessageSegment
+from nonebot.adapters.onebot.v11 import Bot, GROUP, GROUP_ADMIN, GROUP_OWNER, GroupMessageEvent, MessageSegment
 from .data_source import fortune_manager
-from .utils import MainThemeList, SpecificTypeList
+from .utils import MainThemeList
 import re
 
 divine = on_command("今日运势", aliases={"抽签", "运势"}, permission=GROUP, priority=8, block=True)
@@ -17,13 +16,13 @@ show = on_command("抽签设置", permission=GROUP, priority=8, block=True)
 scheduler = require("nonebot_plugin_apscheduler").scheduler
 
 @show.handle()
-async def _(bot: Bot, event: GroupMessageEvent, state: T_State):
+async def _(bot: Bot, event: GroupMessageEvent):
     theme = fortune_manager.get_setting(event)
     show_theme = MainThemeList[theme][0]
     await show.finish(message=f"当前群抽签主题：{show_theme}")
 
 @divine.handle()
-async def _(bot: Bot, event: GroupMessageEvent, state: T_State):
+async def _(bot: Bot, event: GroupMessageEvent):
     image_file, status = fortune_manager.divine(limit=None, event=event)
     if not status:
         msg = MessageSegment.text("你今天抽过签了，再给你看一次哦🤗\n") + MessageSegment.image(image_file)
@@ -34,7 +33,7 @@ async def _(bot: Bot, event: GroupMessageEvent, state: T_State):
     await divine.finish(message=msg, at_sender=True)        
 
 @theme_setting.handle()
-async def _(bot: Bot, event: GroupMessageEvent, state: T_State):
+async def _(bot: Bot, event: GroupMessageEvent):
     is_theme = re.search(r"设置(.*?)签", event.get_plaintext())
     setting_theme = is_theme.group(0)[2:-1] if is_theme is not None else None
 
@@ -49,12 +48,12 @@ async def _(bot: Bot, event: GroupMessageEvent, state: T_State):
         await theme_setting.finish(message="还没有这种抽签主题哦~")
 
 @reset.handle()
-async def _(bot: Bot, event: GroupMessageEvent, state: T_State):
+async def _(bot: Bot, event: GroupMessageEvent):
     fortune_manager.divination_setting("random", event)
     await reset.finish(message="已重置当前群抽签主题为随机~")
 
 @limit_setting.handle()
-async def _(bot: Bot, event: GroupMessageEvent, state: T_State):
+async def _(bot: Bot, event: GroupMessageEvent):
     is_specific_type = re.search(r'指定(.*?)签', event.get_plaintext())
     limit = is_specific_type.group(0)[2:-1] if is_specific_type is not None else None
 

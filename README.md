@@ -19,7 +19,7 @@ _🙏 今日运势 🙏_
   </a>
   
   <a href="">
-    <img src="https://img.shields.io/badge/release-v0.3.0-alpha.0-orange">
+    <img src="https://img.shields.io/badge/release-v0.2.3-alpha.0-orange">
   </a>
   
 </p>
@@ -28,13 +28,15 @@ _🙏 今日运势 🙏_
 
 ## 版本
 
-v0.3.0-alpha.0开发版，该版号**不会发行pypi包**；
+v0.2.3-alpha.0 **开发版**
+
+鉴于pypi包过大，无法发行，目前该开发版选择不发布pypi包，请zip下载以插件形式安装。
 
 ⚠ 适配nonebot2-2.0.0beta.1；适配beta.1稳定版参见[beta.1分支](https://github.com/KafCoppelia/nonebot_plugin_fortune/tree/beta.1)
 
 ## 安装
 
-1. 通过`zip`以插件形式安装；
+1. 通过`zip`安装；
 
 2. 抽签签底`img`、字体`font`、文案`fortune`等资源位于`./resource`下，可在`env`下设置`FORTUNE_PATH`更改；
 
@@ -59,7 +61,7 @@ GRANBLUE_FANTASY_FLAG = false # 碧蓝幻想
 PRETTY_DERBY_FLAG = true	  # 赛马娘
 ```
 
-4. **新增** 在`./resource/fortune_setting.json`内配置**指定签底**规则，例如：
+4. **新增** 在`./resource/fortune_setting.json`内配置**指定抽签**规则，例如：
 
 ```json
 "specific_rule": {
@@ -81,7 +83,7 @@ PRETTY_DERBY_FLAG = true	  # 赛马娘
 
 3. 每群每人一天限抽签1次，0点刷新（贪心的人是不会有好运的🤗）；
 
-4. 抽签的信息会保存在`./resource/fortune_data.json`内；群抽签设置及特定抽签规则保存在`./resource/fortune_setting.json`内；抽签生成的图片当天会保存在`./resource/out`下；
+4. 抽签的信息会保存在`./resource/fortune_data.json`内；群抽签设置及指定抽签规则保存在`./resource/fortune_setting.json`内；抽签生成的图片当天会保存在`./resource/out`下；
 
 ## 命令
 

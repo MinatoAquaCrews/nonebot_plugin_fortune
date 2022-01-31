@@ -1,5 +1,5 @@
 from nonebot.adapters.onebot.v11 import GroupMessageEvent
-from typing import Optional, Union, Dict
+from typing import Optional, Union, Dict, Tuple
 from pathlib import Path
 import nonebot
 import os
@@ -42,7 +42,7 @@ class FortuneManager:
         '''
         return self.user_data[str(event.group_id)][str(event.user_id)]["is_divined"]
 
-    def divine(self, limit: Optional[str], event: GroupMessageEvent) -> tuple[str, bool]:
+    def divine(self, limit: Optional[str], event: GroupMessageEvent) -> Tuple[Path, bool]:
         '''
             今日运势抽签
         '''

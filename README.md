@@ -19,7 +19,7 @@ _🙏 今日运势 🙏_
   </a>
   
   <a href="">
-    <img src="https://img.shields.io/badge/release-v0.3.0-orange">
+    <img src="https://img.shields.io/badge/release-v0.3.1-orange">
   </a>
   
 </p>
@@ -28,7 +28,7 @@ _🙏 今日运势 🙏_
 
 ## 版本
 
-v0.3.0
+v0.3.1
 
 ⚠ 适配nonebot2-2.0.0beta.1；适配alpha.16参见[alpha.16分支](https://github.com/KafCoppelia/nonebot_plugin_fortune/tree/alpha.16)
 
@@ -36,7 +36,7 @@ v0.3.0
 
 1. 安装方式注意：
 
-    - 通过`pip`或`nb`：版本指定`^0.3.0`，pypi无法发行过大安装包，由此安装的插件不包含所有`resource`下所有主题抽签资源，需单独下载，建议`zip`包下载后单独提取`resource`资源，后更改`FORTUNE_PATH`配置即可；
+    - 通过`pip`或`nb`：版本指定`^0.3.1`，pypi无法发行过大安装包，由此安装的插件不包含所有`resource`下所有主题抽签资源，需单独下载，建议`zip`包下载后单独提取`resource`资源，后更改`FORTUNE_PATH`配置即可；
     
     - 通过`zip`或`git clone`安装：包含`resource`下所有主题抽签资源；
 
@@ -86,7 +86,7 @@ PRETTY_DERBY_FLAG = true      # 赛马娘
 
 *group_rule会自动生成，specific_rule可手动配置*
 
-指定凯露签，由于存在两张凯露的签底，配置凯露签的**路径列表**即可，其余类似；目前仅能通过`json`配置规则；
+指定凯露签，由于存在两张凯露的签底，配置凯露签的**路径列表**即可，其余类似，**请确保图片格式输入正确**；目前仅能通过`json`配置规则；
 
 5. 占卜一下你的今日运势！🎉
 
@@ -114,7 +114,7 @@ PRETTY_DERBY_FLAG = true      # 赛马娘
 
 4. 抽签设置：查看当前群抽签主题的配置；
 
-5. **新增** [超管] 刷新抽签：可手动即刻刷新全局抽签`is_divined`值，当遇到未知错误导致过0点未刷新时手动刷新。
+5. **新增** [超管] 刷新抽签：即刻刷新抽签，防止过0点未刷新的意外。
 
 ## 效果
 
@@ -136,7 +136,7 @@ PRETTY_DERBY_FLAG = true      # 赛马娘
 
 ## 资源整合注意
 
-1. 抽签图片及文案资源下载参见上述出处链接；
+1. 抽签图片及文案资源下载参见上述出处链接，各抽签主题图片格式**未统一**；
 
 2. 本插件中未使用[FloatTech-zbpdata/Fortune](https://github.com/FloatTech/zbpdata)提供的全部主题签，其提供的`text.json`文案资源与[opqqq-plugin](https://github.com/opq-osc/opqqq-plugin)提供的文案资源`copywriting.json`与`goodLuck.json`略有不同，具体不同如下：
 

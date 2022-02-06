@@ -19,7 +19,7 @@ _🙏 今日运势 🙏_
   </a>
   
   <a href="">
-    <img src="https://img.shields.io/badge/release-v0.1.2-orange">
+    <img src="https://img.shields.io/badge/release-v0.1.3-orange">
   </a>
   
 </p>
@@ -28,7 +28,7 @@ _🙏 今日运势 🙏_
 
 ## 版本
 
-v0.1.2 **与v0.3.1 for beta.1版本一致**
+v0.1.3 **与v0.3.2 for beta.1版本一致**
 
 ⚠ 适配nonebot2-2.0.0alpha.16；适配beta.1参见[beta.1分支](https://github.com/KafCoppelia/nonebot_plugin_fortune/tree/beta.1)
 
@@ -36,7 +36,7 @@ v0.1.2 **与v0.3.1 for beta.1版本一致**
 
 1. 安装方式注意：
 
-    - 通过`pip`或`nb`：版本指定`0.1.2`，pypi无法发行过大安装包，由此安装的插件不包含所有`resource`下所有主题抽签资源，需单独下载，建议`zip`包下载后单独提取`resource`资源，后更改`FORTUNE_PATH`配置即可；
+    - 通过`pip`或`nb`：版本指定`0.1.3`，pypi无法发行过大安装包，由此安装的插件不包含所有`resource`下所有主题抽签资源，需单独下载，建议`zip`包下载后单独提取`resource`资源，后更改`FORTUNE_PATH`配置即可；
     
     - 通过`zip`或`git clone`安装：包含`resource`下所有主题抽签资源；
 

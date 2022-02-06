@@ -1,5 +1,5 @@
 from nonebot.adapters.cqhttp import GroupMessageEvent
-from typing import Optional, Union, Dict
+from typing import Optional, Union, Dict, Tuple
 from pathlib import Path
 import nonebot
 import random
@@ -48,7 +48,7 @@ class FortuneManager:
         '''
         return self.setting["specific_rule"].get(limit)
 
-    def divine(self, limit: Optional[str], event: GroupMessageEvent) -> tuple[str, bool]:
+    def divine(self, limit: Optional[str], event: GroupMessageEvent) -> Tuple[str, bool]:
         '''
             今日运势抽签
         '''

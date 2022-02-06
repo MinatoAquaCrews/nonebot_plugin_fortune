@@ -83,8 +83,9 @@ async def _(bot: Bot, event: GroupMessageEvent):
 
 @refresh.handle()
 async def _(bot: Bot, event: GroupMessageEvent):
-    fortune_manager.refresh()
-    await limit_setting.finish(message=f"抽签已全部刷新!", at_sender=False)
+    fortune_manager.reset_fortune()
+    logger.info("今日运势已刷新！")
+    await limit_setting.finish(message=f"今日运势已刷新!", at_sender=False)
 
 # 重置每日占卜
 @scheduler.scheduled_job(

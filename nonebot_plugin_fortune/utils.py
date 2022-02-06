@@ -67,12 +67,6 @@ MainThemeList = {
                 ["赛马娘", "马", "马娘", "赛马"]
 }
 
-'''
-    指定特定签底对应表，应指定对应图片路径（./resource/img后）；random仅为标识
-    Key-Value: 签底别名-图片路径 
-    SpecificTypeList 在dev及v0.2.3+已移除，改为json数据保存及读取
-'''
-
 def copywriting() -> str:
     p = f"{FORTUNE_PATH}/fortune/copywriting.json"
     if not os.path.exists(p):

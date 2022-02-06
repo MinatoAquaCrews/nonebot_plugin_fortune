@@ -11,8 +11,7 @@ except ModuleNotFoundError:
     import json
 
 _FORTUNE_PATH = nonebot.get_driver().config.fortune_path
-DEFAULT_PATH = os.path.join(os.path.dirname(__file__), "resource")
-FORTUNE_PATH = DEFAULT_PATH if not _FORTUNE_PATH else _FORTUNE_PATH
+FORTUNE_PATH = os.path.join(os.path.dirname(__file__), "resource") if not _FORTUNE_PATH else _FORTUNE_PATH
 
 from .utils import drawing
 
@@ -153,16 +152,5 @@ class FortuneManager:
         '''
         with open(self.setting_file, 'w', encoding='utf-8') as f:
             json.dump(self.setting, f, ensure_ascii=False, indent=4)
-
-    '''
-        超管功能
-    '''
-    def refresh(self) -> None:
-        for group_id in self.user_data.keys():
-            for user_id in self.user_data[group_id].keys():
-                if self.user_data[group_id][user_id]["is_divined"] == True:
-                    self.user_data[group_id][user_id]["is_divined"] = False
-        
-        self.save_data()
 
 fortune_manager = FortuneManager(Path(FORTUNE_PATH))

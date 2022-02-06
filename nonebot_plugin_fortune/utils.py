@@ -36,7 +36,7 @@ MainThemeEnable = {
     "touhou":           TOUHOU_FLAG,
     "touhou_old":       TOUHOU_OLD_FLAG,
     "onmyoji":          ONMYOJI_FLAG,
-    "auzre":            AZURE_FLAG,
+    "azure":            AZURE_FLAG,
     "asoul":            ASOUL_FLAG,
     "arknights":        ARKNIGHTS_FLAG,
     "granblue_fantasy": GRANBLUE_FANTASY_FLAG,
@@ -57,13 +57,14 @@ MainThemeList = {
     "touhou_old": 
                 ["旧东方", "old touhou", "touhou old", "旧版东方", "老东方", "老版东方", "经典东方"],
     "onmyoji":  ["阴阳师", "yys", "Yys", "痒痒鼠"],
-    "auzre":    ["碧蓝航线", "碧蓝", "azure"],
+    "azure":    ["碧蓝航线", "碧蓝", "azure line"],
     "asoul":    ["asoul", "a手", "A手", "as", "As"],
     "arknights":["明日方舟", "方舟", "arknights", "鹰角"],
     "granblue_fantasy":
                 ["碧蓝幻想", "Granblue Fantasy", "granblue fantasy", "幻想", "fantasy", "Fantasy"],
     "punishing":["战双", "战双帕弥什"],
-    "pretty_derby":["赛马娘", "马", "马娘", "赛马"]
+    "pretty_derby":
+                ["赛马娘", "马", "马娘", "赛马"]
 }
 
 '''

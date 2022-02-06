@@ -19,7 +19,7 @@ _🙏 今日运势 🙏_
   </a>
   
   <a href="">
-    <img src="https://img.shields.io/badge/release-v0.2.3alpha.0-orange">
+    <img src="https://img.shields.io/badge/release-v0.3.0-orange">
   </a>
   
 </p>
@@ -28,15 +28,17 @@ _🙏 今日运势 🙏_
 
 ## 版本
 
-v0.2.3-alpha.0 **开发版**
+v0.3.0 **dev与beta.1版本一致**
 
-鉴于pypi包过大，无法发行，目前该开发版选择不发布pypi包，请zip下载以插件形式安装。
-
-⚠ 适配nonebot2-2.0.0beta.1；适配beta.1稳定版参见[beta.1分支](https://github.com/KafCoppelia/nonebot_plugin_fortune/tree/beta.1)
+⚠ 适配nonebot2-2.0.0beta.1；适配alpha.16参见[alpha.16分支](https://github.com/KafCoppelia/nonebot_plugin_fortune/tree/alpha.16)
 
 ## 安装
 
-1. 通过`zip`安装；
+1. 安装方式注意：
+
+    - 通过`pip`或`nb`：版本指定`^0.3.0`，pypi无法发行过大安装包，由此安装的插件不包含所有`resource`下所有主题抽签资源，需单独下载，建议`zip`包下载后单独提取`resource`资源，后更改`FORTUNE_PATH`配置即可；
+    
+    - 通过`zip`或`git clone`安装：包含`resource`下所有主题抽签资源；
 
 2. 抽签签底`img`、字体`font`、文案`fortune`等资源位于`./resource`下，可在`env`下设置`FORTUNE_PATH`更改；
 
@@ -54,24 +56,37 @@ GENSHIN_FLAG = true           # 原神
 ONMYOJI_FLAG = true           # 阴阳师
 PCR_FLAG = true               # 公主链接
 TOUHOU_FLAG = true            # 东方
-TOUHOU_OLD_FLAG = false       # 东方旧版
+TOUHOU_OLD_FLAG = true        # 东方旧版
 VTUBER_FLAG = true            # Vtuber
-PUNISHING_FLAG = false        # 战双帕弥什
-GRANBLUE_FANTASY_FLAG = false # 碧蓝幻想
+PUNISHING_FLAG = true         # 战双帕弥什
+GRANBLUE_FANTASY_FLAG = true  # 碧蓝幻想
 PRETTY_DERBY_FLAG = true      # 赛马娘
 ```
 
 4. **新增** 在`./resource/fortune_setting.json`内配置**指定抽签**规则，例如：
 
 ```json
-"specific_rule": {
-	"凯露": [
-		"pcr/frame_1.jpg",
-		"pcr/frame_2.jpg"
-	],
+{
+    "group_rule": {
+        "123456789": "random",
+        "987654321": "azure",
+        "123454321": "granblue_fantasy"
+    },
+    "specific_rule": {
+        "凯露": [
+            "pcr\/frame_1.jpg",
+            "pcr\/frame_2.jpg"
+        ],
+        "可可萝": [
+            "pcr\/frame_41.jpg"
+        ]
+    }
+}
 ```
 
-指定凯露签，由于存在两张凯露的签底，配置凯露签的路径列表即可，其余类似；目前仅能通过`json`配置规则；
+*group_rule会自动生成，specific_rule可手动配置*
+
+指定凯露签，由于存在两张凯露的签底，配置凯露签的**路径列表**即可，其余类似；目前仅能通过`json`配置规则；
 
 5. 占卜一下你的今日运势！🎉
 

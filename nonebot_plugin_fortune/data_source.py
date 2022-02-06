@@ -54,7 +54,7 @@ class FortuneManager:
             今日运势抽签
         '''
         self._init_user_data(event)
-        theme = self.setting[str(event.group_id)]
+        theme = self.setting["group_rule"][str(event.group_id)]
         if limit:
             spec_path = random.choice(self.setting["specific_rule"][limit])
         else:
@@ -153,5 +153,16 @@ class FortuneManager:
         '''
         with open(self.setting_file, 'w', encoding='utf-8') as f:
             json.dump(self.setting, f, ensure_ascii=False, indent=4)
+
+    '''
+        超管功能
+    '''
+    def refresh(self) -> None:
+        for group_id in self.user_data.keys():
+            for user_id in self.user_data[group_id].keys():
+                if self.user_data[group_id][user_id]["is_divined"] == True:
+                    self.user_data[group_id][user_id]["is_divined"] = False
+        
+        self.save_data()
 
 fortune_manager = FortuneManager(Path(FORTUNE_PATH))

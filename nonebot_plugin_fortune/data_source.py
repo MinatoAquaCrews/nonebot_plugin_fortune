@@ -1,7 +1,9 @@
 from nonebot.adapters.cqhttp import GroupMessageEvent
-from typing import Optional, Union, List, Dict
+from typing import Optional, Union, Dict
 from pathlib import Path
 import nonebot
+import random
+import os
 
 try:
     import ujson as json
@@ -9,8 +11,7 @@ except ModuleNotFoundError:
     import json
 
 _FORTUNE_PATH = nonebot.get_driver().config.fortune_path
-DEFAULT_PATH = "./data/fortune"
-FORTUNE_PATH = DEFAULT_PATH if not _FORTUNE_PATH else _FORTUNE_PATH
+FORTUNE_PATH = os.path.join(os.path.dirname(__file__), "resource") if not _FORTUNE_PATH else _FORTUNE_PATH
 
 from .utils import drawing
 
@@ -40,16 +41,26 @@ class FortuneManager:
             检测是否重复抽签
         '''
         return self.user_data[str(event.group_id)][str(event.user_id)]["is_divined"]
+    
+    def limit_setting_check(self, limit: str) -> bool:
+        '''
+            检测是否有该特定规则
+        '''
+        return self.setting["specific_rule"].get(limit)
 
     def divine(self, limit: Optional[str], event: GroupMessageEvent) -> tuple[str, bool]:
         '''
             今日运势抽签
         '''
         self._init_user_data(event)
-        theme = self.setting[str(event.group_id)]
+        theme = self.setting["group_rule"][str(event.group_id)]
+        if limit:
+            spec_path = random.choice(self.setting["specific_rule"][limit])
+        else:
+            spec_path = None
 
         if not self.check(event):
-            image_file = drawing(theme, limit, event.user_id, event.group_id)
+            image_file = drawing(theme, spec_path, str(event.user_id), str(event.group_id))
             self._end_data_handle(event)
             return image_file, True
         else:
@@ -86,8 +97,12 @@ class FortuneManager:
         group_id = str(event.group_id)
         nickname = event.sender.card if event.sender.card else event.sender.nickname
         
-        if group_id not in self.setting.keys():
-            self.setting[group_id] = "random"
+        if "group_rule" not in self.setting.keys():
+            self.setting["group_rule"] = {}
+        if "specific_rule" not in self.setting.keys():
+            self.setting["specific_rule"] = {}
+        if group_id not in self.setting["group_rule"].keys():
+            self.setting["group_rule"][group_id] = "random"
         if group_id not in self.user_data.keys():
             self.user_data[group_id] = {}
         if user_id not in self.user_data[group_id].keys():
@@ -120,16 +135,16 @@ class FortuneManager:
             分群管理抽签设置
         '''
         group_id = str(event.group_id)
-        self.setting[group_id] = theme
+        self.setting["group_rule"][group_id] = theme
         self.save_setting()
 
     def get_setting(self, event: GroupMessageEvent) -> str:
         group_id = str(event.group_id)
-        if group_id not in self.setting.keys():
-            self.setting[group_id] = "random"
+        if group_id not in self.setting["group_rule"].keys():
+            self.setting["group_rule"][group_id] = "random"
             self.save_setting()
 
-        return self.setting[group_id]
+        return self.setting["group_rule"][group_id]
 
     def save_setting(self) -> None:
         '''
@@ -138,4 +153,4 @@ class FortuneManager:
         with open(self.setting_file, 'w', encoding='utf-8') as f:
             json.dump(self.setting, f, ensure_ascii=False, indent=4)
 
-fortune_manager = FortuneManager(file=Path(FORTUNE_PATH))
+fortune_manager = FortuneManager(Path(FORTUNE_PATH))

@@ -4,7 +4,7 @@ from nonebot import on_command, on_regex
 from nonebot.permission import SUPERUSER
 from nonebot.adapters.onebot.v11 import Bot, GROUP, GROUP_ADMIN, GROUP_OWNER, GroupMessageEvent, MessageSegment
 from .data_source import fortune_manager
-from .utils import MainThemeList, SpecificTypeList
+from .utils import MainThemeList
 import re
 
 divine = on_command("今日运势", aliases={"抽签", "运势"}, permission=GROUP, priority=8, block=True)
@@ -12,6 +12,11 @@ limit_setting = on_regex(r"指定(.*?)签", permission=GROUP, priority=8, block=
 theme_setting = on_regex(r"设置(.*?)签", permission=SUPERUSER | GROUP_ADMIN | GROUP_OWNER, priority=8, block=True)
 reset = on_command("重置抽签", permission=SUPERUSER | GROUP_ADMIN | GROUP_OWNER, priority=8, block=True)
 show = on_command("抽签设置", permission=GROUP, priority=8, block=True)
+
+'''
+    超管功能
+'''
+refresh = on_command("刷新抽签", permission=SUPERUSER, priority=8, block=True)
 
 scheduler = require("nonebot_plugin_apscheduler").scheduler
 
@@ -60,7 +65,7 @@ async def _(bot: Bot, event: GroupMessageEvent):
     if limit is None:
         await limit_setting.finish("指定签底参数错误~")
 
-    if not SpecificTypeList.get(limit):
+    if not fortune_manager.limit_setting_check(limit):
         await limit_setting.finish("还不可以指定这种签哦~")
     else:
         if limit == "随机":
@@ -74,8 +79,12 @@ async def _(bot: Bot, event: GroupMessageEvent):
         logger.info(f"User {event.user_id} | Group {event.group_id} 占卜了今日运势")
         msg = MessageSegment.text("✨今日运势✨\n") + MessageSegment.image(image_file)
     
-    await limit_setting.finish(message=msg, at_sender=True)          
+    await limit_setting.finish(message=msg, at_sender=True)
 
+@refresh.handle()
+async def _(bot: Bot, event: GroupMessageEvent):
+    fortune_manager.refresh()
+    await limit_setting.finish(message=f"抽签已全部刷新!", at_sender=False)
 
 # 重置每日占卜
 @scheduler.scheduled_job(

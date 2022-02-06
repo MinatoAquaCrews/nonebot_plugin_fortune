@@ -1,3 +1,4 @@
+import nonebot
 import os
 import random
 from PIL import Image, ImageDraw, ImageFont
@@ -11,6 +12,38 @@ except ModuleNotFoundError:
 
 from .data_source import FORTUNE_PATH
 
+# 各主题抽签开关，仅在random抽签中生效
+ARKNIGHTS_FLAG = False if not nonebot.get_driver().config.arknights_flag else True
+ASOUL_FLAG = False if not nonebot.get_driver().config.asoul_flag else True
+AZURE_FLAG = False if not nonebot.get_driver().config.azure_flag else True
+GENSHIN_FLAG = False if not nonebot.get_driver().config.genshin_flag else True
+ONMYOJI_FLAG = False if not nonebot.get_driver().config.onmyoji_flag else True
+PCR_FLAG = False if not nonebot.get_driver().config.pcr_flag else True
+TOUHOU_FLAG = False if not nonebot.get_driver().config.touhou_flag else True
+TOUHOU_OLD_FLAG = False if not nonebot.get_driver().config.touhou_old_flag else True
+VTUBER_FLAG = False if not nonebot.get_driver().config.vtuber_flag else True
+GRANBLUE_FANTASY_FLAG = False if not nonebot.get_driver().config.granblue_fantasy_flag else True
+PUNISHING_FLAG = False if not nonebot.get_driver().config.punishing_flag else True
+PRETTY_DERBY_FLAG = False if not nonebot.get_driver().config.pretty_derby_flag else True
+
+'''
+    抽签主题开关，当随机抽签时判断某主题是否开启
+'''
+MainThemeEnable = {
+    "pcr":              PCR_FLAG,
+    "genshin":          GENSHIN_FLAG,
+    "vtuber":           VTUBER_FLAG,
+    "touhou":           TOUHOU_FLAG,
+    "touhou_old":       TOUHOU_OLD_FLAG,
+    "onmyoji":          ONMYOJI_FLAG,
+    "azure":            AZURE_FLAG,
+    "asoul":            ASOUL_FLAG,
+    "arknights":        ARKNIGHTS_FLAG,
+    "granblue_fantasy": GRANBLUE_FANTASY_FLAG,
+    "punishing":        PUNISHING_FLAG,
+    "pretty_derby":     PRETTY_DERBY_FLAG
+}
+
 '''
     抽签主题对应表，第一键值为“抽签设置”展示的主题名称
     Key-Value: 主题资源文件夹名-设置主题别名
@@ -20,40 +53,25 @@ MainThemeList = {
     "pcr":      ["PCR", "公主链接", "公主连接", "Pcr", "pcr"],
     "genshin":  ["Genshin Impact", "原神", "genshin", "Genshin"],
     "vtuber":   ["Vtuber", "VTB", "Vtb", "vtb", "管人"],
-    "touhou":   ["东方", "touhou", "Touhou"]
+    "touhou":   ["东方", "touhou", "Touhou"],
+    "touhou_old": 
+                ["旧东方", "old touhou", "touhou old", "旧版东方", "老东方", "老版东方", "经典东方"],
+    "onmyoji":  ["阴阳师", "yys", "Yys", "痒痒鼠"],
+    "azure":    ["碧蓝航线", "碧蓝", "azure line"],
+    "asoul":    ["asoul", "a手", "A手", "as", "As"],
+    "arknights":["明日方舟", "方舟", "arknights", "鹰角"],
+    "granblue_fantasy":
+                ["碧蓝幻想", "Granblue Fantasy", "granblue fantasy", "幻想", "fantasy", "Fantasy"],
+    "punishing":["战双", "战双帕弥什"],
+    "pretty_derby":
+                ["赛马娘", "马", "马娘", "赛马"]
 }
 
 '''
     指定特定签底对应表，应指定对应图片路径（./resource/img后）；random仅为标识
     Key-Value: 签底别名-图片路径 
+    SpecificTypeList 在dev及v0.2.3+已移除，改为json数据保存及读取
 '''
-SpecificTypeList = {
-    "随机":     ["random"],
-    "凯露":     ["pcr/frame_1.jpg", "pcr/frame_2.jpg"],
-    "臭鼬":     ["pcr/frame_1.jpg", "pcr/frame_2.jpg"],
-    "可可萝":   ["pcr/frame_41.jpg", "pcr/frame_42.jpg"],
-    "可莉":     ["genshin/frame_24.jpg"],
-    "刻晴":     ["genshin/frame_23.jpg"],
-    "芭芭拉":   ["genshin/frame_2.jpg"],
-    "行秋":     ["genshin/frame_5.jpg"],
-    "fbk":     ["vtuber/frame_17.png"],
-    "白上吹雪": ["vtuber/frame_17.png"],
-    "阿夸":     ["vtuber/frame_18.png"],
-    "debu":     ["vtuber/frame_18.png"],
-    "tskk":     ["vtuber/frame_7.png"],
-    "桐生可可": ["vtuber/frame_7.png"],
-    "蛆皇":     ["vtuber/frame_7.png"],
-    "灵梦":     ["touhou/frame_1.jpg"],
-    "魔理沙":   ["touhou/frame_2.jpg"],
-    "妖梦":     ["touhou/frame_3.png"],
-    "芙兰朵露": ["touhou/frame_4.png"],
-    "二小姐":   ["touhou/frame_4.png"],
-    "大小姐":   ["touhou/frame_5.png"],
-    "幽幽子":   ["touhou/frame_6.jpg"],
-    "八云紫":   ["touhou/frame_7.jpg"],
-    "妹红":     ["touhou/frame_15.jpg"],
-    "咲夜":     ["touhou/frame_16.png"],
-}
 
 def copywriting() -> str:
     p = f"{FORTUNE_PATH}/fortune/copywriting.json"
@@ -78,17 +96,20 @@ def getTitle(structure):
             return i["name"]
     raise Exception("Configuration file error")
 
-def randomBasemap(theme: str, limit: Optional[str]) -> str:
-    if limit:
+def randomBasemap(theme: str, spec_path: Optional[str]) -> str:
+    if spec_path:
         _p = f"{FORTUNE_PATH}/img"
-        specific_path = random.choice(SpecificTypeList[limit])     
-        p = os.path.join(_p, specific_path)
-        
+        p = os.path.join(_p, spec_path)
         return p
     else:
         if theme == "random":
             __p = f"{FORTUNE_PATH}/img"
-            _p = os.path.join(__p, random.choice(os.listdir(__p)))
+            while True:
+                picked_theme = random.choice(os.listdir(__p))
+                if MainThemeEnable[picked_theme] == True:
+                    break
+
+            _p = os.path.join(__p, picked_theme)
             p = os.path.join(_p, random.choice(os.listdir(_p)))
         else:
             _p = os.path.join(f"{FORTUNE_PATH}/img", theme)
@@ -96,12 +117,12 @@ def randomBasemap(theme: str, limit: Optional[str]) -> str:
         
         return p
 
-def drawing(theme: str, limit: Optional[str], user_id: str, group_id: str) -> Path:
+def drawing(theme: str, spec_path: Optional[str], user_id: str, group_id: str) -> Path:
     fontPath = {
         "title": f"{FORTUNE_PATH}/font/Mamelon.otf",
         "text": f"{FORTUNE_PATH}/font/sakura.ttf",
     }
-    imgPath = randomBasemap(theme, limit)
+    imgPath = randomBasemap(theme, spec_path)
     img = Image.open(imgPath)
     # Draw title
     draw = ImageDraw.Draw(img)

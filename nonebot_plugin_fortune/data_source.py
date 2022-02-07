@@ -76,7 +76,7 @@ class FortuneManager:
                 self.user_data[group][user_id]["img_path"] = ""
                 self.user_data[group][user_id]["is_divined"] = False
         
-        self.save()
+        self.save_data()
 
         dirPath = Path(FORTUNE_PATH) / "out"
         for pic in dirPath.iterdir():

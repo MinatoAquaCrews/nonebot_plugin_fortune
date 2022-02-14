@@ -12,7 +12,10 @@ except ModuleNotFoundError:
 
 from .data_source import FORTUNE_PATH
 
-# 各主题抽签开关，仅在random抽签中生效
+'''
+    各主题抽签开关，仅在random抽签中生效
+    请确保不全是False
+'''
 ARKNIGHTS_FLAG = False if not nonebot.get_driver().config.arknights_flag else True
 ASOUL_FLAG = False if not nonebot.get_driver().config.asoul_flag else True
 AZURE_FLAG = False if not nonebot.get_driver().config.azure_flag else True
@@ -57,15 +60,20 @@ MainThemeList = {
     "touhou_old": 
                 ["旧东方", "old touhou", "touhou old", "旧版东方", "老东方", "老版东方", "经典东方"],
     "onmyoji":  ["阴阳师", "yys", "Yys", "痒痒鼠"],
-    "azure":    ["碧蓝航线", "碧蓝", "azure line"],
+    "azure":    ["碧蓝航线", "碧蓝", "azure"],
     "asoul":    ["asoul", "a手", "A手", "as", "As"],
     "arknights":["明日方舟", "方舟", "arknights", "鹰角"],
     "granblue_fantasy":
                 ["碧蓝幻想", "Granblue Fantasy", "granblue fantasy", "幻想", "fantasy", "Fantasy"],
     "punishing":["战双", "战双帕弥什"],
-    "pretty_derby":
-                ["赛马娘", "马", "马娘", "赛马"]
+    "pretty_derby":["赛马娘", "马", "马娘", "赛马"]
 }
+
+'''
+    指定特定签底对应表，应指定对应图片路径（./resource/img后）；random仅为标识
+    Key-Value: 签底别名-图片路径 
+    SpecificTypeList 在dev及v0.2.3+已移除，改为json数据保存及读取
+'''
 
 def copywriting() -> str:
     p = f"{FORTUNE_PATH}/fortune/copywriting.json"
@@ -73,7 +81,7 @@ def copywriting() -> str:
         return False
 
     with open(p, "r", encoding="utf-8") as f:
-        content = json.loads(f.read())
+        content = json.load(f)
 
     return random.choice(content["copywriting"])
 
@@ -83,7 +91,7 @@ def getTitle(structure):
         return False
 
     with open(p, "r", encoding="utf-8") as f:
-        content = json.loads(f.read())
+        content = json.load(f)
 
     for i in content["types_of"]:
         if i["good-luck"] == structure["good-luck"]:
@@ -91,6 +99,7 @@ def getTitle(structure):
     raise Exception("Configuration file error")
 
 def randomBasemap(theme: str, spec_path: Optional[str]) -> str:
+    try_time = 0
     if spec_path:
         _p = f"{FORTUNE_PATH}/img"
         p = os.path.join(_p, spec_path)
@@ -101,6 +110,11 @@ def randomBasemap(theme: str, spec_path: Optional[str]) -> str:
             while True:
                 picked_theme = random.choice(os.listdir(__p))
                 if MainThemeEnable[picked_theme] == True:
+                    break
+                else:
+                    try_time = try_time+1
+
+                if try_time == len(MainThemeEnable):
                     break
 
             _p = os.path.join(__p, picked_theme)

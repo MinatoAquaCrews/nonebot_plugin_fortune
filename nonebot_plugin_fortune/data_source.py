@@ -1,5 +1,5 @@
 from nonebot.adapters.onebot.v11 import GroupMessageEvent
-from typing import Optional, Union, Dict, Tuple
+from typing import Optional, Union, Dict
 from pathlib import Path
 import nonebot
 import random
@@ -28,14 +28,24 @@ class FortuneManager:
 
         self.data_file = data_file
         self.setting_file = setting_file
+        if not data_file.exists():
+            with open(data_file, "w", encoding="utf-8") as f:
+                f.write(json.dumps(dict()))
+                f.close()
+
         if data_file.exists():
             with open(data_file, "r", encoding="utf-8") as f:
                 self.user_data = json.load(f)
         
+        if not setting_file.exists():
+            with open(setting_file, "w", encoding="utf-8") as f:
+                f.write(json.dumps(dict()))
+                f.close()
+        
         if setting_file.exists():
             with open(setting_file, "r", encoding="utf-8") as f:
                 self.setting = json.load(f)
-
+    
     def check(self, event: GroupMessageEvent) -> bool:
         '''
             检测是否重复抽签
@@ -48,7 +58,7 @@ class FortuneManager:
         '''
         return self.setting["specific_rule"].get(limit)
 
-    def divine(self, limit: Optional[str], event: GroupMessageEvent) -> Tuple[str, bool]:
+    def divine(self, limit: Optional[str], event: GroupMessageEvent) -> tuple[str, bool]:
         '''
             今日运势抽签
         '''
@@ -114,16 +124,16 @@ class FortuneManager:
             }
     
     def get_user_data(self, event: GroupMessageEvent) -> Dict[str, Union[str, bool]]:
-        """
+        '''
             获取用户数据
-        """
+        '''
         self._init_user_data(event)
         return self.user_data[str(event.group_id)][str(event.user_id)]
 
     def _end_data_handle(self, event: GroupMessageEvent) -> None:
-        """
+        '''
             占卜结束数据保存
-        """
+        '''
         user_id = str(event.user_id)
         group_id = str(event.group_id)
         self.user_data[group_id][user_id]["is_divined"] = True

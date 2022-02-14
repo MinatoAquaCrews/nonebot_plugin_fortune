@@ -7,6 +7,16 @@ from .data_source import fortune_manager
 from .utils import MainThemeList
 import re
 
+__morning_vsrsion__ = "v0.3.4a1"
+plugin_notes = f'''
+今日运势 {__morning_vsrsion__}
+[今日运势/抽签/运势] 抽签
+[指定xx签] 指定特殊角色签底，需要自己尝试哦~
+[设置xx签] 设置群抽签主题，可选PCR/原神/vtb/东方/旧东方/阴阳师/碧蓝航线/asoul/明日方舟/碧蓝幻想/战双/赛马娘
+[重置抽签] 重置群抽签主题
+[抽签设置] 查看群抽签主题'''.strip()
+
+plugin_help = on_command("今日运势帮助", permission=GROUP, priority=11, block=True)
 divine = on_command("今日运势", aliases={"抽签", "运势"}, permission=GROUP, priority=8, block=True)
 limit_setting = on_regex(r"指定(.*?)签", permission=GROUP, priority=8, block=True)
 theme_setting = on_regex(r"设置(.*?)签", permission=SUPERUSER | GROUP_ADMIN | GROUP_OWNER, priority=8, block=True)
@@ -19,6 +29,10 @@ show = on_command("抽签设置", permission=GROUP, priority=8, block=True)
 refresh = on_command("刷新抽签", permission=SUPERUSER, priority=8, block=True)
 
 scheduler = require("nonebot_plugin_apscheduler").scheduler
+
+@plugin_help.handle()
+async def show_help(bot: Bot, event: GroupMessageEvent):
+    await plugin_help.finish(plugin_notes)
 
 @show.handle()
 async def _(bot: Bot, event: GroupMessageEvent):

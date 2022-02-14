@@ -10,7 +10,7 @@ _🙏 今日运势 🙏_
 </div>
 <p align="center">
   
-  <a href="https://github.com/KafCoppelia/nonebot_plugin_fortune/blob/main/LICENSEE">
+  <a href="https://github.com/KafCoppelia/nonebot_plugin_fortune/blob/main/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-informational">
   </a>
   
@@ -19,7 +19,7 @@ _🙏 今日运势 🙏_
   </a>
   
   <a href="">
-    <img src="https://img.shields.io/badge/release-v0.3.3-orange">
+    <img src="https://img.shields.io/badge/release-v0.3.4a1-orange">
   </a>
   
 </p>
@@ -28,17 +28,17 @@ _🙏 今日运势 🙏_
 
 ## 版本
 
-v0.3.3
+v0.3.4a1 **v0.3.3修复版**
 
 ⚠ 适配nonebot2-2.0.0beta.1；适配alpha.16参见[alpha.16分支](https://github.com/KafCoppelia/nonebot_plugin_fortune/tree/alpha.16)
 
-[更新日志](https://github.com/KafCoppelia/nonebot_plugin_fortune/releases/tag/v0.3.3)
+[更新日志](https://github.com/KafCoppelia/nonebot_plugin_fortune/releases/tag/v0.3.4a1)
 
 ## 安装
 
 1. 安装方式注意：
 
-    - 通过`pip`或`nb`：版本指定`^0.3.3`，pypi无法发行过大安装包，由此安装的插件不包含所有`resource`下所有主题抽签资源，需单独下载，建议`zip`包下载后单独提取`resource`资源，后更改`FORTUNE_PATH`配置即可；
+    - 通过`pip`或`nb`：版本指定`^0.3.4a1`，pypi无法发行过大安装包，由此安装的插件不包含所有`resource`下所有主题抽签资源，需单独下载，建议`zip`包下载后单独提取`resource`资源，后更改`FORTUNE_PATH`配置即可；
     
     - 通过`zip`或`git clone`安装：包含`resource`下所有主题抽签资源；
 
@@ -48,7 +48,7 @@ v0.3.3
 FORTUNE_PATH="your_path_to_resource"   # 默认位于os.path.join(os.path.dirname(__file__), "resource")，具体查看data_source.py
 ```
 
-3. **新增** 更多抽签主题，在`env`下设置`xxx_FLAG`以启用或关闭抽签随机主题，例如：
+3. **新增** 更多抽签主题，在`env`下设置`xxx_FLAG`以启用或关闭抽签随机主题，请确保不全为`false`，例如：
 
 ```python
 ARKNIGHTS_FLAG = true         # 明日方舟
@@ -90,7 +90,9 @@ PRETTY_DERBY_FLAG = true      # 赛马娘
 
 指定凯露签，由于存在两张凯露的签底，配置凯露签的**路径列表**即可，其余类似，**请确保图片格式输入正确**；目前仅能通过`json`配置规则；
 
-5. 占卜一下你的今日运势！🎉
+5. **新增** `fortune_setting.json`已预置明日方舟、Asoul、原神、东方的指定抽签规则；
+
+6. 占卜一下你的今日运势！🎉
 
 ## 功能
 
@@ -116,7 +118,9 @@ PRETTY_DERBY_FLAG = true      # 赛马娘
 
 4. 抽签设置：查看当前群抽签主题的配置；
 
-5. **新增** [超管] 刷新抽签：即刻刷新抽签，防止过0点未刷新的意外。
+5. **新增** [超管] 刷新抽签：即刻刷新抽签，防止过0点未刷新的意外；
+
+6. **新增** 今日运势帮助：显示插件帮助文案；
 
 ## 效果
 

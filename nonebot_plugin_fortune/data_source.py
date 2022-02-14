@@ -1,5 +1,5 @@
 from nonebot.adapters.onebot.v11 import GroupMessageEvent
-from nonebot.typing import Optional, Union, Dict, Tuple
+from typing import Optional, Union, Dict, Tuple
 from pathlib import Path
 import nonebot
 import random

@@ -7,7 +7,7 @@ from .data_source import fortune_manager
 from .utils import MainThemeList
 import re
 
-__morning_vsrsion__ = "v0.3.4a2"
+__morning_vsrsion__ = "v0.3.4a3"
 plugin_notes = f'''
 今日运势 {__morning_vsrsion__}
 [今日运势/抽签/运势] 抽签

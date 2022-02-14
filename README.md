@@ -19,7 +19,7 @@ _🙏 今日运势 🙏_
   </a>
   
   <a href="">
-    <img src="https://img.shields.io/badge/release-v0.3.4a1-orange">
+    <img src="https://img.shields.io/badge/release-v0.3.4a2-orange">
   </a>
   
 </p>
@@ -28,17 +28,17 @@ _🙏 今日运势 🙏_
 
 ## 版本
 
-v0.3.4a1 **v0.3.3修复版**
+v0.3.4a2 **v0.3.3修复版**
 
 ⚠ 适配nonebot2-2.0.0beta.1；适配alpha.16参见[alpha.16分支](https://github.com/KafCoppelia/nonebot_plugin_fortune/tree/alpha.16)
 
-[更新日志](https://github.com/KafCoppelia/nonebot_plugin_fortune/releases/tag/v0.3.4a1)
+[更新日志](https://github.com/KafCoppelia/nonebot_plugin_fortune/releases/tag/v0.3.4a2)
 
 ## 安装
 
 1. 安装方式注意：
 
-    - 通过`pip`或`nb`：版本指定`^0.3.4a1`，pypi无法发行过大安装包，由此安装的插件不包含所有`resource`下所有主题抽签资源，需单独下载，建议`zip`包下载后单独提取`resource`资源，后更改`FORTUNE_PATH`配置即可；
+    - 通过`pip`或`nb`：版本指定`^0.3.4a2`，pypi无法发行过大安装包，由此安装的插件不包含所有`resource`下所有主题抽签资源，需单独下载，建议`zip`包下载后单独提取`resource`资源，后更改`FORTUNE_PATH`配置即可；
     
     - 通过`zip`或`git clone`安装：包含`resource`下所有主题抽签资源；
 
@@ -90,7 +90,7 @@ PRETTY_DERBY_FLAG = true      # 赛马娘
 
 指定凯露签，由于存在两张凯露的签底，配置凯露签的**路径列表**即可，其余类似，**请确保图片格式输入正确**；目前仅能通过`json`配置规则；
 
-5. **新增** `fortune_setting.json`已预置明日方舟、Asoul、原神、东方的指定抽签规则；
+5. **新增** `fortune_setting.json`已预置明日方舟、Asoul、原神、东方、vtb的指定抽签规则；
 
 6. 占卜一下你的今日运势！🎉
 

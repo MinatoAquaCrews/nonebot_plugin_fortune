@@ -1,4 +1,270 @@
 {
-    "group_rule": {},
-    "specific_rule": {}
+    "group_rule": {
+    },
+    "specific_rule": {
+        "艾雅法拉": [
+            "arknights\/艾雅法拉.jpg"
+        ],
+        "小羊": [
+            "arknights\/艾雅法拉.jpg"
+        ],
+        "安洁莉娜": [
+            "arknights\/安洁莉娜.jpg"
+        ],
+        "杰哥": [
+            "arknights\/安洁莉娜.jpg"
+        ],
+        "陈": [
+            "arknights\/陈.jpg"
+        ],
+        "肠粉龙": [
+            "arknights\/陈.jpg"
+        ],
+        "陈晖洁": [
+            "arknights\/陈.jpg"
+        ],
+        "初雪": [
+            "arknights\/初雪.jpg"
+        ],
+        "风笛": [
+            "arknights\/风笛.jpg"
+        ],
+        "傀影": [
+            "arknights\/傀影.jpg"
+        ],
+        "赫拉格": [
+            "arknights\/赫拉格.jpg"
+        ],
+        "老爷子": [
+            "arknights\/赫拉格.jpg"
+        ],
+        "黑": [
+            "arknights\/黑.jpg"
+        ],
+        "煌": [
+            "arknights\/煌.jpg"
+        ],
+        "棘刺": [
+            "arknights\/棘刺.jpg"
+        ],
+        "刻俄柏": [
+            "arknights\/刻俄柏.jpg"
+        ],
+        "小刻": [
+            "arknights\/刻俄柏.jpg"
+        ],
+        "空弦": [
+            "arknights\/空弦.jpg"
+        ],
+        "铃兰": [
+            "arknights\/铃兰.jpg"
+        ],
+        "麦哲伦": [
+            "arknights\/麦哲伦.jpg"
+        ],
+        "小企鹅": [
+            "arknights\/麦哲伦.jpg"
+        ],
+        "企鹅": [
+            "arknights\/麦哲伦.jpg"
+        ],
+        "莫斯提马": [
+            "arknights\/莫斯提马.jpg"
+        ],
+        "蓝天使": [
+            "arknights\/莫斯提马.jpg"
+        ],
+        "能天使": [
+            "arknights\/能天使.jpg"
+        ],
+        "泥岩": [
+            "arknights\/泥岩.jpg"
+        ],
+        "年": [
+            "arknights\/年.jpg"
+        ],
+        "塞雷娅": [
+            "arknights\/塞雷娅.jpg"
+        ],
+        "森蚺": [
+            "arknights\/森蚺.jpg"
+        ],
+        "闪灵": [
+            "arknights\/闪灵.jpg"
+        ],
+        "史尔特尔": [
+            "arknights\/史尔特尔.jpg"
+        ],
+        "斯卡蒂": [
+            "arknights\/斯卡蒂.jpg"
+        ],
+        "蒂蒂": [
+            "arknights\/斯卡蒂.jpg"
+        ],
+        "推进之王": [
+            "arknights\/推进之王.jpg"
+        ],
+        "推王": [
+            "arknights\/推进之王.jpg"
+        ],
+        "王小姐": [
+            "arknights\/推进之王.jpg"
+        ],
+        "温蒂": [
+            "arknights\/温蒂.jpg"
+        ],
+        "霞光": [
+            "arknights\/霞光.jpg"
+        ],
+        "星熊": [
+            "arknights\/星熊.jpg"
+        ],
+        "夜莺": [
+            "arknights\/夜莺.jpg"
+        ],
+        "伊芙利特": [
+            "arknights\/伊芙利特.jpg"
+        ],
+        "小火龙": [
+            "arknights\/伊芙利特.jpg"
+        ],
+        "银灰": [
+            "arknights\/银灰.jpg"
+        ],
+        "银老板": [
+            "arknights\/银灰.jpg"
+        ],
+        "早露": [
+            "arknights\/早露.jpg"
+        ],
+        "W": [
+            "arknights\/W.jpg"
+        ],
+        "向晚": [
+            "asoul\/Ava-Q.jpg",
+            "asoul\/Ava.jpg"
+        ],
+        "贝拉": [
+            "asoul\/Bella-Q.jpg",
+            "asoul\/Bella.jpg"
+        ],
+        "珈乐": [
+            "asoul\/Carol-Q.jpg",
+            "asoul\/Carol.jpg"
+        ],
+        "嘉然": [
+            "asoul\/Diana-Q.jpg",
+            "asoul\/Diana.jpg"
+        ],
+        "乃琳": [
+            "asoul\/Eileen-Q.jpg",
+            "asoul\/Eileen.jpg"
+        ],
+        "凯露": [
+            "pcr\/frame_1.jpg",
+            "pcr\/frame_2.jpg"
+        ],
+        "可可萝": [
+            "pcr\/frame_41.jpg",
+            "pcr\/frame_42.jpg"
+        ],
+        "可莉": [
+            "genshin\/frame_24.jpg"
+        ],
+        "刻晴": [
+            "genshin\/frame_23.jpg"
+        ],
+        "行秋": [
+            "genshin\/frame_5.jpg"
+        ],
+        "白上吹雪": [
+            "vtuber\/frame_17.jpg"
+        ],
+        "fbk": [
+            "vtuber\/frame_17.jpg"
+        ],
+        "阿夸": [
+            "vtuber\/frame_18.jpg"
+        ],
+        "桐生可可": [
+            "vtuber\/frame_7.jpg"
+        ],
+        "tskk": [
+            "vtuber\/frame_7.jpg"
+        ],
+        "灵梦": [
+            "touhou\/frame_1.jpg"
+        ],
+        "魔理沙": [
+            "touhou\/frame_2.jpg"
+        ],
+        "妖梦": [
+            "touhou\/frame_3.jpg"
+        ],
+        "芙兰朵露": [
+            "touhou\/frame_4.jpg"
+        ],
+        "二小姐": [
+            "touhou\/frame_4.jpg"
+        ],
+        "大小姐": [
+            "touhou\/frame_5.jpg"
+        ],
+        "西行寺幽幽子": [
+            "touhou\/frame_6.jpg"
+        ],
+        "幽幽子": [
+            "touhou\/frame_6.jpg"
+        ],
+        "八云紫": [
+            "touhou\/frame_7.jpg"
+        ],
+        "紫妈": [
+            "touhou\/frame_7.jpg"
+        ],
+        "铃仙": [
+            "touhou\/frame_8.jpg",
+            "touhou\/frame_14.jpg"
+        ],
+        "兔子": [
+            "touhou\/frame_8.jpg",
+            "touhou\/frame_14.jpg"
+        ],
+        "琪露诺": [
+            "touhou\/frame_9.jpg"
+        ],
+        "⑨": [
+            "touhou\/frame_9.jpg"
+        ],
+        "大妖精": [
+            "touhou\/frame_10.jpg"
+        ],
+        "大酱": [
+            "touhou\/frame_10.jpg"
+        ],
+        "桑妮": [
+            "touhou\/frame_11.jpg"
+        ],
+        "桑尼": [
+            "touhou\/frame_11.jpg"
+        ],
+        "莉莉怀特": [
+            "touhou\/frame_12.jpg"
+        ],
+        "莉莉白": [
+            "touhou\/frame_12.jpg"
+        ],
+        "露娜": [
+            "touhou\/frame_13.jpg"
+        ],
+        "红美玲": [
+            "touhou\/frame_15.jpg"
+        ],
+        "十六夜咲夜": [
+            "touhou\/frame_16.jpg"
+        ],
+        "咲夜": [
+            "touhou\/frame_16.jpg"
+        ]
+    }
 }

@@ -177,7 +177,6 @@ class FortuneManager:
             获取当前群抽签主题，若没有数据则置随机
         '''
         group_id = str(event.group_id)
-
         if group_id not in self.setting["group_rule"].keys():
             self.setting["group_rule"][group_id] = "random"
             self.save_setting()

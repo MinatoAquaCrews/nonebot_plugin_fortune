@@ -13,7 +13,7 @@ except ModuleNotFoundError:
 _FORTUNE_PATH = nonebot.get_driver().config.fortune_path
 FORTUNE_PATH = os.path.join(os.path.dirname(__file__), "resource") if not _FORTUNE_PATH else _FORTUNE_PATH
 
-from .utils import drawing
+from .utils import drawing, MainThemeList, MainThemeEnable
 
 class FortuneManager:
     def __init__(self, file: Optional[Path]):
@@ -52,29 +52,38 @@ class FortuneManager:
         '''
         return self.user_data[str(event.group_id)][str(event.user_id)]["is_divined"]
     
-    def limit_setting_check(self, limit: str) -> bool:
+    def limit_setting_check(self, limit: str) -> Union[bool, str]:
         '''
             检测是否有该特定规则
+            检查指定规则的签底所对应主题是否开启
+            或路径是否存在
         '''
-        return self.setting["specific_rule"].get(limit)
+        if not self.setting["specific_rule"].get(limit):
+            return False
+        
+        spec_path = random.choice(self.setting["specific_rule"][limit])
+        for theme in MainThemeList.keys():
+            if theme in spec_path:
+                return spec_path if MainThemeEnable[theme] else False
+        
+        return False
 
-    def divine(self, limit: Optional[str], event: GroupMessageEvent) -> Tuple[str, bool]:
+    def divine(self, spec_path: Optional[str], event: GroupMessageEvent) -> Tuple[str, bool]:
         '''
             今日运势抽签
+            主题在群设置主题divination_setting()已确认合法
         '''
         self._init_user_data(event)
-        theme = self.setting["group_rule"][str(event.group_id)]
-        if limit:
-            spec_path = random.choice(self.setting["specific_rule"][limit])
-        else:
-            spec_path = None
+        group_id = str(event.group_id)
+        user_id = str(event.user_id)
 
+        theme = self.setting["group_rule"][group_id]
         if not self.check(event):
-            image_file = drawing(theme, spec_path, str(event.user_id), str(event.group_id))
+            image_file = drawing(theme, spec_path, user_id, group_id)
             self._end_data_handle(event)
             return image_file, True
         else:
-            image_file = Path(FORTUNE_PATH) / "out" / f"{str(event.user_id)}_{str(event.group_id)}.png"
+            image_file = Path(FORTUNE_PATH) / "out" / f"{user_id}_{group_id}.png"
             return image_file, False
 
     def reset_fortune(self) -> None:
@@ -122,6 +131,17 @@ class FortuneManager:
                 "nickname": nickname,
                 "is_divined": False
             }
+
+    def get_main_theme_list(self) -> str:
+        '''
+            获取可设置的抽签主题
+        '''
+        msg = "可选抽签主题"
+        for theme in MainThemeList.keys():
+            if theme != "random" and MainThemeEnable[theme] is True:
+                msg += f"\n{MainThemeList[theme][0]}"
+        
+        return msg
     
     def get_user_data(self, event: GroupMessageEvent) -> Dict[str, Union[str, bool]]:
         '''
@@ -138,18 +158,26 @@ class FortuneManager:
         group_id = str(event.group_id)
         self.user_data[group_id][user_id]["is_divined"] = True
         self.save_data()
-        self.save_setting()
 
-    def divination_setting(self, theme: str, event: GroupMessageEvent) -> None:
+    def divination_setting(self, theme: str, event: GroupMessageEvent) -> bool:
         '''
             分群管理抽签设置
         '''
         group_id = str(event.group_id)
-        self.setting["group_rule"][group_id] = theme
-        self.save_setting()
+        
+        if theme == "random" or MainThemeEnable[theme] is True:
+            self.setting["group_rule"][group_id] = theme
+            self.save_setting()
+            return True        
+        else:
+            return False
 
     def get_setting(self, event: GroupMessageEvent) -> str:
+        '''
+            获取当前群抽签主题，若没有数据则置随机
+        '''
         group_id = str(event.group_id)
+
         if group_id not in self.setting["group_rule"].keys():
             self.setting["group_rule"][group_id] = "random"
             self.save_setting()

@@ -28,6 +28,12 @@ VTUBER_FLAG = False if not nonebot.get_driver().config.vtuber_flag else True
 GRANBLUE_FANTASY_FLAG = False if not nonebot.get_driver().config.granblue_fantasy_flag else True
 PUNISHING_FLAG = False if not nonebot.get_driver().config.punishing_flag else True
 PRETTY_DERBY_FLAG = False if not nonebot.get_driver().config.pretty_derby_flag else True
+DC4_FLAG = False if not nonebot.get_driver().config.dc4_flag else True
+EINSTEIN_FLAG = False if not nonebot.get_driver().config.einstein_flag else True
+SWEET_ILLUSION_FLAG = False if not nonebot.get_driver().config.sweet_illusion_flag else True
+LIQINGGE_FLAG = False if not nonebot.get_driver().config.liqingge_flag else True
+HOSHIZORA_FLAG = False if not nonebot.get_driver().config.Hoshizora_flag else True
+SAKURA_FLAG = False if not nonebot.get_driver().config.sakura_flag else True
 
 '''
     抽签主题开关，当随机抽签时判断某主题是否开启
@@ -44,36 +50,44 @@ MainThemeEnable = {
     "arknights":        ARKNIGHTS_FLAG,
     "granblue_fantasy": GRANBLUE_FANTASY_FLAG,
     "punishing":        PUNISHING_FLAG,
-    "pretty_derby":     PRETTY_DERBY_FLAG
+    "pretty_derby":     PRETTY_DERBY_FLAG,
+    "dc4":              DC4_FLAG,
+    "einstein":         EINSTEIN_FLAG,
+    "sweet_illusion":   SWEET_ILLUSION_FLAG,
+    "liqingge":         LIQINGGE_FLAG,
+    "hoshizora":        HOSHIZORA_FLAG,
+    "sakura":           SAKURA_FLAG
 }
 
 '''
-    抽签主题对应表，第一键值为“抽签设置”展示的主题名称
+    抽签主题对应表，第一键值为“抽签设置”或“主题列表”展示的主题名称
     Key-Value: 主题资源文件夹名-设置主题别名
 '''
 MainThemeList = {
     "random":   ["随机"],
     "pcr":      ["PCR", "公主链接", "公主连接", "Pcr", "pcr"],
-    "genshin":  ["Genshin Impact", "原神", "genshin", "Genshin"],
-    "vtuber":   ["Vtuber", "VTB", "Vtb", "vtb", "管人"],
-    "touhou":   ["东方", "touhou", "Touhou"],
+    "genshin":  ["原神", "Genshin Impact", "genshin", "Genshin"],
+    "vtuber":   ["Vtuber", "VTB", "Vtb", "vtb", "管人", "holo", "猴楼"],
+    "touhou":   ["东方", "touhou", "Touhou", "车万"],
     "touhou_old": 
-                ["旧东方", "old touhou", "touhou old", "旧版东方", "老东方", "老版东方", "经典东方"],
+                ["旧东方", "旧版东方", "老东方", "老版东方", "经典东方"],
     "onmyoji":  ["阴阳师", "yys", "Yys", "痒痒鼠"],
-    "azure":    ["碧蓝航线", "碧蓝", "azure"],
+    "azure":    ["碧蓝航线", "碧蓝", "azure", "Azure"],
     "asoul":    ["asoul", "a手", "A手", "as", "As"],
-    "arknights":["明日方舟", "方舟", "arknights", "鹰角"],
+    "arknights":["明日方舟", "方舟", "arknights", "鹰角", "Arknights", "舟游"],
     "granblue_fantasy":
                 ["碧蓝幻想", "Granblue Fantasy", "granblue fantasy", "幻想", "fantasy", "Fantasy"],
     "punishing":["战双", "战双帕弥什"],
-    "pretty_derby":["赛马娘", "马", "马娘", "赛马"]
+    "pretty_derby":
+                ["赛马娘", "马", "马娘", "赛马"],
+    "dc4":      ["dc4", "DC4", "Dc4", "初音岛", "初音岛4"],
+    "einstein": ["爱因斯坦携爱敬上", "爱因斯坦", "einstein", "Einstein"],
+    "sweet_illusion":
+                ["灵感满溢的甜蜜创想", "甜蜜一家人", "富婆妹"],
+    "liqingge": ["李清歌", "清歌"],
+    "hoshizora":["星空列车与白的旅行", "星空列车"],
+    "sakura":   ["樱色之云绯色之恋", "樱云之恋", "樱云绯恋", "樱云"]
 }
-
-'''
-    指定特定签底对应表，应指定对应图片路径（./resource/img后）；random仅为标识
-    Key-Value: 签底别名-图片路径 
-    SpecificTypeList 在dev及v0.2.3+已移除，改为json数据保存及读取
-'''
 
 def copywriting() -> str:
     p = f"{FORTUNE_PATH}/fortune/copywriting.json"

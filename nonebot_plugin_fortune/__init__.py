@@ -7,20 +7,22 @@ from .data_source import fortune_manager
 from .utils import MainThemeList
 import re
 
-__morning_vsrsion__ = "v0.3.4a3"
+__fortune_vsrsion__ = "v0.4.0"
 plugin_notes = f'''
-今日运势 {__morning_vsrsion__}
+今日运势 {__fortune_vsrsion__}
 [今日运势/抽签/运势] 抽签
 [指定xx签] 指定特殊角色签底，需要自己尝试哦~
-[设置xx签] 设置群抽签主题，可选PCR/原神/vtb/东方/旧东方/阴阳师/碧蓝航线/asoul/明日方舟/碧蓝幻想/战双/赛马娘
+[设置xx签] 设置群抽签主题
 [重置抽签] 重置群抽签主题
+[主题列表] 查看可选的抽签主题
 [抽签设置] 查看群抽签主题'''.strip()
 
-plugin_help = on_command("今日运势帮助", permission=GROUP, priority=11, block=True)
+plugin_help = on_command("今日运势帮助", permission=GROUP, priority=8, block=True)
 divine = on_command("今日运势", aliases={"抽签", "运势"}, permission=GROUP, priority=8, block=True)
 limit_setting = on_regex(r"指定(.*?)签", permission=GROUP, priority=8, block=True)
 theme_setting = on_regex(r"设置(.*?)签", permission=SUPERUSER | GROUP_ADMIN | GROUP_OWNER, priority=8, block=True)
 reset = on_command("重置抽签", permission=SUPERUSER | GROUP_ADMIN | GROUP_OWNER, priority=8, block=True)
+theme_list = on_command("主题列表", permission=GROUP, priority=8, block=True)
 show = on_command("抽签设置", permission=GROUP, priority=8, block=True)
 
 '''
@@ -38,11 +40,16 @@ async def show_help(bot: Bot, event: GroupMessageEvent):
 async def _(bot: Bot, event: GroupMessageEvent):
     theme = fortune_manager.get_setting(event)
     show_theme = MainThemeList[theme][0]
-    await show.finish(message=f"当前群抽签主题：{show_theme}")
+    await show.finish(f"当前群抽签主题：{show_theme}")
+
+@theme_list.handle()
+async def show_list(bot: Bot, event: GroupMessageEvent):
+    msg = fortune_manager.get_main_theme_list()
+    await theme_list.finish(msg)
 
 @divine.handle()
 async def _(bot: Bot, event: GroupMessageEvent):
-    image_file, status = fortune_manager.divine(limit=None, event=event)
+    image_file, status = fortune_manager.divine(spec_path=None, event=event)
     if not status:
         msg = MessageSegment.text("你今天抽过签了，再给你看一次哦🤗\n") + MessageSegment.image(image_file)
     else:
@@ -57,19 +64,21 @@ async def _(bot: Bot, event: GroupMessageEvent):
     setting_theme = is_theme.group(0)[2:-1] if is_theme is not None else None
 
     if setting_theme is None:
-        await theme_setting.finish(message="指定抽签主题参数错误~")
+        await theme_setting.finish("指定抽签主题参数错误~")
     else:
         for theme in MainThemeList.keys():
             if setting_theme in MainThemeList[theme]:
-                fortune_manager.divination_setting(theme, event) 
-                await theme_setting.finish(message="已设置当前群抽签主题~")
+                if not fortune_manager.divination_setting(theme, event):
+                    await theme_setting.finish("该抽签主题未启用~")
+                else:
+                    await theme_setting.finish("已设置当前群抽签主题~")
     
-        await theme_setting.finish(message="还没有这种抽签主题哦~")
+        await theme_setting.finish("还没有这种抽签主题哦~")
 
 @reset.handle()
 async def _(bot: Bot, event: GroupMessageEvent):
     fortune_manager.divination_setting("random", event)
-    await reset.finish(message="已重置当前群抽签主题为随机~")
+    await reset.finish("已重置当前群抽签主题为随机~")
 
 @limit_setting.handle()
 async def _(bot: Bot, event: GroupMessageEvent):
@@ -79,13 +88,14 @@ async def _(bot: Bot, event: GroupMessageEvent):
     if limit is None:
         await limit_setting.finish("指定签底参数错误~")
 
-    if not fortune_manager.limit_setting_check(limit):
-        await limit_setting.finish("还不可以指定这种签哦~")
+    if limit == "随机":
+        image_file, status = fortune_manager.divine(spec_path=None, event=event)
     else:
-        if limit == "随机":
-            image_file, status = fortune_manager.divine(limit=None, event=event)
+        spec_path = fortune_manager.limit_setting_check(limit)
+        if not spec_path:
+            await limit_setting.finish("还不可以指定这种签哦，请确认该签底对应主题开启或图片路径存在~")
         else:
-            image_file, status = fortune_manager.divine(limit=limit, event=event)
+            image_file, status = fortune_manager.divine(spec_path=limit, event=event)
         
     if not status:
         msg = MessageSegment.text("你今天抽过签了，再给你看一次哦🤗\n") + MessageSegment.image(image_file)
@@ -98,8 +108,7 @@ async def _(bot: Bot, event: GroupMessageEvent):
 @refresh.handle()
 async def _(bot: Bot, event: GroupMessageEvent):
     fortune_manager.reset_fortune()
-    logger.info("今日运势已刷新！")
-    await limit_setting.finish(message=f"今日运势已刷新!", at_sender=False)
+    await limit_setting.finish("今日运势已刷新!")
 
 # 重置每日占卜
 @scheduler.scheduled_job(

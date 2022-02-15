@@ -19,7 +19,7 @@ _🙏 今日运势 🙏_
   </a>
   
   <a href="">
-    <img src="https://img.shields.io/badge/release-v0.4.0-orange">
+    <img src="https://img.shields.io/badge/release-v0.4.1-orange">
   </a>
   
 </p>
@@ -28,11 +28,11 @@ _🙏 今日运势 🙏_
 
 ## 版本
 
-v0.4.0 **此版本resource与0.3.x不完全兼容**
+v0.4.1 **此版本resource与0.3.x不完全兼容**
 
 ⚠ 适配nonebot2-2.0.0beta.1；适配alpha.16参见[alpha.16分支](https://github.com/KafCoppelia/nonebot_plugin_fortune/tree/alpha.16)
 
-[更新日志](https://github.com/KafCoppelia/nonebot_plugin_fortune/releases/tag/v0.4.0)
+[更新日志](https://github.com/KafCoppelia/nonebot_plugin_fortune/releases/tag/v0.4.1)
 
 ## 安装
 

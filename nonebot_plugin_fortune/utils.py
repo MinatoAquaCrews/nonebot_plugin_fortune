@@ -32,7 +32,7 @@ DC4_FLAG = False if not nonebot.get_driver().config.dc4_flag else True
 EINSTEIN_FLAG = False if not nonebot.get_driver().config.einstein_flag else True
 SWEET_ILLUSION_FLAG = False if not nonebot.get_driver().config.sweet_illusion_flag else True
 LIQINGGE_FLAG = False if not nonebot.get_driver().config.liqingge_flag else True
-HOSHIZORA_FLAG = False if not nonebot.get_driver().config.Hoshizora_flag else True
+HOSHIZORA_FLAG = False if not nonebot.get_driver().config.hoshizora_flag else True
 SAKURA_FLAG = False if not nonebot.get_driver().config.sakura_flag else True
 
 '''

@@ -4,14 +4,17 @@ from pathlib import Path
 import nonebot
 import random
 import os
-
+from .download import *
 try:
     import ujson as json
 except ModuleNotFoundError:
     import json
 
-_FORTUNE_PATH = nonebot.get_driver().config.fortune_path
-FORTUNE_PATH = os.path.join(os.path.dirname(__file__), "resource") if not _FORTUNE_PATH else _FORTUNE_PATH
+global_config = nonebot.get_driver().config
+if not hasattr(global_config, "fortune_path"):
+    FORTUNE_PATH = os.path.join(os.path.dirname(__file__), "resource")
+else:
+    FORTUNE_PATH = nonebot.get_driver().config.fortune_path
 
 from .utils import drawing, MainThemeList, MainThemeEnable
 
@@ -45,6 +48,9 @@ class FortuneManager:
         if setting_file.exists():
             with open(setting_file, "r", encoding="utf-8") as f:
                 self.setting = json.load(f)
+    
+        get_resource(Path(FORTUNE_PATH), "fortune")
+        get_resource(Path(FORTUNE_PATH), "font")
     
     def check(self, event: GroupMessageEvent) -> bool:
         '''

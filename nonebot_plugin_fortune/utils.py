@@ -1,4 +1,3 @@
-import nonebot
 import os
 import random
 from PIL import Image, ImageDraw, ImageFont
@@ -10,62 +9,30 @@ try:
 except ModuleNotFoundError:
     import json
 
-from .data_source import FORTUNE_PATH
-
-# 各主题抽签开关，仅在random抽签中生效
-ARKNIGHTS_FLAG = False if not nonebot.get_driver().config.arknights_flag else True
-ASOUL_FLAG = False if not nonebot.get_driver().config.asoul_flag else True
-AZURE_FLAG = False if not nonebot.get_driver().config.azure_flag else True
-GENSHIN_FLAG = False if not nonebot.get_driver().config.genshin_flag else True
-ONMYOJI_FLAG = False if not nonebot.get_driver().config.onmyoji_flag else True
-PCR_FLAG = False if not nonebot.get_driver().config.pcr_flag else True
-TOUHOU_FLAG = False if not nonebot.get_driver().config.touhou_flag else True
-TOUHOU_OLD_FLAG = False if not nonebot.get_driver().config.touhou_old_flag else True
-VTUBER_FLAG = False if not nonebot.get_driver().config.vtuber_flag else True
-GRANBLUE_FANTASY_FLAG = False if not nonebot.get_driver().config.granblue_fantasy_flag else True
-PUNISHING_FLAG = False if not nonebot.get_driver().config.punishing_flag else True
-PRETTY_DERBY_FLAG = False if not nonebot.get_driver().config.pretty_derby_flag else True
-
-'''
-    抽签主题开关，当随机抽签时判断某主题是否开启
-'''
-MainThemeEnable = {
-    "pcr":              PCR_FLAG,
-    "genshin":          GENSHIN_FLAG,
-    "vtuber":           VTUBER_FLAG,
-    "touhou":           TOUHOU_FLAG,
-    "touhou_old":       TOUHOU_OLD_FLAG,
-    "onmyoji":          ONMYOJI_FLAG,
-    "azure":            AZURE_FLAG,
-    "asoul":            ASOUL_FLAG,
-    "arknights":        ARKNIGHTS_FLAG,
-    "granblue_fantasy": GRANBLUE_FANTASY_FLAG,
-    "punishing":        PUNISHING_FLAG,
-    "pretty_derby":     PRETTY_DERBY_FLAG
-}
+from .data_source import FORTUNE_PATH, global_config
 
 '''
     各主题抽签开关，仅在random抽签中生效
     请确保不全是False
 '''
-ARKNIGHTS_FLAG = False if not nonebot.get_driver().config.arknights_flag else True
-ASOUL_FLAG = False if not nonebot.get_driver().config.asoul_flag else True
-AZURE_FLAG = False if not nonebot.get_driver().config.azure_flag else True
-GENSHIN_FLAG = False if not nonebot.get_driver().config.genshin_flag else True
-ONMYOJI_FLAG = False if not nonebot.get_driver().config.onmyoji_flag else True
-PCR_FLAG = False if not nonebot.get_driver().config.pcr_flag else True
-TOUHOU_FLAG = False if not nonebot.get_driver().config.touhou_flag else True
-TOUHOU_OLD_FLAG = False if not nonebot.get_driver().config.touhou_old_flag else True
-VTUBER_FLAG = False if not nonebot.get_driver().config.vtuber_flag else True
-GRANBLUE_FANTASY_FLAG = False if not nonebot.get_driver().config.granblue_fantasy_flag else True
-PUNISHING_FLAG = False if not nonebot.get_driver().config.punishing_flag else True
-PRETTY_DERBY_FLAG = False if not nonebot.get_driver().config.pretty_derby_flag else True
-DC4_FLAG = False if not nonebot.get_driver().config.dc4_flag else True
-EINSTEIN_FLAG = False if not nonebot.get_driver().config.einstein_flag else True
-SWEET_ILLUSION_FLAG = False if not nonebot.get_driver().config.sweet_illusion_flag else True
-LIQINGGE_FLAG = False if not nonebot.get_driver().config.liqingge_flag else True
-HOSHIZORA_FLAG = False if not nonebot.get_driver().config.hoshizora_flag else True
-SAKURA_FLAG = False if not nonebot.get_driver().config.sakura_flag else True
+ARKNIGHTS_FLAG = False if not hasattr(global_config, "arknights_flag") else True
+ASOUL_FLAG = False if not hasattr(global_config, "asoul_flag") else True
+AZURE_FLAG = False if not hasattr(global_config, "azure_flag") else True
+GENSHIN_FLAG = False if not hasattr(global_config, "genshin_flag") else True
+ONMYOJI_FLAG = False if not hasattr(global_config, "onmyoji_flag") else True
+PCR_FLAG = False if not hasattr(global_config, "pcr_flag") else True
+TOUHOU_FLAG = False if not hasattr(global_config, "touhou_flag") else True
+TOUHOU_OLD_FLAG = False if not hasattr(global_config, "touhou_old_flag") else True
+VTUBER_FLAG = False if not hasattr(global_config, "vtuber_flag") else True
+GRANBLUE_FANTASY_FLAG = False if not hasattr(global_config, "granblue_fantasy_flag") else True
+PUNISHING_FLAG = False if not hasattr(global_config, "punishing_flag") else True
+PRETTY_DERBY_FLAG = False if not hasattr(global_config, "pretty_derby_flag") else True
+DC4_FLAG = False if not hasattr(global_config, "dc4_flag") else True
+EINSTEIN_FLAG = False if not hasattr(global_config, "einstein_flag") else True
+SWEET_ILLUSION_FLAG = False if not hasattr(global_config, "sweet_illusion_flag") else True
+LIQINGGE_FLAG = False if not hasattr(global_config, "liqingge_flag") else True
+HOSHIZORA_FLAG = False if not hasattr(global_config, "hoshizora_flag") else True
+SAKURA_FLAG = False if not hasattr(global_config, "sakura_flag") else True
 
 '''
     抽签主题开关，当随机抽签时判断某主题是否开启

@@ -1,21 +1,13 @@
 from nonebot.adapters.onebot.v11 import GroupMessageEvent
 from typing import Optional, Union, Dict, Tuple
 from pathlib import Path
-import nonebot
 import random
-import os
-from .download import *
 try:
     import ujson as json
 except ModuleNotFoundError:
     import json
 
-global_config = nonebot.get_driver().config
-if not hasattr(global_config, "fortune_path"):
-    FORTUNE_PATH = os.path.join(os.path.dirname(__file__), "resource")
-else:
-    FORTUNE_PATH = nonebot.get_driver().config.fortune_path
-
+from .config import FORTUNE_PATH
 from .utils import drawing, MainThemeList, MainThemeEnable
 
 class FortuneManager:
@@ -48,9 +40,6 @@ class FortuneManager:
         if setting_file.exists():
             with open(setting_file, "r", encoding="utf-8") as f:
                 self.setting = json.load(f)
-    
-        get_resource(Path(FORTUNE_PATH), "fortune")
-        get_resource(Path(FORTUNE_PATH), "font")
     
     def check(self, event: GroupMessageEvent) -> bool:
         '''
@@ -94,12 +83,15 @@ class FortuneManager:
 
     def reset_fortune(self) -> None:
         '''
-            重置今日运势并清空图片
+            重置今日运势：清空图片，对于昨日未抽签的群友删除信息节约空间
         '''
-        for group in self.user_data.keys():
-            for user_id in self.user_data[group].keys():
-                self.user_data[group][user_id]["img_path"] = ""
-                self.user_data[group][user_id]["is_divined"] = False
+        for group_id in self.user_data.keys():
+            for user_id in list(self.user_data[group_id].keys()):
+                if self.user_data[group_id][user_id]["is_divined"] == False:
+                    self.user_data[group_id].pop(user_id)
+                else:
+                    self.user_data[group_id][user_id]["img_path"] = ""
+                    self.user_data[group_id][user_id]["is_divined"] = False
         
         self.save_data()
 
@@ -183,6 +175,7 @@ class FortuneManager:
             获取当前群抽签主题，若没有数据则置随机
         '''
         group_id = str(event.group_id)
+
         if group_id not in self.setting["group_rule"].keys():
             self.setting["group_rule"][group_id] = "random"
             self.save_setting()

@@ -1,7 +1,7 @@
 import httpx
 from nonebot import logger
-import requests
 from pathlib import Path
+from aiocache import cached
 try:
     import ujson as json
 except ModuleNotFoundError:
@@ -22,10 +22,30 @@ async def download(url: str) -> bytes:
                 logger.warning(f'Error downloading {url}, retry {i}/3: {e}')
     raise DownloadError
 
-async def get_resource(file_path: Path, name: str) -> bool:
-    url = f"https://cdn.jsdelivr.net/gh/KafCoppelia/nonebot_plugin_fortune@beta.1/nonebot_plugin_fortune/resource/{name}"
+async def get_resource(res_path: Path, file_type: str, name: str) -> bytes:
+    file_path: Path = res_path / file_type / name
+    url = f"https://cdn.jsdelivr.net/gh/KafCoppelia/nonebot_plugin_fortune@beta/nonebot_plugin_fortune/resource/{file_type}/{name}"
     data = await download(url)
     if data:
-        with open(file_path, 'w', encoding='utf-8') as f:
-            json.dump(data, f, ensure_ascii=False, indent=4)
-    return True
+        with file_path.open("wb") as f:
+            f.write(data)
+            
+    if not file_path.exists():
+        raise DownloadError
+    
+    return file_path.read_bytes()
+
+@cached(ttl=600)
+async def get_font(res_path: Path, name: str) -> bytes:
+    return await get_resource(res_path, "font", name)
+
+@cached(ttl=600)
+async def get_fortune(res_path: Path, name: str) -> bytes:
+    return await get_resource(res_path, "fortune", name)
+
+@cached(ttl=600)
+async def get_theme(res_path: Path, theme: str) -> bytes:
+    '''
+        区分图片主题与格式
+    '''
+    return await get_resource(res_path, "img", name)

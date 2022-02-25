@@ -1,5 +1,17 @@
 {
     "group_rule": {
+        "813854824": "random",
+        "161831838": "random",
+        "672076603": "random",
+        "450738880": "random",
+        "830322845": "random",
+        "434719132": "random",
+        "875944942": "azure",
+        "974414730": "pretty_derby",
+        "761690304": "touhou",
+        "838747900": "random",
+        "854575784": "random",
+        "799296653": "random"
     },
     "specific_rule": {
         "艾雅法拉": [
@@ -178,19 +190,19 @@
             "genshin\/frame_5.jpg"
         ],
         "白上吹雪": [
-            "vtuber\/frame_17.jpg"
+            "hololive\/frame_17.jpg"
         ],
         "fbk": [
-            "vtuber\/frame_17.jpg"
+            "hololive\/frame_17.jpg"
         ],
         "阿夸": [
-            "vtuber\/frame_18.jpg"
+            "hololive\/frame_18.jpg"
         ],
         "桐生可可": [
-            "vtuber\/frame_7.jpg"
+            "hololive\/frame_7.jpg"
         ],
         "tskk": [
-            "vtuber\/frame_7.jpg"
+            "hololive\/frame_7.jpg"
         ],
         "灵梦": [
             "touhou\/frame_1.jpg"

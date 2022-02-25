@@ -1,18 +1,13 @@
 from nonebot.adapters.onebot.v11 import GroupMessageEvent
 from typing import Optional, Union, Dict, Tuple
 from pathlib import Path
-import nonebot
 import random
-import os
-
 try:
     import ujson as json
 except ModuleNotFoundError:
     import json
 
-_FORTUNE_PATH = nonebot.get_driver().config.fortune_path
-FORTUNE_PATH = os.path.join(os.path.dirname(__file__), "resource") if not _FORTUNE_PATH else _FORTUNE_PATH
-
+from .config import FORTUNE_PATH
 from .utils import drawing, MainThemeList, MainThemeEnable
 
 class FortuneManager:
@@ -90,10 +85,13 @@ class FortuneManager:
         '''
             重置今日运势并清空图片
         '''
-        for group in self.user_data.keys():
-            for user_id in self.user_data[group].keys():
-                self.user_data[group][user_id]["img_path"] = ""
-                self.user_data[group][user_id]["is_divined"] = False
+        for group_id in self.user_data.keys():
+            for user_id in list(self.user_data[group_id].keys()):
+                if self.user_data[group_id][user_id]["is_divined"] == False:
+                    self.user_data[group_id].pop(user_id)
+                else:
+                    self.user_data[group_id][user_id]["img_path"] = ""
+                    self.user_data[group_id][user_id]["is_divined"] = False
         
         self.save_data()
 

@@ -7,7 +7,7 @@ from .data_source import fortune_manager
 from .utils import MainThemeList
 import re
 
-__fortune_vsrsion__ = "v0.4.1"
+__fortune_vsrsion__ = "v0.4.2"
 plugin_notes = f'''
 今日运势 {__fortune_vsrsion__}
 [今日运势/抽签/运势] 抽签
@@ -17,7 +17,7 @@ plugin_notes = f'''
 [主题列表] 查看可选的抽签主题
 [抽签设置] 查看群抽签主题'''.strip()
 
-plugin_help = on_command("今日运势帮助", permission=GROUP, priority=8, block=True)
+plugin_help = on_command("运势帮助", permission=GROUP, priority=8, block=True)
 divine = on_command("今日运势", aliases={"抽签", "运势"}, permission=GROUP, priority=8, block=True)
 limit_setting = on_regex(r"指定(.*?)签", permission=GROUP, priority=8, block=True)
 theme_setting = on_regex(r"设置(.*?)签", permission=SUPERUSER | GROUP_ADMIN | GROUP_OWNER, priority=8, block=True)
@@ -43,7 +43,7 @@ async def _(bot: Bot, event: GroupMessageEvent):
     await show.finish(f"当前群抽签主题：{show_theme}")
 
 @theme_list.handle()
-async def show_list(bot: Bot, event: GroupMessageEvent):
+async def _(bot: Bot, event: GroupMessageEvent):
     msg = fortune_manager.get_main_theme_list()
     await theme_list.finish(msg)
 
@@ -95,7 +95,7 @@ async def _(bot: Bot, event: GroupMessageEvent):
         if not spec_path:
             await limit_setting.finish("还不可以指定这种签哦，请确认该签底对应主题开启或图片路径存在~")
         else:
-            image_file, status = fortune_manager.divine(spec_path=limit, event=event)
+            image_file, status = fortune_manager.divine(spec_path=spec_path, event=event)
         
     if not status:
         msg = MessageSegment.text("你今天抽过签了，再给你看一次哦🤗\n") + MessageSegment.image(image_file)
@@ -111,12 +111,7 @@ async def _(bot: Bot, event: GroupMessageEvent):
     await limit_setting.finish("今日运势已刷新!")
 
 # 重置每日占卜
-@scheduler.scheduled_job(
-    "cron",
-    hour=0,
-    minute=0,
-)
-
+@scheduler.scheduled_job("cron", hour=0, minute=0)
 async def _():
     fortune_manager.reset_fortune()
     logger.info("今日运势已刷新！")

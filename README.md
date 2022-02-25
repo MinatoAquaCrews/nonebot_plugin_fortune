@@ -52,28 +52,28 @@ v0.4.2 **0.4.x最后的版本**
 
 3. **新增** 使用了[FloatTech-zbpdata/Fortune](https://github.com/FloatTech/zbpdata)全部主题。在`env`下设置`xxx_FLAG`以启用或关闭抽签随机主题（默认为全部开启），例如：
 
-```python
-ARKNIGHTS_FLAG=true         # 明日方舟
-ASOUL_FLAG=false            # A-SOUL
-AZURE_FLAG=true             # 碧蓝航线
-GENSHIN_FLAG=true           # 原神
-ONMYOJI_FLAG=false          # 阴阳师
-PCR_FLAG=true               # 公主连结
-TOUHOU_FLAG=true            # 东方
-TOUHOU_OLD_FLAG=false       # 东方旧版
-HOLOLIVE_FLAG=true          # Hololive，原资源名Vtuber已更改为Hololive
-PUNISHING_FLAG=true         # 战双帕弥什
-GRANBLUE_FANTASY_FLAG=true  # 碧蓝幻想
-PRETTY_DERBY_FLAG=true      # 赛马娘
-DC4_FLAG=false              # dc4
-EINSTEIN_FLAG=true          # 爱因斯坦携爱敬上
-SWEET_ILLUSION_FLAG=true    # 灵感满溢的甜蜜创想
-LIQINGGE_FLAG=true          # 李清歌
-HOSHIZORA_FLAG=true         # 星空列车与白的旅行
-SAKURA_FLAG=true            # 樱色之云绯色之恋
-```
+    ```python
+    ARKNIGHTS_FLAG=true         # 明日方舟
+    ASOUL_FLAG=false            # A-SOUL
+    AZURE_FLAG=true             # 碧蓝航线
+    GENSHIN_FLAG=true           # 原神
+    ONMYOJI_FLAG=false          # 阴阳师
+    PCR_FLAG=true               # 公主连结
+    TOUHOU_FLAG=true            # 东方
+    TOUHOU_OLD_FLAG=false       # 东方旧版
+    HOLOLIVE_FLAG=true          # Hololive，原资源名Vtuber已更改为Hololive
+    PUNISHING_FLAG=true         # 战双帕弥什
+    GRANBLUE_FANTASY_FLAG=true  # 碧蓝幻想
+    PRETTY_DERBY_FLAG=true      # 赛马娘
+    DC4_FLAG=false              # dc4
+    EINSTEIN_FLAG=true          # 爱因斯坦携爱敬上
+    SWEET_ILLUSION_FLAG=true    # 灵感满溢的甜蜜创想
+    LIQINGGE_FLAG=true          # 李清歌
+    HOSHIZORA_FLAG=true         # 星空列车与白的旅行
+    SAKURA_FLAG=true            # 樱色之云绯色之恋
+    ```
 
-**请确保不全为`false`**
+    **请确保不全为`false`**
 
 4. 在`./resource/fortune_setting.json`内配置**指定抽签**规则，例如：
 
@@ -104,15 +104,15 @@ SAKURA_FLAG=true            # 樱色之云绯色之恋
 
 ## 功能
 
-1. 随机抽取今日运势，配置**更多**种抽签主题：原神、PCR、Hololive、东方、明日方舟、旧版东方、赛马娘、阴阳师、碧蓝航线、碧蓝幻想、战双帕弥什，galgame主题……
+1. 随机抽取今日运势，配置**更多**种抽签主题：原神、PCR、Hololive、东方、明日方舟、旧版东方、赛马娘、阴阳师、碧蓝航线、碧蓝幻想、战双帕弥什，galgame主题等……
 
-2. 可配置随机抽签主题或指定主题，也可指定部分主题的角色签底（例如可莉、魔理沙、凯露、**阿夸**🥰）；
+2. 可配置随机抽签主题或指定主题，也可指定部分主题的角色签底；
 
 3. 每群每人一天限抽签1次，0点刷新（贪心的人是不会有好运的🤗）抽签信息并清除`./resource/out`下图片；
 
 4. 抽签的信息会保存在`./resource/fortune_data.json`内；群抽签设置及指定抽签规则保存在`./resource/fortune_setting.json`内；抽签生成的图片当天会保存在`./resource/out`下；
 
-5. `fortune_setting.json`已预置明日方舟、Asoul、原神、东方、Hololive的指定抽签规则；
+5. `fortune_setting.json`已预置明日方舟、Asoul、原神、东方、Hololive、李清歌的指定抽签规则；
 
 ## 命令
 

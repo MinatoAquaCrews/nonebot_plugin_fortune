@@ -39,6 +39,9 @@ config: PluginConfig = PluginConfig.parse_obj(global_config.dict())
 FORTUNE_PATH: str = config.fortune_path
 CONFIG_PATH: Path = Path(FORTUNE_PATH) / "fortune_config.json"
 
+'''
+    Reserved for next version
+'''
 @driver.on_startup
 async def check_config():
     if not CONFIG_PATH.exists():

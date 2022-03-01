@@ -24,7 +24,7 @@ async def download(url: str) -> bytes:
 
 async def get_resource(res_path: Path, file_type: str, name: str) -> bytes:
     file_path: Path = res_path / file_type / name
-    url = f"https://cdn.jsdelivr.net/gh/KafCoppelia/nonebot_plugin_fortune@beta/nonebot_plugin_fortune/resource/{file_type}/{name}"
+    url = f"https://cdn.jsdelivr.net/gh/KafCoppelia/nonebot_plugin_fortune@dev/nonebot_plugin_fortune/resource/{file_type}/{name}"
     data = await download(url)
     if data:
         with file_path.open("wb") as f:

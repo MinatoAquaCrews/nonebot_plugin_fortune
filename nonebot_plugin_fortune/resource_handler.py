@@ -1,6 +1,3 @@
-from pickle import TRUE
-
-from matplotlib import image
 from .data_source import PluginConfig
 from pathlib import Path
 from nonebot import logger
@@ -20,6 +17,7 @@ class ResourceHandler():
             "hololive":         config.hololive_flag,
             "touhou":           config.touhou_flag,
             "touhou_old":       config.touhou_olg_flag,
+            "touhou_lostword":  config.touhou_lostword,
             "onmyoji":          config.onmyoji_flag,
             "azure":            config.azure_flag,
             "asoul":            config.asoul_flag,
@@ -46,6 +44,8 @@ class ResourceHandler():
             "touhou":   ["东方", "touhou", "Touhou", "车万"],
             "touhou_old": 
                         ["旧东方", "旧版东方", "老东方", "老版东方", "经典东方"],
+            "touhou_lostword":
+                        ["东方归言录", "东方dlc", "东方DLC", "touhou dlc"],
             "onmyoji":  ["阴阳师", "yys", "Yys", "痒痒鼠"],
             "azure":    ["碧蓝航线", "碧蓝", "azure", "Azure"],
             "asoul":    ["Asoul", "asoul", "a手", "A手", "as", "As"],

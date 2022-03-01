@@ -2,7 +2,7 @@ import os
 import random
 from PIL import Image, ImageDraw, ImageFont
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Union
 from nonebot import logger
 try:
     import ujson as json
@@ -21,7 +21,7 @@ def copywriting() -> str:
 
     return random.choice(content["copywriting"])
 
-def getTitle(structure):
+def getTitle(structure) -> Union[str, bool]:
     p = f"{FORTUNE_PATH}/fortune/goodLuck.json"
     if not os.path.exists(p):
         return False

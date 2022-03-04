@@ -28,7 +28,7 @@ _🙏 今日运势 🙏_
 
 ## 版本
 
-v0.4.3 **抽签主题资源新增东方归言录！**
+v0.4.3 **该版本主要更新主题资源，可通过下方引导手动更新**
 
 👉 [如何在v0.4.2或更早版本上更新抽签主题资源？](https://github.com/KafCoppelia/nonebot_plugin_fortune/blob/beta/How-to-add-new-theme.md)
 

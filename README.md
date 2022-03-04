@@ -30,7 +30,7 @@ _🙏 今日运势 🙏_
 
 v0.4.3 **抽签主题资源新增东方归言录！**
 
-👉 [如何在`v0.4.2`或更早版本上更新抽签主题资源？](https://github.com/KafCoppelia/nonebot_plugin_fortune/blob/beta/resource/README-How-to-add-new-theme.md)
+👉 [如何在`v0.4.2`或更早版本上更新抽签主题资源？](https://github.com/KafCoppelia/nonebot_plugin_fortune/blob/beta/README-How-to-add-new-theme.md)
 
 ⚠ 适配nonebot2-2.0.0beta.2；
 

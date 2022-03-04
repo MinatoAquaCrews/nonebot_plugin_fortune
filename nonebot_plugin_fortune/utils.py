@@ -3,7 +3,6 @@ import random
 from PIL import Image, ImageDraw, ImageFont
 from pathlib import Path
 from typing import Optional
-from nonebot import logger
 try:
     import ujson as json
 except ModuleNotFoundError:
@@ -19,6 +18,7 @@ MainThemeEnable = {
     "genshin":          config.genshin_flag,
     "hololive":         config.hololive_flag,
     "touhou":           config.touhou_flag,
+    "touhou_lostword":  config.touhou_lostword_flag,
     "touhou_old":       config.touhou_olg_flag,
     "onmyoji":          config.onmyoji_flag,
     "azure":            config.azure_flag,
@@ -40,10 +40,12 @@ MainThemeEnable = {
 '''
 MainThemeList = {
     "random":   ["随机"],
-    "pcr":      ["PCR", "公主链接", "公主连接", "Pcr", "pcr"],
+    "pcr":      ["PCR", "公主链接", "公主连结", "Pcr", "pcr"],
     "genshin":  ["原神", "Genshin Impact", "genshin", "Genshin", "op", "原批"],
     "hololive": ["Hololive", "hololive", "Vtb", "vtb", "管人", "holo", "猴楼"],
     "touhou":   ["东方", "touhou", "Touhou", "车万"],
+    "touhou_lostword":
+                ["东方归言录", "东方lostword", "touhou lostword", "Touhou dlc"],
     "touhou_old": 
                 ["旧东方", "旧版东方", "老东方", "老版东方", "经典东方"],
     "onmyoji":  ["阴阳师", "yys", "Yys", "痒痒鼠"],

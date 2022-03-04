@@ -19,7 +19,7 @@ _🙏 今日运势 🙏_
   </a>
   
   <a href="">
-    <img src="https://img.shields.io/badge/release-v0.4.2-orange">
+    <img src="https://img.shields.io/badge/release-v0.4.3-orange">
   </a>
   
 </p>
@@ -28,13 +28,15 @@ _🙏 今日运势 🙏_
 
 ## 版本
 
-v0.4.2 **0.4.x最后的版本**
+v0.4.3 **抽签主题资源新增东方归言录！**
+
+👉 [如何在`v0.4.2`或更早版本上更新抽签主题资源？](https://github.com/KafCoppelia/nonebot_plugin_fortune/tree/beta/nonebot_plugin_fortune/README.md)
 
 ⚠ 适配nonebot2-2.0.0beta.2；
 
 👉 适配alpha.16参见[alpha.16分支](https://github.com/KafCoppelia/nonebot_plugin_fortune/tree/alpha.16)
 
-[更新日志](https://github.com/KafCoppelia/nonebot_plugin_fortune/releases/tag/v0.4.2)
+[更新日志](https://github.com/KafCoppelia/nonebot_plugin_fortune/releases/tag/v0.4.3)
 
 ## 安装
 
@@ -60,6 +62,7 @@ v0.4.2 **0.4.x最后的版本**
     ONMYOJI_FLAG=false          # 阴阳师
     PCR_FLAG=true               # 公主连结
     TOUHOU_FLAG=true            # 东方
+    TOUHOU_LOSTWORD_FLAG=true   # 东方归言录，东方DLC
     TOUHOU_OLD_FLAG=false       # 东方旧版
     HOLOLIVE_FLAG=true          # Hololive，原资源名Vtuber已更改为Hololive
     PUNISHING_FLAG=true         # 战双帕弥什
@@ -104,7 +107,9 @@ v0.4.2 **0.4.x最后的版本**
 
 ## 功能
 
-1. 随机抽取今日运势，配置**更多**种抽签主题：原神、PCR、Hololive、东方、明日方舟、旧版东方、赛马娘、阴阳师、碧蓝航线、碧蓝幻想、战双帕弥什，galgame主题等……
+1. 随机抽取今日运势，配置多种抽签主题：原神、PCR、Hololive、东方、东方归言录、明日方舟、旧版东方、赛马娘、阴阳师、碧蓝航线、碧蓝幻想、战双帕弥什，galgame主题等……
+
+    **新增** 东方归言录主题！
 
 2. 可配置随机抽签主题或指定主题，也可指定部分主题的角色签底；
 
@@ -146,9 +151,11 @@ v0.4.2 **0.4.x最后的版本**
 
 ## 抽签图片及文案资源
 
-1. [opqqq-plugin](https://github.com/opq-osc/opqqq-plugin)：原神、pcr、vtb抽签主题；
+1. [opqqq-plugin](https://github.com/opq-osc/opqqq-plugin)：原神、pcr、hololive抽签主题；
 
 2. 感谢江樂丝提供东方签底；
+
+3. 东方归言录(touhou_lostword)：[KafCoppelia](https://github.com/KafCoppelia)
 
 3. [FloatTech-zbpdata/Fortune](https://github.com/FloatTech/zbpdata)：其余主题签；
 

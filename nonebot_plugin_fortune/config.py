@@ -21,6 +21,7 @@ class PluginConfig(BaseModel):
     onmyoji_flag: bool = True
     pcr_flag: bool = True
     touhou_flag: bool = True
+    touhou_lostword_flag: bool = True
     touhou_olg_flag: bool = True
     hololive_flag: bool = True
     granblue_fantasy_flag: bool = True

@@ -2,10 +2,6 @@ import httpx
 from nonebot import logger
 from pathlib import Path
 from aiocache import cached
-try:
-    import ujson as json
-except ModuleNotFoundError:
-    import json
 
 class DownloadError(Exception):
     pass
@@ -48,4 +44,4 @@ async def get_theme(res_path: Path, theme: str) -> bytes:
     '''
         区分图片主题与格式
     '''
-    return await get_resource(res_path, "img", name)
+    return await get_resource(res_path, "img", theme)

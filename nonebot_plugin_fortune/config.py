@@ -14,6 +14,7 @@ class PluginConfig(BaseModel):
         各主题抽签开关，仅在random抽签中生效
         请确保不全是False
     '''
+    amazing_grace: bool = True
     arknights_flag: bool = True
     asoul_flag: bool = True
     azure_flag: bool = True

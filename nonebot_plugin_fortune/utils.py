@@ -32,7 +32,8 @@ MainThemeEnable = {
     "sweet_illusion":   config.sweet_illusion_flag,
     "liqingge":         config.liqingge_flag,
     "hoshizora":        config.hoshizora_flag,
-    "sakura":           config.sakura_flag
+    "sakura":           config.sakura_flag,
+    "summer_pockets":   config.summer_pockets
 }
 '''
     抽签主题对应表，第一键值为“抽签设置”或“主题列表”展示的主题名称
@@ -63,7 +64,8 @@ MainThemeList = {
                 ["灵感满溢的甜蜜创想", "甜蜜一家人", "富婆妹"],
     "liqingge": ["李清歌", "清歌"],
     "hoshizora":["星空列车与白的旅行", "星空列车"],
-    "sakura":   ["樱色之云绯色之恋", "樱云之恋", "樱云绯恋", "樱云"]
+    "sakura":   ["樱色之云绯色之恋", "樱云之恋", "樱云绯恋", "樱云"],
+    "summer_pockets":["夏日口袋","夏兜","sp","SP"]
 }
 
 def copywriting() -> str:

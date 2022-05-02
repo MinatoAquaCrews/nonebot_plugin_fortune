@@ -33,6 +33,7 @@ class PluginConfig(BaseModel):
     liqingge_flag: bool = True
     hoshizora_flag: bool = True
     sakura_flag: bool = True 
+    summer_pockets: bool = True
 
 driver = nonebot.get_driver()
 global_config = driver.config

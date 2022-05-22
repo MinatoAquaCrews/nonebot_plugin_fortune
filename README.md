@@ -21,6 +21,10 @@ _🙏 今日运势 🙏_
   <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.3">
     <img src="https://img.shields.io/github/v/release/MinatoAquaCrews/nonebot_plugin_fortune?color=orange">
   </a>
+
+  <a href="https://www.codefactor.io/repository/github/MinatoAquaCrews/nonebot_plugin_fortune">
+    <img src="https://img.shields.io/codefactor/grade/github/MinatoAquaCrews/nonebot_plugin_fortune/beta?color=red">
+  </a>
   
 </p>
 
@@ -32,11 +36,12 @@ v0.4.3 **该版本主要更新主题资源，可通过下方引导手动更新**
 
 👉 [如何在v0.4.2或更早版本上更新抽签主题资源？](https://github.com/KafCoppelia/nonebot_plugin_fortune/blob/beta/How-to-add-new-theme.md)
 
-⚠ 适配nonebot2-2.0.0beta.2；
+⚠ 适配nonebot2-2.0.0beta.2+
 
-👉 适配alpha.16参见[alpha.16分支](https://github.com/KafCoppelia/nonebot_plugin_fortune/tree/alpha.16)
-
-[更新日志](https://github.com/KafCoppelia/nonebot_plugin_fortune/releases/tag/v0.4.3)
+<details>
+  <summary>更新日志</summary>
+  👉 [Here](https://github.com/KafCoppelia/nonebot_plugin_fortune/releases/tag/v0.4.3)
+</details>
 
 ## 安装
 

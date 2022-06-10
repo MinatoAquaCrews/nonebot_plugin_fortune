@@ -11,15 +11,19 @@ from .config import FORTUNE_PATH
 from .utils import drawing, MainThemeList, MainThemeEnable
 
 class FortuneManager:
-    def __init__(self, file: Optional[Path]):
+    def __init__(self, path: Optional[Path]):
         self.user_data = {}
         self.setting = {}
-        if not file:
+        if not path:
+            if not Path(FORTUNE_PATH).exists():
+                Path(FORTUNE_PATH).mkdir(parents=True, exist_ok=True)
             data_file = Path(FORTUNE_PATH) / "fortune_data.json"
             setting_file = Path(FORTUNE_PATH) / "fortune_setting.json"
         else:
-            data_file = file / "fortune_data.json"
-            setting_file = file / "fortune_setting.json"
+            if not path.exists():
+                path.mkdir(parents=True, exist_ok=True)
+            data_file = path / "fortune_data.json"
+            setting_file = path / "fortune_setting.json"
 
         self.data_file = data_file
         self.setting_file = setting_file

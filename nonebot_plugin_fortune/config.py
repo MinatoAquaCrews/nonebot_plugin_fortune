@@ -14,6 +14,7 @@ class PluginConfig(BaseModel):
         各主题抽签开关，仅在random抽签中生效
         请确保不全是False
     '''
+    amazing_grace: bool = True
     arknights_flag: bool = True
     asoul_flag: bool = True
     azure_flag: bool = True
@@ -21,6 +22,7 @@ class PluginConfig(BaseModel):
     onmyoji_flag: bool = True
     pcr_flag: bool = True
     touhou_flag: bool = True
+    touhou_lostword_flag: bool = True
     touhou_olg_flag: bool = True
     hololive_flag: bool = True
     granblue_fantasy_flag: bool = True
@@ -32,6 +34,7 @@ class PluginConfig(BaseModel):
     liqingge_flag: bool = True
     hoshizora_flag: bool = True
     sakura_flag: bool = True 
+    summer_pockets: bool = True
 
 driver = nonebot.get_driver()
 global_config = driver.config
@@ -39,6 +42,9 @@ config: PluginConfig = PluginConfig.parse_obj(global_config.dict())
 FORTUNE_PATH: str = config.fortune_path
 CONFIG_PATH: Path = Path(FORTUNE_PATH) / "fortune_config.json"
 
+'''
+    Reserved for next version
+'''
 @driver.on_startup
 async def check_config():
     if not CONFIG_PATH.exists():

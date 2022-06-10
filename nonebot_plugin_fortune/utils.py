@@ -2,14 +2,76 @@ import os
 import random
 from PIL import Image, ImageDraw, ImageFont
 from pathlib import Path
-from typing import Optional, Union
 from nonebot import logger
+from typing import Optional, Union
 try:
     import ujson as json
 except ModuleNotFoundError:
     import json
 
-from .data_source import FORTUNE_PATH
+from .config import config, FORTUNE_PATH
+
+'''
+    抽签主题开关，当随机抽签时判断某主题是否开启
+'''
+MainThemeEnable = {
+    "pcr":              config.pcr_flag,
+    "genshin":          config.genshin_flag,
+    "hololive":         config.hololive_flag,
+    "touhou":           config.touhou_flag,
+    "touhou_lostword":  config.touhou_lostword_flag,
+    "touhou_old":       config.touhou_olg_flag,
+    "onmyoji":          config.onmyoji_flag,
+    "azure":            config.azure_flag,
+    "asoul":            config.asoul_flag,
+    "arknights":        config.arknights_flag,
+    "granblue_fantasy": config.granblue_fantasy_flag,
+    "punishing":        config.punishing_flag,
+    "pretty_derby":     config.pretty_derby_flag,
+    "dc4":              config.dc4_flag,
+    "einstein":         config.einstein_flag,
+    "sweet_illusion":   config.sweet_illusion_flag,
+    "liqingge":         config.liqingge_flag,
+    "hoshizora":        config.hoshizora_flag,
+    "sakura":           config.sakura_flag,
+    "summer_pockets":   config.summer_pockets,
+    "amazing_grace":    config.amazing_grace
+}
+'''
+    抽签主题对应表，第一键值为“抽签设置”或“主题列表”展示的主题名称
+    Key-Value: 主题资源文件夹名-设置主题别名
+'''
+MainThemeList = {
+    "random":   ["随机"],
+    "pcr":      ["PCR", "公主链接", "公主连结", "Pcr", "pcr"],
+    "genshin":  ["原神", "Genshin Impact", "genshin", "Genshin", "op", "原批"],
+    "hololive": ["Hololive", "hololive", "Vtb", "vtb", "管人", "holo", "猴楼"],
+    "touhou":   ["东方", "touhou", "Touhou", "车万"],
+    "touhou_lostword":
+                ["东方归言录", "东方lostword", "touhou lostword", "Touhou dlc"],
+    "touhou_old": 
+                ["旧东方", "旧版东方", "老东方", "老版东方", "经典东方"],
+    "onmyoji":  ["阴阳师", "yys", "Yys", "痒痒鼠"],
+    "azure":    ["碧蓝航线", "碧蓝", "azure", "Azure"],
+    "asoul":    ["Asoul", "asoul", "a手", "A手", "as", "As"],
+    "arknights":["明日方舟", "方舟", "arknights", "鹰角", "Arknights", "舟游"],
+    "granblue_fantasy":
+                ["碧蓝幻想", "Granblue Fantasy", "granblue fantasy", "幻想", "fantasy", "Fantasy"],
+    "punishing":["战双", "战双帕弥什"],
+    "pretty_derby":
+                ["赛马娘", "马", "马娘", "赛马"],
+    "dc4":      ["dc4", "DC4", "Dc4", "初音岛", "初音岛4"],
+    "einstein": ["爱因斯坦携爱敬上", "爱因斯坦", "einstein", "Einstein"],
+    "sweet_illusion":
+                ["灵感满溢的甜蜜创想", "甜蜜一家人", "富婆妹"],
+    "liqingge": ["李清歌", "清歌"],
+    "hoshizora":["星空列车与白的旅行", "星空列车"],
+    "sakura":   ["樱色之云绯色之恋", "樱云之恋", "樱云绯恋", "樱云"],
+    "summer_pockets":
+                ["夏日口袋", "夏兜", "sp", "SP"],
+    "amazing_grace":
+                ["奇异恩典"]
+}
 
 def copywriting() -> str:
     p = f"{FORTUNE_PATH}/fortune/copywriting.json"

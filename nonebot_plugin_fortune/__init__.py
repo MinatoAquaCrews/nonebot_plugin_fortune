@@ -7,7 +7,11 @@ from .data_source import fortune_manager
 from .utils import MainThemeList
 import re
 
+<<<<<<< HEAD
 __fortune_vsrsion__ = "v0.4.2"
+=======
+__fortune_vsrsion__ = "v0.4.3"
+>>>>>>> beta
 plugin_notes = f'''
 今日运势 {__fortune_vsrsion__}
 [今日运势/抽签/运势] 抽签
@@ -95,7 +99,7 @@ async def _(bot: Bot, event: GroupMessageEvent):
         if not spec_path:
             await limit_setting.finish("还不可以指定这种签哦，请确认该签底对应主题开启或图片路径存在~")
         else:
-            image_file, status = fortune_manager.divine(spec_path=limit, event=event)
+            image_file, status = fortune_manager.divine(spec_path=spec_path, event=event)
         
     if not status:
         msg = MessageSegment.text("你今天抽过签了，再给你看一次哦🤗\n") + MessageSegment.image(image_file)

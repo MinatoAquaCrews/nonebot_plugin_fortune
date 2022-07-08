@@ -1,4 +1,3 @@
-import os
 import random
 from PIL import Image, ImageDraw, ImageFont
 from pathlib import Path
@@ -9,33 +8,33 @@ try:
 except ModuleNotFoundError:
     import json
 
-from .config import config, FORTUNE_PATH
+from .config import fortune_config
 
 '''
     抽签主题开关，当随机抽签时判断某主题是否开启
 '''
 MainThemeEnable = {
-    "pcr":              config.pcr_flag,
-    "genshin":          config.genshin_flag,
-    "hololive":         config.hololive_flag,
-    "touhou":           config.touhou_flag,
-    "touhou_lostword":  config.touhou_lostword_flag,
-    "touhou_old":       config.touhou_olg_flag,
-    "onmyoji":          config.onmyoji_flag,
-    "azure":            config.azure_flag,
-    "asoul":            config.asoul_flag,
-    "arknights":        config.arknights_flag,
-    "granblue_fantasy": config.granblue_fantasy_flag,
-    "punishing":        config.punishing_flag,
-    "pretty_derby":     config.pretty_derby_flag,
-    "dc4":              config.dc4_flag,
-    "einstein":         config.einstein_flag,
-    "sweet_illusion":   config.sweet_illusion_flag,
-    "liqingge":         config.liqingge_flag,
-    "hoshizora":        config.hoshizora_flag,
-    "sakura":           config.sakura_flag,
-    "summer_pockets":   config.summer_pockets,
-    "amazing_grace":    config.amazing_grace
+    "pcr":              fortune_config.pcr_flag,
+    "genshin":          fortune_config.genshin_flag,
+    "hololive":         fortune_config.hololive_flag,
+    "touhou":           fortune_config.touhou_flag,
+    "touhou_lostword":  fortune_config.touhou_lostword_flag,
+    "touhou_old":       fortune_config.touhou_olg_flag,
+    "onmyoji":          fortune_config.onmyoji_flag,
+    "azure":            fortune_config.azure_flag,
+    "asoul":            fortune_config.asoul_flag,
+    "arknights":        fortune_config.arknights_flag,
+    "granblue_fantasy": fortune_config.granblue_fantasy_flag,
+    "punishing":        fortune_config.punishing_flag,
+    "pretty_derby":     fortune_config.pretty_derby_flag,
+    "dc4":              fortune_config.dc4_flag,
+    "einstein":         fortune_config.einstein_flag,
+    "sweet_illusion":   fortune_config.sweet_illusion_flag,
+    "liqingge":         fortune_config.liqingge_flag,
+    "hoshizora":        fortune_config.hoshizora_flag,
+    "sakura":           fortune_config.sakura_flag,
+    "summer_pockets":   fortune_config.summer_pockets_flag,
+    "amazing_grace":    fortune_config.amazing_grace_flag
 }
 '''
     抽签主题对应表，第一键值为“抽签设置”或“主题列表”展示的主题名称
@@ -73,13 +72,13 @@ MainThemeList = {
                 ["奇异恩典"]
 }
 
-def copywriting() -> str:
-    p = f"{FORTUNE_PATH}/fortune/copywriting.json"
-    if not os.path.exists(p):
+def copywriting() -> Union[bool, str]:
+    _p: Path = fortune_config.fortune_path / "fortune" / "copywriting.json"
+    if not _p.exists():
         return False
 
-    with open(p, "r", encoding="utf-8") as f:
-        content = json.load(f)
+    with open(_p, "r", encoding="utf-8") as f:
+        content = json.load(f).get("copywriting")
 
     return random.choice(content["copywriting"])
 

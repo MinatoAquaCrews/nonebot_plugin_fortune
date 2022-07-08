@@ -1,20 +1,19 @@
-import nonebot
-from nonebot import logger
-import os
+from nonebot import get_driver, logger
 from pathlib import Path
-from pydantic import BaseModel, ValidationError
+from pydantic import BaseModel, Extra, ValidationError
 try:
     import ujson as json
 except ModuleNotFoundError:
     import json
 
-class PluginConfig(BaseModel):
-    fortune_path: str = os.path.join(os.path.dirname(__file__), "resource")
+class PluginConfig(BaseModel, extra=Extra.ignore):
+    fortune_path: Path = Path(__file__).parent / "resource"
+    
     '''
         各主题抽签开关，仅在random抽签中生效
         请确保不全是False
     '''
-    amazing_grace: bool = True
+    amazing_grace_flag: bool = True
     arknights_flag: bool = True
     asoul_flag: bool = True
     azure_flag: bool = True
@@ -34,30 +33,25 @@ class PluginConfig(BaseModel):
     liqingge_flag: bool = True
     hoshizora_flag: bool = True
     sakura_flag: bool = True 
-    summer_pockets: bool = True
+    summer_pockets_flag: bool = True
 
-driver = nonebot.get_driver()
-global_config = driver.config
-config: PluginConfig = PluginConfig.parse_obj(global_config.dict())
-FORTUNE_PATH: str = config.fortune_path
-CONFIG_PATH: Path = Path(FORTUNE_PATH) / "fortune_config.json"
+driver = get_driver()
+fortune_config: PluginConfig = PluginConfig.parse_obj(driver.config.dict())
 
-'''
-    Reserved for next version
-'''
 @driver.on_startup
-async def check_config():
-    if not CONFIG_PATH.exists():
+async def check_config() -> None:
+    config_path: Path = fortune_config.fortune_path / "fortune_config.json"
+    if not config_path.exists():
         logger.warning("配置文件不存在，已重新生成配置文件……")
         config = PluginConfig()
     else:
-        with CONFIG_PATH.open("r", encoding="utf-8") as f:
+        with config_path.open("r", encoding="utf-8") as f:
             data = json.load(f)
         try:
-            config = PluginConfig.parse_obj({**global_config.dict(), **data})
+            config = PluginConfig.parse_obj({**driver.config.dict(), **data})
         except ValidationError:
             config = PluginConfig()
             logger.warning("配置文件格式错误，已重新生成配置文件……")
         
-    with CONFIG_PATH.open("w", encoding="utf-8") as f:
+    with config_path.open("w", encoding="utf-8") as f:
         json.dump(config.dict(), f, ensure_ascii=False, indent=4)

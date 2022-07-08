@@ -6,12 +6,9 @@ from nonebot.adapters.onebot.v11 import Bot, GROUP, GROUP_ADMIN, GROUP_OWNER, Gr
 from .data_source import fortune_manager
 from .utils import MainThemeList
 import re
+from nonebot_plugin_apscheduler import scheduler
 
-<<<<<<< HEAD
-__fortune_vsrsion__ = "v0.4.2"
-=======
 __fortune_vsrsion__ = "v0.4.3"
->>>>>>> beta
 plugin_notes = f'''
 今日运势 {__fortune_vsrsion__}
 [今日运势/抽签/运势] 抽签
@@ -33,8 +30,6 @@ show = on_command("抽签设置", permission=GROUP, priority=8, block=True)
     超管功能
 '''
 refresh = on_command("刷新抽签", permission=SUPERUSER, priority=8, block=True)
-
-scheduler = require("nonebot_plugin_apscheduler").scheduler
 
 @plugin_help.handle()
 async def show_help(bot: Bot, event: GroupMessageEvent):
@@ -115,7 +110,7 @@ async def _(bot: Bot, event: GroupMessageEvent):
     await limit_setting.finish("今日运势已刷新!")
 
 # 重置每日占卜
-@scheduler.scheduled_job("cron", hour=0, minute=0)
+@scheduler.scheduled_job("cron", hour=0, minute=0, misfire_grace_time=60)
 async def _():
     fortune_manager.reset_fortune()
     logger.info("今日运势已刷新！")

@@ -15,7 +15,7 @@ _🙏 今日运势 🙏_
   </a>
   
   <a href="https://github.com/nonebot/nonebot2">
-    <img src="https://img.shields.io/badge/nonebot2-2.0.0beta.2-green">
+    <img src="https://img.shields.io/badge/nonebot2-2.0.0beta.2+-green">
   </a>
   
   <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.3">
@@ -28,11 +28,9 @@ _🙏 今日运势 🙏_
   
 </p>
 
-</p>
-
 ## 版本
 
-dev版
+dev版，请勿使用
 
 👉 [如何在v0.4.2或更早版本上更新抽签主题资源？](https://github.com/KafCoppelia/nonebot_plugin_fortune/blob/beta/How-to-add-new-theme.md)
 
@@ -44,7 +42,7 @@ dev版
 
 1. 安装方式：
 
-    - 通过`pip`或`nb`，版本请指定`0.4.2`；pypi无法发行过大安装包，由此安装的插件不包含所有`resource`下所有主题抽签资源，需单独下载，建议`zip`包下载后单独提取`resource`资源，后更改`FORTUNE_PATH`配置即可；
+    - 通过`pip`或`nb`；pypi无法发行过大安装包，由此安装的插件不包含所有`resource`下所有主题抽签资源，需单独下载，建议`zip`包下载后单独提取`resource`资源，后更改`FORTUNE_PATH`配置即可；
     
     - 通过`zip`或`git clone`安装：包含`resource`下所有主题抽签资源；
 

@@ -52,7 +52,7 @@ dev版，请勿使用
     FORTUNE_PATH="your_path_to_resource"
     ```
 
-3. **新增** 使用了[FloatTech-zbpdata/Fortune](https://github.com/FloatTech/zbpdata)全部主题。在`env`下设置`xxx_FLAG`以启用或关闭抽签随机主题（默认为全部开启），例如：
+3. 使用[FloatTech-zbpdata/Fortune](https://github.com/FloatTech/zbpdata)全部主题。在`env`下设置`xxx_FLAG`以启用或关闭抽签随机主题（默认为全部开启），例如：
 
     ```python
     ARKNIGHTS_FLAG=true         # 明日方舟
@@ -74,9 +74,8 @@ dev版，请勿使用
     LIQINGGE_FLAG=true          # 李清歌
     HOSHIZORA_FLAG=true         # 星空列车与白的旅行
     SAKURA_FLAG=true            # 樱色之云绯色之恋
-    # 新增两种主题资源
-    SUMMER_POCKETS=true         # 夏日口袋
-    AMAZING_GRACE=true          # 奇异恩典·圣夜的小镇
+    SUMMER_POCKETS_FLAG=true    # 夏日口袋
+    AMAZING_GRACE_FLAG=true     # 奇异恩典·圣夜的小镇
     ```
 
     **请确保不全为`false`**
@@ -111,8 +110,6 @@ dev版，请勿使用
 ## 功能
 
 1. 随机抽取今日运势，配置多种抽签主题：原神、PCR、Hololive、东方、东方归言录、明日方舟、旧版东方、赛马娘、阴阳师、碧蓝航线、碧蓝幻想、战双帕弥什，galgame主题等……
-
-    **新增** 夏日口袋[#14](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/pull/14)、奇异恩典·圣夜的小镇！
 
 2. 可配置随机抽签主题或指定主题，也可指定部分主题的角色签底；
 

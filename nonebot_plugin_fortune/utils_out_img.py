@@ -13,7 +13,7 @@ def get_copywriting() -> Tuple[str, str]:
     '''
         Read the copywriting.json, choice a luck with a random content
     '''
-    _p: Path = fortune_config.fortune_path / "fortune" / "copywriting.json"
+    _p: Path = fortune_config.fortune_path / "fortune" / "copywriting copy.json"
     if not _p.exists():
         return False
 
@@ -52,12 +52,12 @@ def randomBasemap(_theme: Optional[str], _charac: Optional[str]) -> Path:
         
     return p
 
-def exportFilePath(originalFilePath: str, user_id: str, group_id: str) -> Path:
-    dirPath = f"{FORTUNE_PATH}/out"
-    if not os.path.exists(dirPath):
-        os.makedirs(dirPath)
+def exportFilePath(originalFilePath: Path, user_id: str, group_id: str) -> Path:
+    dirPath: Path = fortune_config.fortune_path / "out"
+    if not dirPath.exists():
+        dirPath.mkdir(exist_ok=True, parents=True)
 
-    outPath = Path(originalFilePath).parent.parent.parent / "out" / f"{user_id}_{group_id}.png" 
+    outPath = originalFilePath.parent.parent.parent / "out" / f"{user_id}_{group_id}.png" 
     return outPath
 
 def decrement(text: str) -> Union[List[str], bool]:
@@ -118,26 +118,27 @@ def random_pick_theme() -> str:
         if _d.get(picked, False) is True:
             return picked.split("_flag")[0]
 
-def drawing(theme: str, spec_path: Optional[str], user_id: str, group_id: str) -> bytes:
+def drawing(_theme: Optional[str], _charac: Optional[str], user_id: str, group_id: str) -> bytes:
     '''
         Draw a specific divination
         @retval: bytes?
-        
-        通过储存image path、text title保存今日运势信息
     '''
+    # 1. Random choice a base image
+    imgPath: Path = randomBasemap(_theme, _charac)
+    img: Image.Image = Image.open(imgPath)
+    draw = ImageDraw.Draw(img)
+    
+    # 2. Random choice a luck text with title
+    title, text = get_copywriting()
+    
+    # 3. Draw
+    font_size = 45
+    color = "#F5F5F5"
+    image_font_center: Tuple[int, int] = (140, 99)
     fontPath = {
         "title": f"{fortune_config.fortune_path}/font/Mamelon.otf",
         "text": f"{fortune_config.fortune_path}/font/sakura.ttf",
     }
-    imgPath: Path = randomBasemap(theme, spec_path)
-    img: Image.Image = Image.open(imgPath)
-    
-    # Draw title
-    draw = ImageDraw.Draw(img)
-    title, text = get_copywriting()
-    font_size = 45
-    color = "#F5F5F5"
-    image_font_center = (140, 99)
     ttfront = ImageFont.truetype(fontPath["title"], font_size)
     font_length = ttfront.getsize(title)
     draw.text(
@@ -149,6 +150,7 @@ def drawing(theme: str, spec_path: Optional[str], user_id: str, group_id: str) -
         fill=color,
         font=ttfront,
     )
+    
     # Text rendering
     font_size = 25
     color = "#323232"
@@ -171,6 +173,7 @@ def drawing(theme: str, spec_path: Optional[str], user_id: str, group_id: str) -
         )
         y = int(image_font_center[1] - font_height / 2)
         draw.text((x, y), textVertical, fill=color, font=ttfront)
+        
     # Save
     outPath = exportFilePath(imgPath, user_id, group_id)
     img.save(outPath)

@@ -15,10 +15,10 @@ _🙏 今日运势 🙏_
   </a>
   
   <a href="https://github.com/nonebot/nonebot2">
-    <img src="https://img.shields.io/badge/nonebot2-2.0.0beta.2-green">
+    <img src="https://img.shields.io/badge/nonebot2-2.0.0beta.2+-green">
   </a>
   
-  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.3">
+  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.4a1">
     <img src="https://img.shields.io/github/v/release/MinatoAquaCrews/nonebot_plugin_fortune?color=orange">
   </a>
 
@@ -28,26 +28,21 @@ _🙏 今日运势 🙏_
   
 </p>
 
-</p>
-
 ## 版本
 
-v0.4.3 **该版本主要更新主题资源，可通过下方引导手动更新**
+v0.4.4a1 全新的运势文案！
 
 👉 [如何在v0.4.2或更早版本上更新抽签主题资源？](https://github.com/KafCoppelia/nonebot_plugin_fortune/blob/beta/How-to-add-new-theme.md)
 
 ⚠ 适配nonebot2-2.0.0beta.2+
 
-<details>
-  <summary>更新日志</summary>
-  👉 [Here](https://github.com/KafCoppelia/nonebot_plugin_fortune/releases/tag/v0.4.3)
-</details>
+[更新日志](https://github.com/KafCoppelia/nonebot_plugin_fortune/releases/tag/v0.4.4a1)
 
 ## 安装
 
 1. 安装方式：
 
-    - 通过`pip`或`nb`：pypi无法发行过大安装包，由此安装的插件不包含所有`resource`下所有主题抽签资源，需单独下载，建议`zip`包下载后单独提取`resource`资源，后更改`FORTUNE_PATH`配置即可；
+    - 通过`pip`或`nb`；pypi无法发行过大安装包，由此安装的插件不包含所有`resource`下所有主题抽签资源，需单独下载，建议`zip`包下载后单独提取`resource`资源，后更改`FORTUNE_PATH`配置即可；
     
     - 通过`zip`或`git clone`安装：包含`resource`下所有主题抽签资源；
 
@@ -57,7 +52,7 @@ v0.4.3 **该版本主要更新主题资源，可通过下方引导手动更新**
     FORTUNE_PATH="your_path_to_resource"
     ```
 
-3. **新增** 使用了[FloatTech-zbpdata/Fortune](https://github.com/FloatTech/zbpdata)全部主题。在`env`下设置`xxx_FLAG`以启用或关闭抽签随机主题（默认为全部开启），例如：
+3. 使用[FloatTech-zbpdata/Fortune](https://github.com/FloatTech/zbpdata)全部主题。在`env`下设置`xxx_FLAG`以启用或关闭抽签随机主题（默认为全部开启），例如：
 
     ```python
     ARKNIGHTS_FLAG=true         # 明日方舟
@@ -79,9 +74,8 @@ v0.4.3 **该版本主要更新主题资源，可通过下方引导手动更新**
     LIQINGGE_FLAG=true          # 李清歌
     HOSHIZORA_FLAG=true         # 星空列车与白的旅行
     SAKURA_FLAG=true            # 樱色之云绯色之恋
-    # 新增两种主题资源
-    SUMMER_POCKETS=true         # 夏日口袋
-    AMAZING_GRACE=true          # 奇异恩典·圣夜的小镇
+    SUMMER_POCKETS_FLAG=true    # 夏日口袋
+    AMAZING_GRACE_FLAG=true     # 奇异恩典·圣夜的小镇
     ```
 
     **请确保不全为`false`**
@@ -117,8 +111,6 @@ v0.4.3 **该版本主要更新主题资源，可通过下方引导手动更新**
 
 1. 随机抽取今日运势，配置多种抽签主题：原神、PCR、Hololive、东方、东方归言录、明日方舟、旧版东方、赛马娘、阴阳师、碧蓝航线、碧蓝幻想、战双帕弥什，galgame主题等……
 
-    **新增** 夏日口袋[#14](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/pull/14)、奇异恩典·圣夜的小镇！
-
 2. 可配置随机抽签主题或指定主题，也可指定部分主题的角色签底；
 
 3. 每群每人一天限抽签1次，0点刷新（贪心的人是不会有好运的🤗）抽签信息并清除`./resource/out`下图片；
@@ -126,6 +118,12 @@ v0.4.3 **该版本主要更新主题资源，可通过下方引导手动更新**
 4. 抽签的信息会保存在`./resource/fortune_data.json`内；群抽签设置及指定抽签规则保存在`./resource/fortune_setting.json`内；抽签生成的图片当天会保存在`./resource/out`下；
 
 5. `fortune_setting.json`已预置明日方舟、Asoul、原神、东方、Hololive、李清歌的指定抽签规则；
+
+6. **新增** 全新的运势文案！原`goodLuck.json`已移除，现`copywriting.json`整合了19种运势及共计500余条文案！
+
+	⚠ `version`字段记录文案版本，后续版本将实现从repo自动更新最新文案资源
+
+	⚠ `1.0`版本文案资源来自于hololive早安系列2019年第6.10～8.24期，有修改。
 
 ## 命令
 
@@ -141,11 +139,11 @@ v0.4.3 **该版本主要更新主题资源，可通过下方引导手动更新**
 
 4. 抽签设置：查看当前群抽签主题的配置；
 
-5. [超管] 刷新抽签：即刻刷新抽签，防止过0点未刷新的意外；
+5. [超管] 刷新抽签：即刻刷新抽签，防止过0点未刷新的意外（虽然这个问题已经得到修复）；
 
 6. 今日运势帮助：显示插件帮助文案；
 
-7. 主题列表：显示当前已启用主题；
+7. **修改** 查看（抽签）主题：显示当前已启用主题；
 
 ## 效果
 
@@ -163,16 +161,8 @@ v0.4.3 **该版本主要更新主题资源，可通过下方引导手动更新**
 
 2. 感谢江樂丝提供东方签底；
 
-3. 东方归言录(touhou_lostword)：[KafCoppelia](https://github.com/KafCoppelia)
+3. 东方归言录(touhou_lostword)：[KafCoppelia](https://github.com/KafCoppelia)；
 
-3. [FloatTech-zbpdata/Fortune](https://github.com/FloatTech/zbpdata)：其余主题签；
+4. [FloatTech-zbpdata/Fortune](https://github.com/FloatTech/zbpdata)：其余主题签；
 
-## 资源整合注意
-
-1. 抽签图片及文案资源下载参见上述出处链接；
-
-2. [FloatTech-zbpdata/Fortune](https://github.com/FloatTech/zbpdata)提供的`text.json`文案资源与[opqqq-plugin](https://github.com/opq-osc/opqqq-plugin)提供的文案资源`copywriting.json`与`goodLuck.json`略有不同，具体不同如下：
-
-	- `text.json`中`title`（吉凶度设定）直接对应`content`（运势文案内容）；
-
-	- 而`goodLuck.json`中`good-luck`（吉凶度编号）对应`name`（吉凶度设定）；`copywriting.json`中`good-luck`（吉凶度编号）对应`content`（运势文案内容）；
+5. 新版运势文案资源：[KafCoppelia](https://github.com/KafCoppelia)。`copywriting.json`整合了関係運、全体運、勉強運、金運、仕事運、恋愛運、総合運、大吉、中吉、小吉、吉、半吉、末吉、末小吉、凶、小凶、半凶、末凶、大凶及500+运势文案！来自于hololive早安系列2019年第6.10～8.24期，有修改。

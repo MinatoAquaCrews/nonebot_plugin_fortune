@@ -1,111 +1,72 @@
-import os
-import random
 from PIL import Image, ImageDraw, ImageFont
+from typing import Optional, Tuple, Union, Dict, List
 from pathlib import Path
-from typing import Optional
+import random
 try:
     import ujson as json
 except ModuleNotFoundError:
     import json
 
-from .config import config, FORTUNE_PATH
+from .config import fortune_config
 
 '''
     抽签主题开关，当随机抽签时判断某主题是否开启
 '''
 MainThemeEnable = {
-    "pcr":              config.pcr_flag,
-    "genshin":          config.genshin_flag,
-    "hololive":         config.hololive_flag,
-    "touhou":           config.touhou_flag,
-    "touhou_lostword":  config.touhou_lostword_flag,
-    "touhou_old":       config.touhou_olg_flag,
-    "onmyoji":          config.onmyoji_flag,
-    "azure":            config.azure_flag,
-    "asoul":            config.asoul_flag,
-    "arknights":        config.arknights_flag,
-    "granblue_fantasy": config.granblue_fantasy_flag,
-    "punishing":        config.punishing_flag,
-    "pretty_derby":     config.pretty_derby_flag,
-    "dc4":              config.dc4_flag,
-    "einstein":         config.einstein_flag,
-    "sweet_illusion":   config.sweet_illusion_flag,
-    "liqingge":         config.liqingge_flag,
-    "hoshizora":        config.hoshizora_flag,
-    "sakura":           config.sakura_flag,
-    "summer_pockets":   config.summer_pockets,
-    "amazing_grace":    config.amazing_grace
-}
-'''
-    抽签主题对应表，第一键值为“抽签设置”或“主题列表”展示的主题名称
-    Key-Value: 主题资源文件夹名-设置主题别名
-'''
-MainThemeList = {
-    "random":   ["随机"],
-    "pcr":      ["PCR", "公主链接", "公主连结", "Pcr", "pcr"],
-    "genshin":  ["原神", "Genshin Impact", "genshin", "Genshin", "op", "原批"],
-    "hololive": ["Hololive", "hololive", "Vtb", "vtb", "管人", "holo", "猴楼"],
-    "touhou":   ["东方", "touhou", "Touhou", "车万"],
-    "touhou_lostword":
-                ["东方归言录", "东方lostword", "touhou lostword", "Touhou dlc"],
-    "touhou_old": 
-                ["旧东方", "旧版东方", "老东方", "老版东方", "经典东方"],
-    "onmyoji":  ["阴阳师", "yys", "Yys", "痒痒鼠"],
-    "azure":    ["碧蓝航线", "碧蓝", "azure", "Azure"],
-    "asoul":    ["Asoul", "asoul", "a手", "A手", "as", "As"],
-    "arknights":["明日方舟", "方舟", "arknights", "鹰角", "Arknights", "舟游"],
-    "granblue_fantasy":
-                ["碧蓝幻想", "Granblue Fantasy", "granblue fantasy", "幻想", "fantasy", "Fantasy"],
-    "punishing":["战双", "战双帕弥什"],
-    "pretty_derby":
-                ["赛马娘", "马", "马娘", "赛马"],
-    "dc4":      ["dc4", "DC4", "Dc4", "初音岛", "初音岛4"],
-    "einstein": ["爱因斯坦携爱敬上", "爱因斯坦", "einstein", "Einstein"],
-    "sweet_illusion":
-                ["灵感满溢的甜蜜创想", "甜蜜一家人", "富婆妹"],
-    "liqingge": ["李清歌", "清歌"],
-    "hoshizora":["星空列车与白的旅行", "星空列车"],
-    "sakura":   ["樱色之云绯色之恋", "樱云之恋", "樱云绯恋", "樱云"],
-    "summer_pockets":
-                ["夏日口袋", "夏兜", "sp", "SP"],
-    "amazing_grace":
-                ["奇异恩典"]
+    "pcr":              fortune_config.pcr_flag,
+    "genshin":          fortune_config.genshin_flag,
+    "hololive":         fortune_config.hololive_flag,
+    "touhou":           fortune_config.touhou_flag,
+    "touhou_lostword":  fortune_config.touhou_lostword_flag,
+    "touhou_old":       fortune_config.touhou_olg_flag,
+    "onmyoji":          fortune_config.onmyoji_flag,
+    "azure":            fortune_config.azure_flag,
+    "asoul":            fortune_config.asoul_flag,
+    "arknights":        fortune_config.arknights_flag,
+    "granblue_fantasy": fortune_config.granblue_fantasy_flag,
+    "punishing":        fortune_config.punishing_flag,
+    "pretty_derby":     fortune_config.pretty_derby_flag,
+    "dc4":              fortune_config.dc4_flag,
+    "einstein":         fortune_config.einstein_flag,
+    "sweet_illusion":   fortune_config.sweet_illusion_flag,
+    "liqingge":         fortune_config.liqingge_flag,
+    "hoshizora":        fortune_config.hoshizora_flag,
+    "sakura":           fortune_config.sakura_flag,
+    "summer_pockets":   fortune_config.summer_pockets_flag,
+    "amazing_grace":    fortune_config.amazing_grace_flag
 }
 
-def copywriting() -> str:
-    p = f"{FORTUNE_PATH}/fortune/copywriting.json"
-    if not os.path.exists(p):
+def get_copywriting() -> Tuple[str, str]:
+    '''
+        Read the copywriting.json, choice a luck with a random content
+    '''
+    _p: Path = fortune_config.fortune_path / "fortune" / "copywriting.json"
+    if not _p.exists():
         return False
 
-    with open(p, "r", encoding="utf-8") as f:
-        content = json.load(f)
+    with open(_p, "r", encoding="utf-8") as f:
+        content: List[Dict[str, Union[str, int, List[str]]]]= json.load(f).get("copywriting")
+        
+    luck: Dict[str, Union[str, int, List[str]]] = random.choice(content)
+    
+    title: str = luck.get("good-luck")
+    text: str = random.choice(luck.get("content"))
 
-    return random.choice(content["copywriting"])
-
-def getTitle(structure):
-    p = f"{FORTUNE_PATH}/fortune/goodLuck.json"
-    if not os.path.exists(p):
-        return False
-
-    with open(p, "r", encoding="utf-8") as f:
-        content = json.load(f)
-
-    for i in content["types_of"]:
-        if i["good-luck"] == structure["good-luck"]:
-            return i["name"]
-    raise Exception("Configuration file error")
+    return title, text
 
 def randomBasemap(theme: str, spec_path: Optional[str]) -> str:
     try_time = 0
     if spec_path:
-        _p = f"{FORTUNE_PATH}/img"
-        p = os.path.join(_p, spec_path)
+        _p: Path = fortune_config.fortune_path / "img"
+        p: Path =_p / spec_path
         return p
     else:
         if theme == "random":
-            __p = f"{FORTUNE_PATH}/img"
+            __p: Path = fortune_config.fortune_path / "img"
+            # Each dir is a theme
+            themes: List[str] = [str(f) for f in __p.iterdir() if f.is_dir()]
             while True:
-                picked_theme = random.choice(os.listdir(__p))
+                picked_theme = random.choice(themes)
                 if MainThemeEnable[picked_theme] == True:
                     break
                 else:
@@ -114,29 +75,34 @@ def randomBasemap(theme: str, spec_path: Optional[str]) -> str:
                 if try_time == len(MainThemeEnable):
                     break
 
-            _p = os.path.join(__p, picked_theme)
-            p = os.path.join(_p, random.choice(os.listdir(_p)))
+            _p: Path = __p / picked_theme
+            # Each file is a image
+            images: List[str] = [str(f) for f in _p.iterdir() if f.is_file()]
+            p: Path = _p / random.choice(images)
         else:
-            _p = os.path.join(f"{FORTUNE_PATH}/img", theme)
-            p = os.path.join(_p, random.choice(os.listdir(_p)))
+            _p: Path = fortune_config.fortune_path / "img" / theme
+            images: List[str] = [str(f) for f in _p.iterdir() if f.is_file()]
+            p: Path = _p / random.choice(images)
         
         return p
 
 def drawing(theme: str, spec_path: Optional[str], user_id: str, group_id: str) -> Path:
-    fontPath = {
-        "title": f"{FORTUNE_PATH}/font/Mamelon.otf",
-        "text": f"{FORTUNE_PATH}/font/sakura.ttf",
-    }
+    # 1. Random choice a base image
     imgPath = randomBasemap(theme, spec_path)
-    img = Image.open(imgPath)
-    # Draw title
+    img: Image.Image = Image.open(imgPath)
     draw = ImageDraw.Draw(img)
-    text = copywriting()
-    title = getTitle(text)
-    text = text["content"]
+    
+    # 2. Random choice a luck text with title
+    title, text = get_copywriting()
+    
+    # 3. Draw
     font_size = 45
     color = "#F5F5F5"
     image_font_center = (140, 99)
+    fontPath = {
+        "title": f"{fortune_config.fortune_path}/font/Mamelon.otf",
+        "text": f"{fortune_config.fortune_path}/font/sakura.ttf",
+    }
     ttfront = ImageFont.truetype(fontPath["title"], font_size)
     font_length = ttfront.getsize(title)
     draw.text(
@@ -173,12 +139,12 @@ def drawing(theme: str, spec_path: Optional[str], user_id: str, group_id: str) -
     img.save(outPath)
     return outPath
 
-def exportFilePath(originalFilePath: str, user_id: str, group_id: str) -> Path:
-    dirPath = f"{FORTUNE_PATH}/out"
-    if not os.path.exists(dirPath):
-        os.makedirs(dirPath)
+def exportFilePath(originalFilePath: Path, user_id: str, group_id: str) -> Path:
+    dirPath: Path = fortune_config.fortune_path / "out"
+    if not dirPath.exists():
+        dirPath.mkdir(exist_ok=True, parents=True)
 
-    outPath = Path(originalFilePath).parent.parent.parent / "out" / f"{user_id}_{group_id}.png" 
+    outPath: Path = originalFilePath.parent.parent.parent / "out" / f"{user_id}_{group_id}.png" 
     return outPath
 
 def decrement(text):
@@ -218,7 +184,6 @@ def decrement(text):
         else:
             result.append(text[i * cardinality : (i + 1) * cardinality])
     return result
-
 
 def vertical(str):
     list = []

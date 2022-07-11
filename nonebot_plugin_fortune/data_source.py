@@ -7,23 +7,24 @@ try:
 except ModuleNotFoundError:
     import json
 
-from .config import FORTUNE_PATH
-from .utils import drawing, MainThemeList, MainThemeEnable
+from .config import fortune_config, MainThemeList
+from .utils import drawing, MainThemeEnable
 
 class FortuneManager:
-    def __init__(self, path: Optional[Path]):
+    def __init__(self):
         self.user_data = {}
         self.setting = {}
-        if not path:
-            if not Path(FORTUNE_PATH).exists():
-                Path(FORTUNE_PATH).mkdir(parents=True, exist_ok=True)
-            data_file = Path(FORTUNE_PATH) / "fortune_data.json"
-            setting_file = Path(FORTUNE_PATH) / "fortune_setting.json"
+        _path: Path = fortune_config.fortune_path
+        if not _path:
+            if not fortune_config.fortune_path.exists():
+                fortune_config.fortune_path.mkdir(parents=True, exist_ok=True)
+            data_file = fortune_config.fortune_path / "fortune_data.json"
+            setting_file = fortune_config.fortune_path / "fortune_setting.json"
         else:
-            if not path.exists():
-                path.mkdir(parents=True, exist_ok=True)
-            data_file = path / "fortune_data.json"
-            setting_file = path / "fortune_setting.json"
+            if not _path.exists():
+                _path.mkdir(parents=True, exist_ok=True)
+            data_file = _path / "fortune_data.json"
+            setting_file = _path / "fortune_setting.json"
 
         self.data_file = data_file
         self.setting_file = setting_file
@@ -82,7 +83,7 @@ class FortuneManager:
             self._end_data_handle(event)
             return image_file, True
         else:
-            image_file = Path(FORTUNE_PATH) / "out" / f"{user_id}_{group_id}.png"
+            image_file = fortune_config.fortune_path / "out" / f"{user_id}_{group_id}.png"
             return image_file, False
 
     def reset_fortune(self) -> None:
@@ -99,7 +100,7 @@ class FortuneManager:
         
         self.save_data()
 
-        dirPath = Path(FORTUNE_PATH) / "out"
+        dirPath: Path = fortune_config.fortune_path / "out"
         for pic in dirPath.iterdir():
             pic.unlink()
 
@@ -171,8 +172,8 @@ class FortuneManager:
             self.setting["group_rule"][group_id] = theme
             self.save_setting()
             return True        
-        else:
-            return False
+        
+        return False
 
     def get_setting(self, event: GroupMessageEvent) -> str:
         '''
@@ -192,4 +193,4 @@ class FortuneManager:
         with open(self.setting_file, 'w', encoding='utf-8') as f:
             json.dump(self.setting, f, ensure_ascii=False, indent=4)
 
-fortune_manager = FortuneManager(Path(FORTUNE_PATH))
+fortune_manager = FortuneManager()

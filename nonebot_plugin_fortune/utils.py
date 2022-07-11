@@ -66,16 +66,17 @@ def randomBasemap(theme: str, spec_path: Optional[str]) -> str:
             # Each dir is a theme
             themes: List[str] = [str(f) for f in __p.iterdir() if f.is_dir()]
             while True:
-                picked_theme = random.choice(themes)
-                if MainThemeEnable[picked_theme] == True:
+                picked = random.choice(themes)
+                picked_theme = picked + "_flag"
+                if MainThemeEnable.get(picked_theme) is True:
                     break
                 else:
-                    try_time = try_time+1
+                    try_time += 1
 
                 if try_time == len(MainThemeEnable):
                     break
 
-            _p: Path = __p / picked_theme
+            _p: Path = __p / picked
             # Each file is a image
             images: List[str] = [str(f) for f in _p.iterdir() if f.is_file()]
             p: Path = _p / random.choice(images)

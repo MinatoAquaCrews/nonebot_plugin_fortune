@@ -119,7 +119,7 @@ v0.4.4a1 全新的运势文案！
 
 5. `fortune_setting.json`已预置明日方舟、Asoul、原神、东方、Hololive、李清歌的指定抽签规则；
 
-6. **新增** 全新的运势文案！原`goodLuck.json`已移除，现`copywriting.json`整合了19种运势及共计500余条文案！
+6. 🔥 **重磅更新** 全新的运势文案！原`goodLuck.json`已移除，现`copywriting.json`整合了19种运势及共计500余条文案！
 
 	⚠ `version`字段记录文案版本，后续版本将实现从repo自动更新最新文案资源
 

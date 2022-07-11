@@ -12,35 +12,28 @@ except ModuleNotFoundError:
     Key-Value: 主题资源文件夹名-设置主题别名
 '''
 MainThemeList: Dict[str, List[str]] = {
-    "random":   ["随机"],
-    "pcr":      ["PCR", "公主链接", "公主连结", "Pcr", "pcr"],
-    "genshin":  ["原神", "Genshin Impact", "genshin", "Genshin", "op", "原批"],
+    "random": ["随机"],
+    "pcr": ["PCR", "公主链接", "公主连结", "Pcr", "pcr"],
+    "genshin": ["原神", "Genshin Impact", "genshin", "Genshin", "op", "原批"],
     "hololive": ["Hololive", "hololive", "Vtb", "vtb", "管人", "holo", "猴楼"],
-    "touhou":   ["东方", "touhou", "Touhou", "车万"],
-    "touhou_lostword":
-                ["东方归言录", "东方lostword", "touhou lostword", "Touhou dlc"],
-    "touhou_old": 
-                ["旧东方", "旧版东方", "老东方", "老版东方", "经典东方"],
-    "onmyoji":  ["阴阳师", "yys", "Yys", "痒痒鼠"],
-    "azure":    ["碧蓝航线", "碧蓝", "azure", "Azure"],
-    "asoul":    ["Asoul", "asoul", "a手", "A手", "as", "As"],
-    "arknights":["明日方舟", "方舟", "arknights", "鹰角", "Arknights", "舟游"],
-    "granblue_fantasy":
-                ["碧蓝幻想", "Granblue Fantasy", "granblue fantasy", "幻想", "fantasy", "Fantasy"],
+    "touhou": ["东方", "touhou", "Touhou", "车万"],
+    "touhou_lostword": ["东方归言录", "东方lostword", "touhou lostword", "Touhou dlc"],
+    "touhou_old": ["旧东方", "旧版东方", "老东方", "老版东方", "经典东方"],
+    "onmyoji": ["阴阳师", "yys", "Yys", "痒痒鼠"],
+    "azure": ["碧蓝航线", "碧蓝", "azure", "Azure"],
+    "asoul": ["Asoul", "asoul", "a手", "A手", "as", "As"],
+    "arknights": ["明日方舟", "方舟", "arknights", "鹰角", "Arknights", "舟游"],
+    "granblue_fantasy": ["碧蓝幻想", "Granblue Fantasy", "granblue fantasy", "幻想", "fantasy", "Fantasy"],
     "punishing":["战双", "战双帕弥什"],
-    "pretty_derby":
-                ["赛马娘", "马", "马娘", "赛马"],
-    "dc4":      ["dc4", "DC4", "Dc4", "初音岛", "初音岛4"],
+    "pretty_derby": ["赛马娘", "马", "马娘", "赛马"],
+    "dc4": ["dc4", "DC4", "Dc4", "初音岛", "初音岛4"],
     "einstein": ["爱因斯坦携爱敬上", "爱因斯坦", "einstein", "Einstein"],
-    "sweet_illusion":
-                ["灵感满溢的甜蜜创想", "甜蜜一家人", "富婆妹"],
+    "sweet_illusion": ["灵感满溢的甜蜜创想", "甜蜜一家人", "富婆妹"],
     "liqingge": ["李清歌", "清歌"],
-    "hoshizora":["星空列车与白的旅行", "星空列车"],
-    "sakura":   ["樱色之云绯色之恋", "樱云之恋", "樱云绯恋", "樱云"],
-    "summer_pockets":
-                ["夏日口袋", "夏兜", "sp", "SP"],
-    "amazing_grace":
-                ["奇异恩典"]
+    "hoshizora": ["星空列车与白的旅行", "星空列车"],
+    "sakura": ["樱色之云绯色之恋", "樱云之恋", "樱云绯恋", "樱云"],
+    "summer_pockets": ["夏日口袋", "夏兜", "sp", "SP"],
+    "amazing_grace": ["奇异恩典"]
 }
 
 class PluginConfig(BaseModel, extra=Extra.ignore):

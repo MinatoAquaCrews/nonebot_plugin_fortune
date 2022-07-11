@@ -13,27 +13,27 @@ from .config import fortune_config
     抽签主题开关，当随机抽签时判断某主题是否开启
 '''
 MainThemeEnable = {
-    "pcr":              fortune_config.pcr_flag,
-    "genshin":          fortune_config.genshin_flag,
-    "hololive":         fortune_config.hololive_flag,
-    "touhou":           fortune_config.touhou_flag,
-    "touhou_lostword":  fortune_config.touhou_lostword_flag,
-    "touhou_old":       fortune_config.touhou_olg_flag,
-    "onmyoji":          fortune_config.onmyoji_flag,
-    "azure":            fortune_config.azure_flag,
-    "asoul":            fortune_config.asoul_flag,
-    "arknights":        fortune_config.arknights_flag,
+    "pcr": fortune_config.pcr_flag,
+    "genshin": fortune_config.genshin_flag,
+    "hololive": fortune_config.hololive_flag,
+    "touhou": fortune_config.touhou_flag,
+    "touhou_lostword": fortune_config.touhou_lostword_flag,
+    "touhou_old": fortune_config.touhou_olg_flag,
+    "onmyoji": fortune_config.onmyoji_flag,
+    "azure": fortune_config.azure_flag,
+    "asoul": fortune_config.asoul_flag,
+    "arknights": fortune_config.arknights_flag,
     "granblue_fantasy": fortune_config.granblue_fantasy_flag,
-    "punishing":        fortune_config.punishing_flag,
-    "pretty_derby":     fortune_config.pretty_derby_flag,
-    "dc4":              fortune_config.dc4_flag,
-    "einstein":         fortune_config.einstein_flag,
-    "sweet_illusion":   fortune_config.sweet_illusion_flag,
-    "liqingge":         fortune_config.liqingge_flag,
-    "hoshizora":        fortune_config.hoshizora_flag,
-    "sakura":           fortune_config.sakura_flag,
-    "summer_pockets":   fortune_config.summer_pockets_flag,
-    "amazing_grace":    fortune_config.amazing_grace_flag
+    "punishing": fortune_config.punishing_flag,
+    "pretty_derby": fortune_config.pretty_derby_flag,
+    "dc4": fortune_config.dc4_flag,
+    "einstein": fortune_config.einstein_flag,
+    "sweet_illusion": fortune_config.sweet_illusion_flag,
+    "liqingge": fortune_config.liqingge_flag,
+    "hoshizora": fortune_config.hoshizora_flag,
+    "sakura": fortune_config.sakura_flag,
+    "summer_pockets": fortune_config.summer_pockets_flag,
+    "amazing_grace": fortune_config.amazing_grace_flag
 }
 
 def get_copywriting() -> Tuple[str, str]:
@@ -66,16 +66,17 @@ def randomBasemap(theme: str, spec_path: Optional[str]) -> str:
             # Each dir is a theme
             themes: List[str] = [str(f) for f in __p.iterdir() if f.is_dir()]
             while True:
-                picked_theme = random.choice(themes)
-                if MainThemeEnable[picked_theme] == True:
+                picked = random.choice(themes)
+                picked_theme = picked + "_flag"
+                if MainThemeEnable.get(picked_theme) is True:
                     break
                 else:
-                    try_time = try_time+1
+                    try_time += 1
 
                 if try_time == len(MainThemeEnable):
                     break
 
-            _p: Path = __p / picked_theme
+            _p: Path = __p / picked
             # Each file is a image
             images: List[str] = [str(f) for f in _p.iterdir() if f.is_file()]
             p: Path = _p / random.choice(images)

@@ -75,7 +75,7 @@ async def _(event: GroupMessageEvent, state: T_State = Depends(get_user_theme)):
     
     for theme in MainThemeList:
         if user_theme in MainThemeList[theme]:
-            if not fortune_manager.theme_enable_check(theme, event):
+            if not fortune_manager.theme_enable_check(theme):
                 await divine_specific.finish("该抽签主题未启用~")
             else:
                 image_file, status = fortune_manager.divine(_theme=user_theme, _spec_path=None, event=event)

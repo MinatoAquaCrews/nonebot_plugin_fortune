@@ -117,7 +117,7 @@ class FortuneManager:
             self.setting["specific_rule"] = {}
         if group_id not in self.setting["group_rule"]:
             self.setting["group_rule"][group_id] = "random"
-        if group_id not in self.get_user_data:
+        if group_id not in self.user_data:
             self.user_data[group_id] = {}
         if user_id not in self.user_data[group_id]:
             self.user_data[group_id][user_id] = {

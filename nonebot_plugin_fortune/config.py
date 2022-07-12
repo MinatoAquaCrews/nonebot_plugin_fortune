@@ -88,5 +88,6 @@ async def check_config() -> None:
                 
     with config_path.open("w", encoding="utf-8") as f:
         content = config.dict()
+        # Posix path need to transfer to str then write in json
         content.update({"fortune_path": str(content.get("fortune_path"))})
         json.dump(content, f, ensure_ascii=False, indent=4)

@@ -18,7 +18,7 @@ _🙏 今日运势 🙏_
     <img src="https://img.shields.io/badge/nonebot2-2.0.0beta.2+-green">
   </a>
   
-  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.4a1">
+  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.4a2">
     <img src="https://img.shields.io/github/v/release/MinatoAquaCrews/nonebot_plugin_fortune?color=orange&include_prereleases">
   </a>
 
@@ -30,13 +30,13 @@ _🙏 今日运势 🙏_
 
 ## 版本
 
-v0.4.4a1 全新的运势文案！
+v0.4.4a2 全新的运势文案！
 
 👉 [如何在v0.4.2或更早版本上更新抽签主题资源？](https://github.com/KafCoppelia/nonebot_plugin_fortune/blob/beta/How-to-add-new-theme.md)
 
 ⚠ 适配nonebot2-2.0.0beta.2+
 
-[更新日志](https://github.com/KafCoppelia/nonebot_plugin_fortune/releases/tag/v0.4.4a1)
+[更新日志](https://github.com/KafCoppelia/nonebot_plugin_fortune/releases/tag/v0.4.4a2)
 
 ## 安装
 
@@ -103,6 +103,8 @@ v0.4.4a1 全新的运势文案！
 
     *group_rule会自动生成，specific_rule可手动配置*
 
+    ⚠ 考虑在新版本弃用此功能
+
     指定凯露签，由于存在两张凯露的签底，配置凯露签的**路径列表**即可，其余类似，**请确保图片路径、格式输入正确**；
 
 5. 占卜一下你的今日运势！🎉
@@ -111,7 +113,7 @@ v0.4.4a1 全新的运势文案！
 
 1. 随机抽取今日运势，配置多种抽签主题：原神、PCR、Hololive、东方、东方归言录、明日方舟、旧版东方、赛马娘、阴阳师、碧蓝航线、碧蓝幻想、战双帕弥什，galgame主题等……
 
-2. 可配置随机抽签主题或指定主题，也可指定部分主题的角色签底；
+2. 可指定主题抽签；
 
 3. 每群每人一天限抽签1次，0点刷新（贪心的人是不会有好运的🤗）抽签信息并清除`./resource/out`下图片；
 
@@ -125,25 +127,37 @@ v0.4.4a1 全新的运势文案！
 
 	⚠ `1.0`版本文案资源来自于hololive早安系列2019年第6.10～8.24期，有修改。
 
+7. TODO in `v0.5.x` 🥳
+
+	- [] 优化设置主题、指定主题、及检索的方式，`v0.4.x`并没有完全改变之前的业务逻辑；
+	- [] 文案排版算法；
+	- [] 新增功能：每日星座运势；
+	- [] 新增功能：资源缺失检查、自动下载；
+	- [] 新增资源：新的抽签主题资源！
+
 ## 命令
 
 1. 一般抽签：今日运势、抽签、运势；
 
-2. 指定签底并抽签：指定[xxx]签，在`./resource/fortune_setting.json`内手动配置；
+2. 指定主题抽签：[xx抽签]，例如：PCR抽签、holo抽签；[#18](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/issues/18)
 
-3. [群管或群主或超管] 配置抽签主题：
+3. 指定签底并抽签：指定[xxx]签，在`./resource/fortune_setting.json`内手动配置；
+
+	⚠ 考虑在新版本弃用此功能
+
+4. [群管或群主或超管] 配置抽签主题：
 
     - 设置[原神/pcr/东方/vtb/xxx]签：设置群抽签主题；
 
-    - 重置抽签：设置群抽签主题为随机；
+    - **修改** 重置（抽签）主题：设置群抽签主题为随机；
 
-4. 抽签设置：查看当前群抽签主题的配置；
+5. 抽签设置：查看当前群抽签主题的配置；
 
-5. [超管] 刷新抽签：即刻刷新抽签，防止过0点未刷新的意外（虽然这个问题已经得到修复）；
+6. [超管] 刷新抽签：即刻刷新抽签，防止过0点未刷新的意外（虽然这个问题已经得到修复）；
 
-6. 今日运势帮助：显示插件帮助文案；
+7. 今日运势帮助：显示插件帮助文案；
 
-7. **修改** 查看（抽签）主题：显示当前已启用主题；
+8. **修改** 查看（抽签）主题：显示当前已启用主题；
 
 ## 效果
 

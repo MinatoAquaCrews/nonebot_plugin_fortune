@@ -78,7 +78,7 @@ async def _(event: GroupMessageEvent, state: T_State = Depends(get_user_theme)):
             if not fortune_manager.theme_enable_check(theme):
                 await divine_specific.finish("该抽签主题未启用~")
             else:
-                image_file, status = fortune_manager.divine(_theme=user_theme, _spec_path=None, event=event)
+                image_file, status = fortune_manager.divine(_theme=theme, _spec_path=None, event=event)
                 if not status:
                     msg = MessageSegment.text("你今天抽过签了，再给你看一次哦🤗\n") + MessageSegment.image(image_file)
                 else:

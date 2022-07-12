@@ -1,10 +1,11 @@
 [tool.poetry]
 name = "nonebot_plugin_fortune"
-version = "0.4.3"
+version = "0.4.4a1"
 description = "Fortune divination!"
 authors = ["KafCoppelia <k740677208@gmail.com>"]
 license = "MIT"
 readme = "README.md"
+packages = [{include = "nonebot_plugin_fortune"}]
 
 [tool.poetry.dependencies]
 python = "^3.7.3"

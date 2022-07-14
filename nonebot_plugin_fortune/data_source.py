@@ -20,7 +20,7 @@ class FortuneManager:
         '''
             检测是否重复抽签
         '''
-        self._user_data = self._load_data()
+        self._load_data()
         
         return self._user_data[gid][uid]["is_divined"]
     
@@ -29,7 +29,7 @@ class FortuneManager:
             检测是否有该特定规则
             检查指定规则的签底所对应主题是否开启或路径是否存在
         '''
-        self._setting = self._load_setting()
+        self._load_setting()
         
         if not self._setting["specific_rule"].get(limit):
             return False
@@ -48,7 +48,7 @@ class FortuneManager:
         '''
         self._init_user_data(gid ,uid, nickname)
         
-        self._setting = self._load_setting()
+        self._load_setting()
         if not isinstance(_theme, str):
             theme = self._setting["group_rule"][gid]
         else:
@@ -70,7 +70,7 @@ class FortuneManager:
         '''
             重置今日运势并清空图片
         '''
-        self._user_data = self._load_data()
+        self._load_data()
         for gid in self._user_data:
             for uid in list(self._user_data[gid]):
                 if self._user_data[gid][uid]["is_divined"] == False:
@@ -88,8 +88,8 @@ class FortuneManager:
         '''
             初始化用户信息
         '''
-        self._user_data = self._load_data()
-        self._setting = self._load_setting()
+        self._load_data()
+        self._load_setting()
         
         if "group_rule" not in self._setting:
             self._setting["group_rule"] = {}
@@ -125,7 +125,7 @@ class FortuneManager:
         '''
             占卜结束数据保存
         '''
-        self._user_data = self._load_data()
+        self._load_data()
         
         self._user_data[gid][uid]["is_divined"] = True
         self._save_data()
@@ -140,7 +140,7 @@ class FortuneManager:
         '''
             分群管理抽签设置
         '''
-        self._setting = self._load_setting()
+        self._load_setting()
         
         if self.theme_enable_check(theme):
             self._setting["group_rule"][gid] = theme
@@ -153,7 +153,7 @@ class FortuneManager:
         '''
             获取当前群抽签主题，若没有数据则置随机
         '''
-        self._setting = self._load_setting()
+        self._load_setting()
         
         if gid not in self._setting["group_rule"]:
             self._setting["group_rule"][gid] = "random"

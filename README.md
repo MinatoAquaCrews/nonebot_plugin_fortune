@@ -18,7 +18,7 @@ _🙏 今日运势 🙏_
     <img src="https://img.shields.io/badge/nonebot2-2.0.0beta.2+-green">
   </a>
   
-  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.4a2">
+  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.4a3">
     <img src="https://img.shields.io/github/v/release/MinatoAquaCrews/nonebot_plugin_fortune?color=orange&include_prereleases">
   </a>
 
@@ -30,29 +30,29 @@ _🙏 今日运势 🙏_
 
 ## 版本
 
-v0.4.4a2 全新的运势文案！
+v0.4.4a3 全新的运势文案！
 
 👉 [如何在v0.4.2或更早版本上更新抽签主题资源？](https://github.com/KafCoppelia/nonebot_plugin_fortune/blob/beta/How-to-add-new-theme.md)
 
 ⚠ 适配nonebot2-2.0.0beta.2+
 
-[更新日志](https://github.com/KafCoppelia/nonebot_plugin_fortune/releases/tag/v0.4.4a2)
+[更新日志](https://github.com/KafCoppelia/nonebot_plugin_fortune/releases/tag/v0.4.4a3)
 
 ## 安装
 
 1. 安装方式：
 
-    - 通过`pip`或`nb`；pypi无法发行过大安装包，由此安装的插件不包含`resource/img`下所有抽签主题图片，需单独下载，建议`zip`包下载后单独提取`resource/img`抽签主题图片，后更改`FORTUNE_PATH`配置即可；
+    - 通过`pip`或`nb`；pypi无法发行过大安装包，由此安装的插件不包含`resource/img`下所有**抽签主题图片**，需单独下载，建议`zip`包下载后单独提取`resource/img`抽签主题图片，后更改`FORTUNE_PATH`配置即可；
     
     - 通过`zip`或`git clone`安装：包含`resource`下所有主题抽签资源；
 
-2. 抽签主题图片`img`、字体`font`、文案`fortune`等资源位于`./resource`下，可在`env`下设置`FORTUNE_PATH`更改；
+2. 抽签主题图片`img`、字体`font`、文案`fortune`等资源均位于`./resource`下，可在`env`中设置`FORTUNE_PATH`；
 
     ```python
-    FORTUNE_PATH="your_path_to_resource"
+    FORTUNE_PATH="your_path_to_resource"  # For example, "./my-data/fortune"，其下有img、font、fortune文件夹等资源
     ```
 
-3. 使用[FloatTech-zbpdata/Fortune](https://github.com/FloatTech/zbpdata)全部主题。在`env`下设置`xxx_FLAG`以启用或关闭抽签随机主题（默认为全部开启），例如：
+3. 使用[FloatTech-zbpdata/Fortune](https://github.com/FloatTech/zbpdata)全部主题。在`env`下设置`xxx_FLAG`以启用或关闭抽签随机主题（默认全部开启），例如：
 
     ```python
     ARKNIGHTS_FLAG=true         # 明日方舟
@@ -103,7 +103,7 @@ v0.4.4a2 全新的运势文案！
 
     *group_rule会自动生成，specific_rule可手动配置*
 
-    ⚠ 考虑在新版本弃用此功能
+    ⚠ 将在`v0.5.x`弃用，`v0.4.x`会保留
 
     指定凯露签，由于存在两张凯露的签底，配置凯露签的**路径列表**即可，其余类似，**请确保图片路径、格式输入正确**；
 
@@ -129,11 +129,11 @@ v0.4.4a2 全新的运势文案！
 
 7. TODO in `v0.5.x` 🥳
 
-	- [] 优化设置主题、指定主题、及检索的方式，`v0.4.x`并没有完全改变之前的业务逻辑；
-	- [] 文案排版算法；
-	- [] 新增功能：每日星座运势；
-	- [] 新增功能：资源缺失检查、自动下载；
-	- [] 新增资源：新的抽签主题资源！
+	- [ ] 优化设置主题、指定主题、及检索的方式，`v0.4.x`并没有完全改变之前的业务逻辑；
+	- [ ] 文案排版算法；
+	- [ ] 新增功能：每日星座运势；
+	- [ ] 新增功能：资源缺失检查、自动下载：目前会尝试自动从repo中下载最新的`copywriting.json`；
+	- [ ] 新增资源：新的抽签主题资源！
 
 ## 命令
 
@@ -143,7 +143,7 @@ v0.4.4a2 全新的运势文案！
 
 3. 指定签底并抽签：指定[xxx]签，在`./resource/fortune_setting.json`内手动配置；
 
-	⚠ 考虑在新版本弃用此功能
+	⚠ 将在`v0.5.x`弃用，`v0.4.x`会保留
 
 4. [群管或群主或超管] 配置抽签主题：
 

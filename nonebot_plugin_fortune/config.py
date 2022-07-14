@@ -6,6 +6,8 @@ try:
     import ujson as json
 except ModuleNotFoundError:
     import json
+    
+from .download import DownloadError, download_url
 
 '''
     抽签主题对应表，第一键值为“抽签设置”或“主题列表”展示的主题名称
@@ -67,12 +69,12 @@ class PluginConfig(BaseModel, extra=Extra.ignore):
 driver = get_driver()
 fortune_config: PluginConfig = PluginConfig.parse_obj(driver.config.dict())
 
-'''
-    Reserved for next version
-'''
 @driver.on_startup
-async def check_config() -> None:
+async def fortune_check() -> None:
     config_path: Path = fortune_config.fortune_path / "fortune_config.json"
+    
+    if not fortune_config.fortune_path.exists():
+        fortune_config.fortune_path.mkdir(parents=True, exist_ok=True)
     
     if not config_path.exists():
         logger.warning("配置文件不存在，已重新生成配置文件……")
@@ -91,3 +93,47 @@ async def check_config() -> None:
         # Posix path need to transfer to str then write in json
         content.update({"fortune_path": str(content.get("fortune_path"))})
         json.dump(content, f, ensure_ascii=False, indent=4)
+    
+    '''
+        Try to get the latest copywriting from repo
+    '''
+    copywriting_path: Path = fortune_config.fortune_path / "fortune" / "fortune_config.json"
+    url = "https://raw.fastgit.org/MinatoAquaCrews/nonebot_plugin_fortune/beta/nonebot_plugin_fortune/resource/fortune/copywriting.json"
+    response = await download_url(url)
+    if response is None:
+        if not copywriting_path.exists():
+           raise DownloadError("Copywriting resource missing! Please check!")
+    else:
+        docs = response.json()
+        version = docs.get("version")
+
+        with copywriting_path.open("w", encoding="utf-8") as f:
+            json.dump(docs, f, ensure_ascii=False, indent=4)
+        
+        logger.info(f"Get the latest copywriting docs from repo, version: {version}")
+    
+    fortune_data_path: Path = fortune_config.fortune_path / "fortune_data.json"
+    fortune_setting_path: Path = fortune_config.fortune_path / "fortune_setting.json"
+    
+    if not fortune_data_path.exists():
+        logger.warning("fortune_data.json is missing, but initialized one...")
+        
+        with fortune_data_path.open("w", encoding="utf-8") as f:
+            json.dump(dict(), f, ensure_ascii=False, indent=4)
+
+    if not fortune_setting_path.exists():
+        url = "https://raw.fastgit.org/MinatoAquaCrews/nonebot_plugin_fortune/beta/nonebot_plugin_fortune/resource/fortune_setting.json"
+        response = await download_url(url)
+        if response is None:
+            logger.warning("fortune_setting.json is missing, but initialized one...")
+            
+            content = {{"group_rule": {}, "specific_rule": {}}}
+            with fortune_setting_path.open("w", encoding="utf-8") as f:
+                json.dump(content, f, ensure_ascii=False, indent=4)
+        else:
+            setting = response.json()
+
+            with fortune_setting_path.open("w", encoding="utf-8") as f:
+                json.dump(setting, f, ensure_ascii=False, indent=4)
+            
+            logger.info(f"fortune_setting.json is missing, but downloaded from repo")

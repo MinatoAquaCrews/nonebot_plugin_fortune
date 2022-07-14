@@ -1,5 +1,4 @@
-from nonebot.adapters.onebot.v11 import GroupMessageEvent
-from typing import Optional, Union, Dict, Tuple
+from typing import Optional, Union, Tuple, List, Dict
 from pathlib import Path
 import random
 try:
@@ -12,90 +11,72 @@ from .utils import drawing, MainThemeEnable
 
 class FortuneManager:
     def __init__(self):
-        self.user_data = {}
-        self.setting = {}
-        _path: Path = fortune_config.fortune_path
-
-        if not _path.exists():
-            _path.mkdir(parents=True, exist_ok=True)
-            
-        data_file = _path / "fortune_data.json"
-        setting_file = _path / "fortune_setting.json"
-
-        self.data_file = data_file
-        self.setting_file = setting_file
-        
-        if not data_file.exists():
-            with open(data_file, "w", encoding="utf-8") as f:
-                f.write(json.dumps(dict()))
-
-        if data_file.exists():
-            with open(data_file, "r", encoding="utf-8") as f:
-                self.user_data = json.load(f)
-        
-        if not setting_file.exists():
-            with open(setting_file, "w", encoding="utf-8") as f:
-                f.write(json.dumps(dict()))
-        
-        if setting_file.exists():
-            with open(setting_file, "r", encoding="utf-8") as f:
-                self.setting = json.load(f)
+        self._user_data: Dict[str, Dict[str, Dict[str, Union[str, bool]]]] = {}
+        self._setting: Dict[str, Union[str, Dict[str, List[str]]]] = {}
+        self._data_file: Path = fortune_config.fortune_path / "fortune_data.json"
+        self._setting_file: Path = fortune_config.fortune_path / "fortune_setting.json"
     
-    def _multi_divine_check(self, event: GroupMessageEvent) -> bool:
+    def _multi_divine_check(self, gid: str, uid: str) -> bool:
         '''
             检测是否重复抽签
         '''
-        return self.user_data[str(event.group_id)][str(event.user_id)]["is_divined"]
+        self._load_data()
+        
+        return self._user_data[gid][uid]["is_divined"]
     
     def limit_setting_check(self, limit: str) -> Union[bool, str]:
         '''
             检测是否有该特定规则
-            检查指定规则的签底所对应主题是否开启
-            或路径是否存在
+            检查指定规则的签底所对应主题是否开启或路径是否存在
         '''
-        if not self.setting["specific_rule"].get(limit):
+        self._load_setting()
+        
+        if not self._setting["specific_rule"].get(limit):
             return False
         
-        spec_path = random.choice(self.setting["specific_rule"][limit])
+        spec_path = random.choice(self._setting["specific_rule"][limit])
         for theme in MainThemeList:
             if theme in spec_path:
                 return spec_path if MainThemeEnable[theme] else False
         
         return False
 
-    def divine(self, _theme: Optional[str], _spec_path: Optional[str], event: GroupMessageEvent) -> Tuple[str, bool]:
+    def divine(self, _theme: Optional[str], _spec_path: Optional[str], gid: str, uid: str, nickname: str) -> Tuple[Union[Path, bool], bool]:
         '''
             今日运势抽签
-            主题在群设置主题divination_setting()已确认合法
+            主题在群设置主题divination__setting()已确认合法
         '''
-        self._init_user_data(event)
-        group_id = str(event.group_id)
-        user_id = str(event.user_id)
+        self._init_user_data(gid ,uid, nickname)
         
+        self._load_setting()
         if not isinstance(_theme, str):
-            theme = self.setting["group_rule"][group_id]
+            theme = self._setting["group_rule"][gid]
         else:
             theme = _theme
             
-        if not self._multi_divine_check(event):
-            image_file = drawing(theme, _spec_path, user_id, group_id)
-            self._end_data_handle(event)
+        if not self._multi_divine_check(gid, uid):
+            try:
+                image_file = drawing(theme, _spec_path, gid, uid)
+            except Exception:
+                return False, True
+            
+            self._end_data_handle(gid, uid)
             return image_file, True
         else:
-            image_file = fortune_config.fortune_path / "out" / f"{user_id}_{group_id}.png"
+            image_file = fortune_config.fortune_path / "out" / f"{uid}_{gid}.png"
             return image_file, False
 
     def reset_fortune(self) -> None:
         '''
             重置今日运势并清空图片
         '''
-        for group_id in self.user_data:
-            for user_id in list(self.user_data[group_id]):
-                if self.user_data[group_id][user_id]["is_divined"] == False:
-                    self.user_data[group_id].pop(user_id)
+        self._load_data()
+        for gid in self._user_data:
+            for uid in list(self._user_data[gid]):
+                if self._user_data[gid][uid]["is_divined"] == False:
+                    self._user_data[gid].pop(uid)
                 else:
-                    self.user_data[group_id][user_id]["img_path"] = ""
-                    self.user_data[group_id][user_id]["is_divined"] = False
+                    self._user_data[gid][uid]["is_divined"] = False
         
         self._save_data()
 
@@ -103,29 +84,31 @@ class FortuneManager:
         for pic in dirPath.iterdir():
             pic.unlink()
 
-    def _init_user_data(self, event: GroupMessageEvent) -> None:
+    def _init_user_data(self, gid: str, uid: str, nickname: str) -> None:
         '''
             初始化用户信息
         '''
-        user_id = str(event.user_id)
-        group_id = str(event.group_id)
-        nickname = event.sender.card if event.sender.card else event.sender.nickname
+        self._load_data()
+        self._load_setting()
         
-        if "group_rule" not in self.setting:
-            self.setting["group_rule"] = {}
-        if "specific_rule" not in self.setting:
-            self.setting["specific_rule"] = {}
-        if group_id not in self.setting["group_rule"]:
-            self.setting["group_rule"][group_id] = "random"
-        if group_id not in self.user_data:
-            self.user_data[group_id] = {}
-        if user_id not in self.user_data[group_id]:
-            self.user_data[group_id][user_id] = {
-                "user_id": user_id,
-                "group_id": group_id,
+        if "group_rule" not in self._setting:
+            self._setting["group_rule"] = {}
+        if "specific_rule" not in self._setting:
+            self._setting["specific_rule"] = {}
+        if gid not in self._setting["group_rule"]:
+            self._setting["group_rule"][gid] = "random"
+        if gid not in self._user_data:
+            self._user_data[gid] = {}
+        if uid not in self._user_data[gid]:
+            self._user_data[gid][uid] = {
+                "uid": uid,
+                "gid": gid,
                 "nickname": nickname,
                 "is_divined": False
             }
+        
+        self._save_data()
+        self._save_setting()
 
     def get_main_theme_list(self) -> str:
         '''
@@ -137,80 +120,74 @@ class FortuneManager:
                 msg += f"\n{MainThemeList[theme][0]}"
         
         return msg
-    
-    def get_user_data(self, event: GroupMessageEvent) -> Dict[str, Union[str, bool]]:
-        '''
-            获取用户数据
-        '''
-        self._init_user_data(event)
-        return self.user_data[str(event.group_id)][str(event.user_id)]
 
-    def _end_data_handle(self, event: GroupMessageEvent) -> None:
+    def _end_data_handle(self, gid: str, uid: str) -> None:
         '''
             占卜结束数据保存
         '''
-        user_id = str(event.user_id)
-        group_id = str(event.group_id)
-        self.user_data[group_id][user_id]["is_divined"] = True
+        self._load_data()
+        
+        self._user_data[gid][uid]["is_divined"] = True
         self._save_data()
     
     def theme_enable_check(self, _theme: str) -> bool:
         '''
             Check whether a theme is enable
         '''
-        return True if _theme == "random" or MainThemeEnable.get(_theme) else False
+        return True if _theme == "random" or MainThemeEnable.get(_theme, False) else False
 
-    def divination_setting(self, theme: str, event: GroupMessageEvent) -> bool:
+    def divination_setting(self, theme: str, gid: str) -> bool:
         '''
             分群管理抽签设置
         '''
-        group_id = str(event.group_id)
+        self._load_setting()
         
         if self.theme_enable_check(theme):
-            self.setting["group_rule"][group_id] = theme
+            self._setting["group_rule"][gid] = theme
             self._save_setting()
             return True
         
         return False
 
-    def get_setting(self, event: GroupMessageEvent) -> str:
+    def get_setting(self, gid: str) -> str:
         '''
             获取当前群抽签主题，若没有数据则置随机
         '''
-        group_id = str(event.group_id)
-        if group_id not in self.setting["group_rule"]:
-            self.setting["group_rule"][group_id] = "random"
+        self._load_setting()
+        
+        if gid not in self._setting["group_rule"]:
+            self._setting["group_rule"][gid] = "random"
             self._save_setting()
 
-        return self.setting["group_rule"][group_id]
+        return self._setting["group_rule"][gid]
     
     # ------------------------------ Utils ------------------------------ #
     def _load_setting(self) -> None:
         '''
             读取各群抽签设置
         '''
-        with open(self.setting_file, 'r', encoding='utf-8') as f:
-            self.setting = json.load(f)
+        with open(self._setting_file, 'r', encoding='utf-8') as f:
+            self._setting = json.load(f)
 
     def _save_setting(self) -> None:
         '''
             保存各群抽签设置
         '''
-        with open(self.setting_file, 'w', encoding='utf-8') as f:
-            json.dump(self.setting, f, ensure_ascii=False, indent=4)
+        with open(self._setting_file, 'w', encoding='utf-8') as f:
+            json.dump(self._setting, f, ensure_ascii=False, indent=4)
             
     def _load_data(self) -> None:
         '''
             读取抽签数据
         '''
-        with open(self.data_file, 'r', encoding='utf-8') as f:
-            self.user_data = json.load(f)
+        with open(self._data_file, 'r', encoding='utf-8') as f:
+            self._user_data = json.load(f)
 
     def _save_data(self) -> None:
         '''
             保存抽签数据
         '''
-        with open(self.data_file, 'w', encoding='utf-8') as f:
-            json.dump(self.user_data, f, ensure_ascii=False, indent=4)
+        with open(self._data_file, 'w', encoding='utf-8') as f:
+            json.dump(self._user_data, f, ensure_ascii=False, indent=4)
 
 fortune_manager = FortuneManager()

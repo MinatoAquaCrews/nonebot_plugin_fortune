@@ -41,11 +41,10 @@ def get_copywriting() -> Tuple[str, str]:
         Read the copywriting.json, choice a luck with a random content
     '''
     _p: Path = fortune_config.fortune_path / "fortune" / "copywriting.json"
-    if not _p.exists():
-        return False
+    content: List[Dict[str, Union[str, int, List[str]]]] = {}
 
     with open(_p, "r", encoding="utf-8") as f:
-        content: List[Dict[str, Union[str, int, List[str]]]]= json.load(f).get("copywriting")
+        content = json.load(f).get("copywriting")
         
     luck: Dict[str, Union[str, int, List[str]]] = random.choice(content)
     
@@ -54,14 +53,14 @@ def get_copywriting() -> Tuple[str, str]:
 
     return title, text
 
-def randomBasemap(theme: str, spec_path: Optional[str]) -> str:
+def randomBasemap(_theme: str, _spec_path: Optional[str]) -> str:
     try_time = 0
-    if spec_path:
+    if _spec_path:
         _p: Path = fortune_config.fortune_path / "img"
-        p: Path =_p / spec_path
+        p: Path =_p / _spec_path
         return p
     else:
-        if theme == "random":
+        if _theme == "random":
             __p: Path = fortune_config.fortune_path / "img"
             # Each dir is a theme
             themes: List[str] = [str(f) for f in __p.iterdir() if f.is_dir()]
@@ -81,13 +80,13 @@ def randomBasemap(theme: str, spec_path: Optional[str]) -> str:
             images: List[str] = [str(f) for f in _p.iterdir() if f.is_file()]
             p: Path = _p / random.choice(images)
         else:
-            _p: Path = fortune_config.fortune_path / "img" / theme
+            _p: Path = fortune_config.fortune_path / "img" / _theme
             images: List[str] = [str(f) for f in _p.iterdir() if f.is_file()]
             p: Path = _p / random.choice(images)
         
         return p
 
-def drawing(theme: str, spec_path: Optional[str], user_id: str, group_id: str) -> Path:
+def drawing(theme: str, spec_path: Optional[str], gid: str, uid: str) -> Path:
     # 1. Random choice a base image
     imgPath = randomBasemap(theme, spec_path)
     img: Image.Image = Image.open(imgPath)
@@ -121,8 +120,7 @@ def drawing(theme: str, spec_path: Optional[str], user_id: str, group_id: str) -
     image_font_center = [140, 297]
     ttfront = ImageFont.truetype(fontPath["text"], font_size)
     result = decrement(text)
-    if not result[0]:
-        return
+    
     textVertical = []
     for i in range(0, result[0]):
         font_height = len(result[i + 1]) * (font_size + 4)
@@ -136,29 +134,32 @@ def drawing(theme: str, spec_path: Optional[str], user_id: str, group_id: str) -
         y = int(image_font_center[1] - font_height / 2)
         draw.text((x, y), textVertical, fill=color, font=ttfront)
     # Save
-    outPath = exportFilePath(imgPath, user_id, group_id)
+    outPath = exportFilePath(imgPath, gid, uid)
     img.save(outPath)
     return outPath
 
-def exportFilePath(originalFilePath: Path, user_id: str, group_id: str) -> Path:
+def exportFilePath(originalFilePath: Path, gid: str, uid: str) -> Path:
     dirPath: Path = fortune_config.fortune_path / "out"
     if not dirPath.exists():
         dirPath.mkdir(exist_ok=True, parents=True)
 
-    outPath: Path = originalFilePath.parent.parent.parent / "out" / f"{user_id}_{group_id}.png" 
+    outPath: Path = originalFilePath.parent.parent.parent / "out" / f"{uid}_{gid}.png" 
     return outPath
 
-def decrement(text):
+def decrement(text: str) -> List[str]:
     length = len(text)
     result = []
     cardinality = 9
     if length > 4 * cardinality:
-        return [False]
+        raise Exception
+    
     numberOfSlices = 1
     while length > cardinality:
         numberOfSlices += 1
         length -= cardinality
+        
     result.append(numberOfSlices)
+    
     # Optimize for two columns
     space = " "
     length = len(text)
@@ -179,15 +180,17 @@ def decrement(text):
                 text[: int((length + 1) / 2)] + fillIn,
                 fillIn + space + text[int((length + 1) / 2) :],
             ]
+            
     for i in range(0, numberOfSlices):
         if i == numberOfSlices - 1 or numberOfSlices == 1:
             result.append(text[i * cardinality :])
         else:
             result.append(text[i * cardinality : (i + 1) * cardinality])
+            
     return result
 
-def vertical(str):
-    list = []
-    for s in str:
-        list.append(s)
-    return "\n".join(list)
+def vertical(_str: List[str]) -> str:
+    _list = []
+    for s in _str:
+        _list.append(s)
+    return "\n".join(_list)

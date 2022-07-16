@@ -15,7 +15,7 @@ _🙏 今日运势 🙏_
   </a>
   
   <a href="https://github.com/nonebot/nonebot2">
-    <img src="https://img.shields.io/badge/nonebot2-2.0.0beta.2+-green">
+    <img src="https://img.shields.io/badge/nonebot2-2.0.0beta.3+-green">
   </a>
   
   <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.4">
@@ -34,7 +34,7 @@ v0.4.4 运势文案！全新的！
 
 👉 [如何在v0.4.2或更早版本上更新抽签主题资源？](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/blob/beta/How-to-add-new-theme.md)
 
-⚠ 适配nonebot2-2.0.0beta.2+
+⚠ 适配nonebot2-2.0.0beta.3+
 
 [更新日志](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.4)
 

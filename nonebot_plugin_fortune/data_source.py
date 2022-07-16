@@ -191,3 +191,7 @@ class FortuneManager:
             json.dump(self._user_data, f, ensure_ascii=False, indent=4)
 
 fortune_manager = FortuneManager()
+
+__all__ = [
+    fortune_manager
+]

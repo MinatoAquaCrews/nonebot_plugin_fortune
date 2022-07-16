@@ -12,7 +12,7 @@ from .config import fortune_config
 '''
     抽签主题开关，当随机抽签时判断某主题是否开启
 '''
-MainThemeEnable = {
+MainThemeEnable: Dict[str, bool] = {
     "pcr": fortune_config.pcr_flag,
     "genshin": fortune_config.genshin_flag,
     "hololive": fortune_config.hololive_flag,
@@ -55,7 +55,7 @@ def get_copywriting() -> Tuple[str, str]:
 
 def randomBasemap(_theme: str, _spec_path: Optional[str]) -> str:
     try_time = 0
-    if _spec_path:
+    if isinstance(_spec_path, str):
         _p: Path = fortune_config.fortune_path / "img"
         p: Path =_p / _spec_path
         return p
@@ -72,7 +72,7 @@ def randomBasemap(_theme: str, _spec_path: Optional[str]) -> str:
                 else:
                     try_time += 1
 
-                if try_time == len(MainThemeEnable):
+                if try_time == len(list(MainThemeEnable)):
                     break
 
             _p: Path = __p / picked
@@ -86,9 +86,9 @@ def randomBasemap(_theme: str, _spec_path: Optional[str]) -> str:
         
         return p
 
-def drawing(theme: str, spec_path: Optional[str], gid: str, uid: str) -> Path:
+def drawing(_theme: str, _spec_path: Optional[str], gid: str, uid: str) -> Path:
     # 1. Random choice a base image
-    imgPath = randomBasemap(theme, spec_path)
+    imgPath = randomBasemap(_theme, _spec_path)
     img: Image.Image = Image.open(imgPath)
     draw = ImageDraw.Draw(img)
     

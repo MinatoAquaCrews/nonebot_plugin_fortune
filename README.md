@@ -18,7 +18,7 @@ _🙏 今日运势 🙏_
     <img src="https://img.shields.io/badge/nonebot2-2.0.0beta.2+-green">
   </a>
   
-  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.4a3">
+  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.4">
     <img src="https://img.shields.io/github/v/release/MinatoAquaCrews/nonebot_plugin_fortune?color=orange&include_prereleases">
   </a>
 
@@ -30,13 +30,13 @@ _🙏 今日运势 🙏_
 
 ## 版本
 
-v0.4.4a3 全新的运势文案！
+v0.4.4 运势文案！全新的！
 
-👉 [如何在v0.4.2或更早版本上更新抽签主题资源？](https://github.com/KafCoppelia/nonebot_plugin_fortune/blob/beta/How-to-add-new-theme.md)
+👉 [如何在v0.4.2或更早版本上更新抽签主题资源？](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/blob/beta/How-to-add-new-theme.md)
 
 ⚠ 适配nonebot2-2.0.0beta.2+
 
-[更新日志](https://github.com/KafCoppelia/nonebot_plugin_fortune/releases/tag/v0.4.4a3)
+[更新日志](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.4)
 
 ## 安装
 
@@ -103,7 +103,7 @@ v0.4.4a3 全新的运势文案！
 
     *group_rule会自动生成，specific_rule可手动配置*
 
-    ⚠ 将在`v0.5.x`弃用，`v0.4.x`会保留
+    ⚠ 将在`v0.5.x`弃用
 
     指定凯露签，由于存在两张凯露的签底，配置凯露签的**路径列表**即可，其余类似，**请确保图片路径、格式输入正确**；
 
@@ -143,7 +143,7 @@ v0.4.4a3 全新的运势文案！
 
 3. 指定签底并抽签：指定[xxx]签，在`./resource/fortune_setting.json`内手动配置；
 
-	⚠ 将在`v0.5.x`弃用，`v0.4.x`会保留
+	⚠ 将在`v0.5.x`弃用
 
 4. [群管或群主或超管] 配置抽签主题：
 

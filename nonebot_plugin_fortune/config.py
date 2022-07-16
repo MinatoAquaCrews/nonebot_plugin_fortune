@@ -90,7 +90,7 @@ async def fortune_check() -> None:
                 
     with config_path.open("w", encoding="utf-8") as f:
         content = config.dict()
-        # Posix path need to transfer to str then write in json
+        # Posix path need to transfer to string then write in json
         content.update({"fortune_path": str(content.get("fortune_path"))})
         json.dump(content, f, ensure_ascii=False, indent=4)
     
@@ -127,7 +127,10 @@ async def fortune_check() -> None:
         if response is None:
             logger.warning("fortune_setting.json is missing, but initialized one...")
             
-            content = {{"group_rule": {}, "specific_rule": {}}}
+            content = {
+                "group_rule": {}, 
+                "specific_rule": {}
+            }
             with fortune_setting_path.open("w", encoding="utf-8") as f:
                 json.dump(content, f, ensure_ascii=False, indent=4)
         else:

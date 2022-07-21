@@ -8,7 +8,7 @@ from .data_source import fortune_manager
 from .config import MainThemeList
 from nonebot_plugin_apscheduler import scheduler
 
-__fortune_version__ = "v0.4.4"
+__fortune_version__ = "v0.4.5"
 __fortune_notes__ = f'''
 今日运势 {__fortune_version__}
 [今日运势/抽签/运势] 抽签

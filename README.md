@@ -18,7 +18,7 @@ _🙏 今日运势 🙏_
     <img src="https://img.shields.io/badge/nonebot2-2.0.0beta.2+-green">
   </a>
   
-  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.4">
+  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.5">
     <img src="https://img.shields.io/github/v/release/MinatoAquaCrews/nonebot_plugin_fortune?color=orange&include_prereleases">
   </a>
 
@@ -30,13 +30,13 @@ _🙏 今日运势 🙏_
 
 ## 版本
 
-v0.4.4 运势文案！全新的！
+v0.4.5 运势文案！全新的！
 
 👉 [如何在v0.4.2或更早版本上更新抽签主题资源？](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/blob/beta/How-to-add-new-theme.md)
 
-⚠ 适配nonebot2-2.0.0beta.2+
+⚠ 适配nonebot2-2.0.0beta.3+
 
-[更新日志](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.4)
+[更新日志](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.5)
 
 ## 安装
 
@@ -78,7 +78,7 @@ v0.4.4 运势文案！全新的！
     AMAZING_GRACE_FLAG=true     # 奇异恩典·圣夜的小镇
     ```
 
-    **请确保不全为`false`**
+    **请确保不全为`false`，否则会抛出错误**
 
 4. 在`./resource/fortune_setting.json`内配置**指定抽签**规则，例如：
 
@@ -127,9 +127,11 @@ v0.4.4 运势文案！全新的！
 
 	⚠ `1.0`版本文案资源来自于hololive早安系列2019年第6.10～8.24期，有修改。
 
-7. TODO in `v0.5.x` 🥳
+7. **新增** 抽签主题启用检查，当全部为`false`会抛出错误。
 
-	- [ ] 优化设置主题、指定主题、及检索的方式，`v0.4.x`并没有完全改变之前的业务逻辑；
+8. TODO in `v0.5.x` 🥳
+
+	- [ ] 优化设置主题、指定主题、及检索的方式；
 	- [ ] 文案排版算法；
 	- [ ] 新增功能：每日星座运势；
 	- [ ] 新增功能：资源缺失检查、自动下载：目前会尝试自动从repo中下载最新的`copywriting.json`；

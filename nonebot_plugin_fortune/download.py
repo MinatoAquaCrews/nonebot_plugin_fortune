@@ -17,8 +17,8 @@ async def download_url(url: str) -> Union[httpx.Response, None]:
                 if resp.status_code != 200:
                     continue
                 return resp
-            except Exception as e:
-                logger.warning(f'Error downloading {url}, retry {i}/3: {e}')
+            except Exception:
+                logger.warning(f"Error downloading {url}, retry: {i}/3")
     
     logger.warning(f"Abort downloading")           
     return None

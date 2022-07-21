@@ -15,7 +15,7 @@ _🙏 今日运势 🙏_
   </a>
   
   <a href="https://github.com/nonebot/nonebot2">
-    <img src="https://img.shields.io/badge/nonebot2-2.0.0beta.2+-green">
+    <img src="https://img.shields.io/badge/nonebot2-2.0.0b3+-green">
   </a>
   
   <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.5">
@@ -34,7 +34,7 @@ v0.4.5 运势文案！全新的！
 
 👉 [如何在v0.4.2或更早版本上更新抽签主题资源？](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/blob/beta/How-to-add-new-theme.md)
 
-⚠ 适配nonebot2-2.0.0beta.3+
+⚠ 适配nonebot2-2.0.0b3+
 
 [更新日志](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.5)
 
@@ -62,9 +62,9 @@ v0.4.5 运势文案！全新的！
     ONMYOJI_FLAG=false          # 阴阳师
     PCR_FLAG=true               # 公主连结
     TOUHOU_FLAG=true            # 东方
-    TOUHOU_LOSTWORD_FLAG=true   # 东方归言录，东方DLC
+    TOUHOU_LOSTWORD_FLAG=true   # 东方归言录
     TOUHOU_OLD_FLAG=false       # 东方旧版
-    HOLOLIVE_FLAG=true          # Hololive，原资源名Vtuber已更改为Hololive
+    HOLOLIVE_FLAG=true          # Hololive
     PUNISHING_FLAG=true         # 战双帕弥什
     GRANBLUE_FANTASY_FLAG=true  # 碧蓝幻想
     PRETTY_DERBY_FLAG=true      # 赛马娘

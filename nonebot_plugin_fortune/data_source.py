@@ -7,7 +7,7 @@ except ModuleNotFoundError:
     import json
 
 from .config import fortune_config, MainThemeList
-from .utils import drawing, MainThemeEnable
+from .utils import drawing, theme_flag_check
 
 class FortuneManager:
     def __init__(self):
@@ -37,7 +37,7 @@ class FortuneManager:
         spec_path = random.choice(self._setting["specific_rule"][limit])
         for theme in MainThemeList:
             if theme in spec_path:
-                return spec_path if MainThemeEnable[theme] else False
+                return spec_path if theme_flag_check(theme) else False
         
         return False
 
@@ -101,8 +101,8 @@ class FortuneManager:
             self._user_data[gid] = {}
         if uid not in self._user_data[gid]:
             self._user_data[gid][uid] = {
-                "uid": uid,
                 "gid": gid,
+                "uid": uid,
                 "nickname": nickname,
                 "is_divined": False
             }
@@ -116,7 +116,7 @@ class FortuneManager:
         '''
         msg = "可选抽签主题"
         for theme in MainThemeList:
-            if theme != "random" and MainThemeEnable[theme] is True:
+            if theme != "random" and theme_flag_check(theme):
                 msg += f"\n{MainThemeList[theme][0]}"
         
         return msg
@@ -134,7 +134,7 @@ class FortuneManager:
         '''
             Check whether a theme is enable
         '''
-        return True if _theme == "random" or MainThemeEnable.get(_theme, False) else False
+        return _theme == "random" or theme_flag_check(_theme)
 
     def divination_setting(self, theme: str, gid: str) -> bool:
         '''

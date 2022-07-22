@@ -15,10 +15,10 @@ _🙏 今日运势 🙏_
   </a>
   
   <a href="https://github.com/nonebot/nonebot2">
-    <img src="https://img.shields.io/badge/nonebot2-2.0.0beta.3+-green">
+    <img src="https://img.shields.io/badge/nonebot2-2.0.0b3+-green">
   </a>
   
-  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.4">
+  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.5">
     <img src="https://img.shields.io/github/v/release/MinatoAquaCrews/nonebot_plugin_fortune?color=orange&include_prereleases">
   </a>
 
@@ -30,13 +30,13 @@ _🙏 今日运势 🙏_
 
 ## 版本
 
-v0.4.4 运势文案！全新的！
+v0.4.5 运势文案！全新的！
 
 👉 [如何在v0.4.2或更早版本上更新抽签主题资源？](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/blob/beta/How-to-add-new-theme.md)
 
-⚠ 适配nonebot2-2.0.0beta.3+
+⚠ 适配nonebot2-2.0.0b3+
 
-[更新日志](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.4)
+[更新日志](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.5)
 
 ## 安装
 
@@ -62,9 +62,9 @@ v0.4.4 运势文案！全新的！
     ONMYOJI_FLAG=false          # 阴阳师
     PCR_FLAG=true               # 公主连结
     TOUHOU_FLAG=true            # 东方
-    TOUHOU_LOSTWORD_FLAG=true   # 东方归言录，东方DLC
+    TOUHOU_LOSTWORD_FLAG=true   # 东方归言录
     TOUHOU_OLD_FLAG=false       # 东方旧版
-    HOLOLIVE_FLAG=true          # Hololive，原资源名Vtuber已更改为Hololive
+    HOLOLIVE_FLAG=true          # Hololive
     PUNISHING_FLAG=true         # 战双帕弥什
     GRANBLUE_FANTASY_FLAG=true  # 碧蓝幻想
     PRETTY_DERBY_FLAG=true      # 赛马娘
@@ -78,7 +78,7 @@ v0.4.4 运势文案！全新的！
     AMAZING_GRACE_FLAG=true     # 奇异恩典·圣夜的小镇
     ```
 
-    **请确保不全为`false`**
+    **请确保不全为`false`，否则会抛出错误**
 
 4. 在`./resource/fortune_setting.json`内配置**指定抽签**规则，例如：
 
@@ -121,15 +121,17 @@ v0.4.4 运势文案！全新的！
 
 5. `fortune_setting.json`已预置明日方舟、Asoul、原神、东方、Hololive、李清歌的指定抽签规则；
 
-6. 🔥 **重磅更新** 全新的运势文案！原`goodLuck.json`已移除，现`copywriting.json`整合了19种运势及共计500余条文案！
+6. 🔥 **重磅更新** 全新的运势文案！原`goodLuck.json`已移除，现`copywriting.json`整合了19种运势及共计600+条文案！
 
 	⚠ `version`字段记录文案版本，后续版本将实现从repo自动更新最新文案资源
 
-	⚠ `1.0`版本文案资源来自于hololive早安系列2019年第6.10～8.24期，有修改。
+	⚠ `1.0`版本文案资源来自于hololive早安系列2019年第6.10～9.9期，有修改。
 
-7. TODO in `v0.5.x` 🥳
+7. **新增** 抽签主题启用检查，当全部为`false`会抛出错误。
 
-	- [ ] 优化设置主题、指定主题、及检索的方式，`v0.4.x`并没有完全改变之前的业务逻辑；
+8. TODO in `v0.5.x` 🥳
+
+	- [ ] 优化设置主题、指定主题、及检索的方式；
 	- [ ] 文案排版算法；
 	- [ ] 新增功能：每日星座运势；
 	- [ ] 新增功能：资源缺失检查、自动下载：目前会尝试自动从repo中下载最新的`copywriting.json`；
@@ -179,4 +181,4 @@ v0.4.4 运势文案！全新的！
 
 4. [FloatTech-zbpdata/Fortune](https://github.com/FloatTech/zbpdata)：其余主题签；
 
-5. 新版运势文案资源：[KafCoppelia](https://github.com/KafCoppelia)。`copywriting.json`整合了関係運、全体運、勉強運、金運、仕事運、恋愛運、総合運、大吉、中吉、小吉、吉、半吉、末吉、末小吉、凶、小凶、半凶、末凶、大凶及500+运势文案！来自于hololive早安系列2019年第6.10～8.24期，有修改。
+5. 新版运势文案资源：[KafCoppelia](https://github.com/KafCoppelia)。`copywriting.json`整合了関係運、全体運、勉強運、金運、仕事運、恋愛運、総合運、大吉、中吉、小吉、吉、半吉、末吉、末小吉、凶、小凶、半凶、末凶、大凶及600+条运势文案！来自于hololive早安系列2019年第6.10～9.9期，有修改。

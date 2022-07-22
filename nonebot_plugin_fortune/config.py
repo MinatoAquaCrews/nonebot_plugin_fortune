@@ -106,7 +106,7 @@ async def fortune_check() -> None:
     '''
         Try to get the latest copywriting from repo
     '''
-    copywriting_path: Path = fortune_config.fortune_path / "fortune" / "fortune_config.json"
+    copywriting_path: Path = fortune_config.fortune_path / "fortune" / "copywriting.json"
     url = "https://raw.fastgit.org/MinatoAquaCrews/nonebot_plugin_fortune/beta/nonebot_plugin_fortune/resource/fortune/copywriting.json"
     response = await download_url(url)
     if response is None:

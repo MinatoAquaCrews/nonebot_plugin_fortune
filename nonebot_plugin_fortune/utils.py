@@ -39,11 +39,11 @@ def randomBasemap(_theme: str, _spec_path: Optional[str]) -> Path:
 
         _p: Path = __p / picked
         # Each file is a posix path of images
-        images: List[Path] = [f for f in _p.iterdir() if f.is_file()]
+        images: List[Path] = [i for i in _p.iterdir() if i.is_file()]
         p: Path = random.choice(images)
     else:
         _p: Path = fortune_config.fortune_path / "img" / _theme
-        images: List[Path] = [f for f in _p.iterdir() if f.is_file()]
+        images: List[Path] = [i for i in _p.iterdir() if i.is_file()]
         p: Path = random.choice(images)
     
     return p

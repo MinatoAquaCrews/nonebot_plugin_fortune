@@ -121,11 +121,11 @@ v0.4.5 运势文案！全新的！
 
 5. `fortune_setting.json`已预置明日方舟、Asoul、原神、东方、Hololive、李清歌的指定抽签规则；
 
-6. 🔥 **重磅更新** 全新的运势文案！原`goodLuck.json`已移除，现`copywriting.json`整合了19种运势及共计500余条文案！
+6. 🔥 **重磅更新** 全新的运势文案！原`goodLuck.json`已移除，现`copywriting.json`整合了19种运势及共计600+条文案！
 
 	⚠ `version`字段记录文案版本，后续版本将实现从repo自动更新最新文案资源
 
-	⚠ `1.0`版本文案资源来自于hololive早安系列2019年第6.10～8.24期，有修改。
+	⚠ `1.0`版本文案资源来自于hololive早安系列2019年第6.10～9.9期，有修改。
 
 7. **新增** 抽签主题启用检查，当全部为`false`会抛出错误。
 
@@ -181,4 +181,4 @@ v0.4.5 运势文案！全新的！
 
 4. [FloatTech-zbpdata/Fortune](https://github.com/FloatTech/zbpdata)：其余主题签；
 
-5. 新版运势文案资源：[KafCoppelia](https://github.com/KafCoppelia)。`copywriting.json`整合了関係運、全体運、勉強運、金運、仕事運、恋愛運、総合運、大吉、中吉、小吉、吉、半吉、末吉、末小吉、凶、小凶、半凶、末凶、大凶及500+运势文案！来自于hololive早安系列2019年第6.10～8.24期，有修改。
+5. 新版运势文案资源：[KafCoppelia](https://github.com/KafCoppelia)。`copywriting.json`整合了関係運、全体運、勉強運、金運、仕事運、恋愛運、総合運、大吉、中吉、小吉、吉、半吉、末吉、末小吉、凶、小凶、半凶、末凶、大凶及600+条运势文案！来自于hololive早安系列2019年第6.10～9.9期，有修改。

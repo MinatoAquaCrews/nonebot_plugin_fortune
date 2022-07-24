@@ -165,7 +165,7 @@ def theme_flag_check(_theme: str) -> bool:
     with flag_config_path.open("r", encoding="utf-8") as f:
         data: Dict[str, bool] = json.load(f)
     
-    return data.get(_theme, False)
+    return data.get((_theme + "_flag"), False)
 
 __all__ = [
     drawing, theme_flag_check

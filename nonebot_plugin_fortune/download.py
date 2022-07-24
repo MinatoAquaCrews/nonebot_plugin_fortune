@@ -18,7 +18,7 @@ async def download_url(url: str) -> Union[httpx.Response, None]:
                     continue
                 return resp
             except Exception:
-                logger.warning(f"Error downloading {url}, retry: {i}/3")
+                logger.warning(f"Error occurred when downloading {url}, retry: {i}/3")
     
-    logger.warning(f"Abort downloading")           
+    logger.warning(f"Abort downloading")
     return None

@@ -18,8 +18,9 @@ _🙏 今日运势 🙏_
     <img src="https://img.shields.io/badge/nonebot2-2.0.0b3+-green">
   </a>
   
-  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.6">
-    <img src="https://img.shields.io/github/v/release/MinatoAquaCrews/nonebot_plugin_fortune?color=orange&include_prereleases">
+  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.7">
+    <img src="https://img.shields.io/github/v/release/MinatoAquaCrews/nonebot_plugin_fortune?color=orange">
+
   </a>
 
   <a href="https://www.codefactor.io/repository/github/MinatoAquaCrews/nonebot_plugin_fortune">
@@ -30,13 +31,13 @@ _🙏 今日运势 🙏_
 
 ## 版本
 
-v0.4.6 运势文案！全新的！
+v0.4.7 运势文案！全新的！
 
 👉 [如何在v0.4.2或更早版本上更新抽签主题资源？](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/blob/beta/How-to-add-new-theme.md)
 
 ⚠ 适配nonebot2-2.0.0b3+
 
-[更新日志](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.6)
+[更新日志](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.7)
 
 ## 安装
 
@@ -125,7 +126,7 @@ v0.4.6 运势文案！全新的！
 
 	⚠ `version`字段记录文案版本，后续版本将实现从repo自动更新最新文案资源
 
-	⚠ `1.0`版本文案资源来自于hololive早安系列2019年第6.10～9.9期，有修改。
+	⚠ 文案资源来自于hololive早安系列2019年第6.10～9.9期，有修改。
 
 7. **新增** 抽签主题启用检查，当全部为`false`会抛出错误。
 
@@ -155,7 +156,7 @@ v0.4.6 运势文案！全新的！
 
 5. 抽签设置：查看当前群抽签主题的配置；
 
-6. [超管] 刷新抽签：即刻刷新抽签，防止过0点未刷新的意外（虽然这个问题已经得到修复）；
+6. [超管] 刷新抽签：全局即刻刷新抽签，防止过0点未刷新的意外（虽然这个问题已经得到修复）；
 
 7. 今日运势帮助：显示插件帮助文案；
 

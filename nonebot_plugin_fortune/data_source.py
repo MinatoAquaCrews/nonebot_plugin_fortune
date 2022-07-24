@@ -63,7 +63,7 @@ class FortuneManager:
             self._end_data_handle(gid, uid)
             return image_file, True
         else:
-            image_file = fortune_config.fortune_path / "out" / f"{uid}_{gid}.png"
+            image_file = fortune_config.fortune_path / "out" / f"{gid}_{uid}.png"
             return image_file, False
 
     def reset_fortune(self) -> None:

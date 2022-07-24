@@ -8,7 +8,7 @@ from .data_source import fortune_manager
 from .config import MainThemeList
 from nonebot_plugin_apscheduler import scheduler
 
-__fortune_version__ = "v0.4.5"
+__fortune_version__ = "v0.4.7"
 __fortune_notes__ = f'''
 今日运势 {__fortune_version__}
 [今日运势/抽签/运势] 抽签
@@ -21,7 +21,7 @@ __fortune_notes__ = f'''
 
 divine = on_command("今日运势", aliases={"抽签", "运势"}, permission=GROUP, priority=8)
 divine_specific = on_regex(r"^.+抽签$", permission=GROUP, priority=8)
-limit_setting = on_regex(r"^指定(.*?)签$", permission=GROUP, priority=8, block=True)
+limit_setting = on_regex(r"^指定(.*?)签$", permission=GROUP, priority=8)
 theme_setting = on_regex(r"^设置(.*?)签$", permission=SUPERUSER | GROUP_ADMIN | GROUP_OWNER, priority=8, block=True)
 reset = on_regex("^重置(抽签)?主题$", permission=SUPERUSER | GROUP_ADMIN | GROUP_OWNER, priority=8, block=True)
 theme_list = on_fullmatch("主题列表", permission=GROUP, priority=8, block=True)

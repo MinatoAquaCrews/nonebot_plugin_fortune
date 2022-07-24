@@ -1,5 +1,5 @@
 from nonebot import get_driver, logger
-from pydantic import BaseModel, Extra, ValidationError
+from pydantic import BaseModel, Extra
 from typing import List, Dict
 from pathlib import Path
 try:

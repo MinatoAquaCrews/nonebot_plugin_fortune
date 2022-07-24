@@ -34,7 +34,7 @@ def randomBasemap(_theme: str, _spec_path: Optional[str]) -> Path:
     if _theme == "random":
         __p: Path = fortune_config.fortune_path / "img"
         # Each dir is a theme, remember add _flag after the names of themes
-        themes: List[str] = [f.name for f in __p.iterdir() if f.is_dir() and theme_flag_check(f.name + "_flag")]
+        themes: List[str] = [f.name for f in __p.iterdir() if f.is_dir() and theme_flag_check(f.name)]
         picked = random.choice(themes)
 
         _p: Path = __p / picked

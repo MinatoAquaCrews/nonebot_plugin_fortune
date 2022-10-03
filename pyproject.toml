@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nonebot_plugin_fortune"
-version = "0.4.8"
+version = "0.4.9a1"
 description = "Fortune divination!"
 authors = ["KafCoppelia <k740677208@gmail.com>"]
 license = "MIT"

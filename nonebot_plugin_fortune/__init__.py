@@ -20,7 +20,7 @@ __fortune_notes__ = f'''
 [查看主题] 查看群抽签主题'''.strip()
 
 divine = on_command("今日运势", aliases={"抽签", "运势"}, permission=GROUP, priority=8)
-divine_specific = on_regex(r"^.+抽签$", permission=GROUP, priority=8)
+divine_specific = on_regex(r"^\w+抽签$", permission=GROUP, priority=8)
 limit_setting = on_regex(r"^指定(.*?)签$", permission=GROUP, priority=8)
 theme_setting = on_regex(r"^设置(.*?)签$", permission=SUPERUSER | GROUP_ADMIN | GROUP_OWNER, priority=8, block=True)
 reset = on_regex("^重置(抽签)?主题$", permission=SUPERUSER | GROUP_ADMIN | GROUP_OWNER, priority=8, block=True)

@@ -18,7 +18,7 @@ _🙏 今日运势 🙏_
     <img src="https://img.shields.io/badge/nonebot2-2.0.0b3+-green">
   </a>
   
-  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.9a1">
+  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.8">
     <img src="https://img.shields.io/github/v/release/MinatoAquaCrews/nonebot_plugin_fortune?color=orange">
 
   </a>
@@ -31,13 +31,13 @@ _🙏 今日运势 🙏_
 
 ## 版本
 
-v0.4.9a1 运势文案！全新的！
+v0.4.8 运势文案！全新的！
 
 👉 [如何在v0.4.2或更早版本上更新抽签主题资源？](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/blob/beta/How-to-add-new-theme.md)
 
 ⚠ 适配nonebot2-2.0.0b3+
 
-[更新日志](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.9a1)
+[更新日志](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.8)
 
 ## 安装
 
@@ -182,4 +182,4 @@ v0.4.9a1 运势文案！全新的！
 
 4. [FloatTech-zbpdata/Fortune](https://github.com/FloatTech/zbpdata)：其余主题签；
 
-5. 新版运势文案资源：[KafCoppelia](https://github.com/KafCoppelia)。`copywriting.json`整合了関係運、全体運、勉強運、金運、仕事運、恋愛運、総合運、大吉、中吉、小吉、吉、半吉、末吉、末小吉、凶、小凶、半凶、末凶、大凶及600+条运势文案！来自于hololive早安系列2019年第6.10～9.9期，有修改。
+5. 新版运势文案资源：[KafCoppelia](https://github.com/KafCoppelia)。`copywriting.json`整合了関係運、全体運、勉強運、金運、仕事運、恋愛運、総合運、大吉、中吉、小吉、吉、半吉、末吉、末小吉、凶、小凶、半凶、末凶、大凶及700+条运势文案！来自于hololive早安系列2019年第6.10～9.22期，有修改。

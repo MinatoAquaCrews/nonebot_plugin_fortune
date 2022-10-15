@@ -9,7 +9,6 @@ python-versions = ">=3.6.2"
 [package.dependencies]
 idna = ">=2.8"
 sniffio = ">=1.1"
-typing-extensions = {version = "*", markers = "python_version < \"3.8\""}
 
 [package.extras]
 doc = ["packaging", "sphinx-rtd-theme", "sphinx-autodoc-typehints (>=1.2.0)"]
@@ -91,7 +90,6 @@ python-versions = ">=3.7"
 
 [package.dependencies]
 colorama = {version = "*", markers = "platform_system == \"Windows\""}
-importlib-metadata = {version = "*", markers = "python_version < \"3.8\""}
 
 [package.source]
 type = "legacy"
@@ -225,28 +223,6 @@ url = "https://mirrors.tencent.com/pypi/simple"
 reference = "tencentyun"
 
 [[package]]
-name = "importlib-metadata"
-version = "5.0.0"
-description = "Read metadata from Python packages"
-category = "main"
-optional = false
-python-versions = ">=3.7"
-
-[package.dependencies]
-typing-extensions = {version = ">=3.6.4", markers = "python_version < \"3.8\""}
-zipp = ">=0.5"
-
-[package.extras]
-docs = ["sphinx (>=3.5)", "jaraco.packaging (>=9)", "rst.linker (>=1.9)", "furo", "jaraco.tidelift (>=1.4)"]
-perf = ["ipython"]
-testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "flake8 (<5)", "pytest-cov", "pytest-enabler (>=1.3)", "packaging", "pyfakefs", "flufl.flake8", "pytest-perf (>=0.9.2)", "pytest-black (>=0.3.7)", "pytest-mypy (>=0.9.1)", "importlib-resources (>=1.3)"]
-
-[package.source]
-type = "legacy"
-url = "https://mirrors.tencent.com/pypi/simple"
-reference = "tencentyun"
-
-[[package]]
 name = "loguru"
 version = "0.6.0"
 description = "Python logging made (stupidly) simple"
@@ -294,11 +270,11 @@ reference = "tencentyun"
 
 [[package]]
 name = "nonebot-adapter-onebot"
-version = "2.1.3"
+version = "2.1.4"
 description = "OneBot(CQHTTP) adapter for nonebot2"
 category = "main"
 optional = false
-python-versions = ">=3.7.3,<4.0.0"
+python-versions = ">=3.8,<4.0"
 
 [package.dependencies]
 msgpack = ">=1.0.3,<2.0.0"
@@ -328,11 +304,11 @@ reference = "tencentyun"
 
 [[package]]
 name = "nonebot2"
-version = "2.0.0b5"
+version = "2.0.0rc1"
 description = "An asynchronous python bot framework."
 category = "main"
 optional = false
-python-versions = ">=3.7.3,<4.0.0"
+python-versions = ">=3.8,<4.0"
 
 [package.dependencies]
 fastapi = ">=0.79.0,<0.80.0"
@@ -546,7 +522,7 @@ reference = "tencentyun"
 
 [[package]]
 name = "typing-extensions"
-version = "4.3.0"
+version = "4.4.0"
 description = "Backported and Experimental Type Hints for Python 3.7+"
 category = "main"
 optional = false
@@ -559,7 +535,7 @@ reference = "tencentyun"
 
 [[package]]
 name = "tzdata"
-version = "2022.4"
+version = "2022.5"
 description = "Provider of IANA time zone data"
 category = "main"
 optional = false
@@ -620,7 +596,6 @@ h11 = ">=0.8"
 httptools = {version = ">=0.4.0", optional = true, markers = "extra == \"standard\""}
 python-dotenv = {version = ">=0.13", optional = true, markers = "extra == \"standard\""}
 pyyaml = {version = ">=5.1", optional = true, markers = "extra == \"standard\""}
-typing-extensions = {version = "*", markers = "python_version < \"3.8\""}
 uvloop = {version = ">=0.14.0,<0.15.0 || >0.15.0,<0.15.1 || >0.15.1", optional = true, markers = "sys_platform != \"win32\" and sys_platform != \"cygwin\" and platform_python_implementation != \"PyPy\" and extra == \"standard\""}
 watchfiles = {version = ">=0.13", optional = true, markers = "extra == \"standard\""}
 websockets = {version = ">=10.0", optional = true, markers = "extra == \"standard\""}
@@ -707,24 +682,6 @@ python-versions = ">=3.7"
 [package.dependencies]
 idna = ">=2.0"
 multidict = ">=4.0"
-typing-extensions = {version = ">=3.7.4", markers = "python_version < \"3.8\""}
-
-[package.source]
-type = "legacy"
-url = "https://mirrors.tencent.com/pypi/simple"
-reference = "tencentyun"
-
-[[package]]
-name = "zipp"
-version = "3.8.1"
-description = "Backport of pathlib-compatible object wrapper for zip files"
-category = "main"
-optional = false
-python-versions = ">=3.7"
-
-[package.extras]
-docs = ["sphinx", "jaraco.packaging (>=9)", "rst.linker (>=1.9)", "jaraco.tidelift (>=1.4)"]
-testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-cov", "pytest-enabler (>=1.3)", "jaraco.itertools", "func-timeout", "pytest-black (>=0.3.7)", "pytest-mypy (>=0.9.1)"]
 
 [package.source]
 type = "legacy"
@@ -733,8 +690,8 @@ reference = "tencentyun"
 
 [metadata]
 lock-version = "1.1"
-python-versions = "^3.7.3"
-content-hash = "314edbb6906f0a9565983ebb3d3774282b2e14c91f38231f30b24d9146822216"
+python-versions = "^3.8"
+content-hash = "71982458a7c80eb2cfb763c9d27e587d6c387792560ba5d83229e042a17af273"
 
 [metadata.files]
 anyio = [
@@ -837,10 +794,6 @@ httpx = [
 idna = [
     {file = "idna-3.4-py3-none-any.whl", hash = "sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2"},
     {file = "idna-3.4.tar.gz", hash = "sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4"},
-]
-importlib-metadata = [
-    {file = "importlib_metadata-5.0.0-py3-none-any.whl", hash = "sha256:ddb0e35065e8938f867ed4928d0ae5bf2a53b7773871bfe6bcc7e4fcdc7dea43"},
-    {file = "importlib_metadata-5.0.0.tar.gz", hash = "sha256:da31db32b304314d044d3c12c79bd59e307889b287ad12ff387b3500835fc2ab"},
 ]
 loguru = [
     {file = "loguru-0.6.0-py3-none-any.whl", hash = "sha256:4e2414d534a2ab57573365b3e6d0234dfb1d84b68b7f3b948e6fb743860a77c3"},
@@ -962,16 +915,16 @@ multidict = [
     {file = "multidict-6.0.2.tar.gz", hash = "sha256:5ff3bd75f38e4c43f1f470f2df7a4d430b821c4ce22be384e1459cb57d6bb013"},
 ]
 nonebot-adapter-onebot = [
-    {file = "nonebot-adapter-onebot-2.1.3.tar.gz", hash = "sha256:2090847c58d0058604077b9404be78e6bee225d4972ab59f7223685f79bd5a86"},
-    {file = "nonebot_adapter_onebot-2.1.3-py3-none-any.whl", hash = "sha256:d44eb7b119fdcc3f7936c77e2c0922728c959ad6d6b36ebd004e94856d9ccf49"},
+    {file = "nonebot_adapter_onebot-2.1.4-py3-none-any.whl", hash = "sha256:c49cb5fc8f046a99467873dcd5883486eb36c80c62c3379f5446a1c41a348e23"},
+    {file = "nonebot_adapter_onebot-2.1.4.tar.gz", hash = "sha256:09f910db7e51c362ae06dc75c04776a06650a043dc87aaa72af839cb489d4994"},
 ]
 nonebot-plugin-apscheduler = [
     {file = "nonebot-plugin-apscheduler-0.1.4.tar.gz", hash = "sha256:7541cfb2af48f244b74b66fd14f6486ef39a6d79f17b15c31cf1c6ad9a9632ca"},
     {file = "nonebot_plugin_apscheduler-0.1.4-py3-none-any.whl", hash = "sha256:c904c344c22c8fb2bafec9875ee195b7be7d1f0b758a04e96da6758d62cf4e83"},
 ]
 nonebot2 = [
-    {file = "nonebot2-2.0.0b5-py3-none-any.whl", hash = "sha256:5cfbfcd62ffcf55f884f9fb750a71cd92c97e347c99e891ef617da4d445a1f22"},
-    {file = "nonebot2-2.0.0b5.tar.gz", hash = "sha256:fccb5af749cceb289d756901b7abc7a679e5952dbe88c8b6ad8b2d906715c3ee"},
+    {file = "nonebot2-2.0.0rc1-py3-none-any.whl", hash = "sha256:99c70300b9d0755bba6ed50b7399f44f6213e119157bc026b960b3e157a38416"},
+    {file = "nonebot2-2.0.0rc1.tar.gz", hash = "sha256:6e5a0abf24086d05d5c2a56c971a551ece2a343ff29f83b76b398bf717b92e16"},
 ]
 pillow = [
     {file = "Pillow-9.2.0-cp310-cp310-macosx_10_10_x86_64.whl", hash = "sha256:a9c9bc489f8ab30906d7a85afac4b4944a572a7432e00698a7239f44a44e6efb"},
@@ -1141,12 +1094,12 @@ tomlkit = [
     {file = "tomlkit-0.11.5.tar.gz", hash = "sha256:571854ebbb5eac89abcb4a2e47d7ea27b89bf29e09c35395da6f03dd4ae23d1c"},
 ]
 typing-extensions = [
-    {file = "typing_extensions-4.3.0-py3-none-any.whl", hash = "sha256:25642c956049920a5aa49edcdd6ab1e06d7e5d467fc00e0506c44ac86fbfca02"},
-    {file = "typing_extensions-4.3.0.tar.gz", hash = "sha256:e6d2677a32f47fc7eb2795db1dd15c1f34eff616bcaf2cfb5e997f854fa1c4a6"},
+    {file = "typing_extensions-4.4.0-py3-none-any.whl", hash = "sha256:16fa4864408f655d35ec496218b85f79b3437c829e93320c7c9215ccfd92489e"},
+    {file = "typing_extensions-4.4.0.tar.gz", hash = "sha256:1511434bb92bf8dd198c12b1cc812e800d4181cfcb867674e0f8279cc93087aa"},
 ]
 tzdata = [
-    {file = "tzdata-2022.4-py2.py3-none-any.whl", hash = "sha256:74da81ecf2b3887c94e53fc1d466d4362aaf8b26fc87cda18f22004544694583"},
-    {file = "tzdata-2022.4.tar.gz", hash = "sha256:ada9133fbd561e6ec3d1674d3fba50251636e918aa97bd59d63735bef5a513bb"},
+    {file = "tzdata-2022.5-py2.py3-none-any.whl", hash = "sha256:323161b22b7802fdc78f20ca5f6073639c64f1a7227c40cd3e19fd1d0ce6650a"},
+    {file = "tzdata-2022.5.tar.gz", hash = "sha256:e15b2b3005e2546108af42a0eb4ccab4d9e225e2dfbf4f77aad50c70a4b1f3ab"},
 ]
 tzlocal = [
     {file = "tzlocal-4.2-py3-none-any.whl", hash = "sha256:89885494684c929d9191c57aa27502afc87a579be5cdd3225c77c463ea043745"},
@@ -1389,8 +1342,4 @@ yarl = [
     {file = "yarl-1.8.1-cp39-cp39-win32.whl", hash = "sha256:8b0af1cf36b93cee99a31a545fe91d08223e64390c5ecc5e94c39511832a4bb6"},
     {file = "yarl-1.8.1-cp39-cp39-win_amd64.whl", hash = "sha256:de49d77e968de6626ba7ef4472323f9d2e5a56c1d85b7c0e2a190b2173d3b9be"},
     {file = "yarl-1.8.1.tar.gz", hash = "sha256:af887845b8c2e060eb5605ff72b6f2dd2aab7a761379373fd89d314f4752abbf"},
-]
-zipp = [
-    {file = "zipp-3.8.1-py3-none-any.whl", hash = "sha256:47c40d7fe183a6f21403a199b3e4192cca5774656965b0a4988ad2f8feb5f009"},
-    {file = "zipp-3.8.1.tar.gz", hash = "sha256:05b45f1ee8f807d0cc928485ca40a07cb491cf092ff587c0df9cb1fd154848d2"},
 ]

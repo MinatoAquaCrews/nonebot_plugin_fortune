@@ -1,4 +1,4 @@
-from nonebot import logger
+from nonebot.log import logger
 from typing import Union
 import httpx
 

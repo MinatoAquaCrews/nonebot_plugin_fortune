@@ -11,8 +11,8 @@ from .utils import drawing, theme_flag_check
 
 class FortuneManager:
     def __init__(self):
-        self._user_data: Dict[str, Dict[str, Dict[str, Union[str, bool]]]] = {}
-        self._setting: Dict[str, Union[str, Dict[str, List[str]]]] = {}
+        self._user_data = dict()
+        self._setting = dict()
         self._data_file: Path = fortune_config.fortune_path / "fortune_data.json"
         self._setting_file: Path = fortune_config.fortune_path / "fortune_setting.json"
     
@@ -191,7 +191,3 @@ class FortuneManager:
             json.dump(self._user_data, f, ensure_ascii=False, indent=4)
 
 fortune_manager = FortuneManager()
-
-__all__ = [
-    fortune_manager
-]

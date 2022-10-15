@@ -1,5 +1,5 @@
 from PIL import Image, ImageDraw, ImageFont
-from typing import Optional, Tuple, Union, Dict, List
+from typing import Optional, Tuple, Dict, List
 from pathlib import Path
 import random
 try:
@@ -14,12 +14,12 @@ def get_copywriting() -> Tuple[str, str]:
         Read the copywriting.json, choice a luck with a random content
     '''
     _p: Path = fortune_config.fortune_path / "fortune" / "copywriting.json"
-    content: List[Dict[str, Union[str, int, List[str]]]] = {}
+    content = dict()
 
     with open(_p, "r", encoding="utf-8") as f:
         content = json.load(f).get("copywriting")
         
-    luck: Dict[str, Union[str, int, List[str]]] = random.choice(content)
+    luck = random.choice(content)
     
     title: str = luck.get("good-luck")
     text: str = random.choice(luck.get("content"))
@@ -81,20 +81,21 @@ def drawing(_theme: str, _spec_path: Optional[str], gid: str, uid: str) -> Path:
     color = "#323232"
     image_font_center = [140, 297]
     ttfront = ImageFont.truetype(fontPath["text"], font_size)
-    result = decrement(text)
+    slices, result = decrement(text)
     
     textVertical = []
-    for i in range(0, result[0]):
+    for i in range(0, slices):
         font_height = len(result[i + 1]) * (font_size + 4)
-        textVertical = vertical(result[i + 1])
+        textVertical = "\n".join(result[i])
         x = int(
             image_font_center[0]
-            + (result[0] - 2) * font_size / 2
-            + (result[0] - 1) * 4
+            + (slices - 2) * font_size / 2
+            + (slices - 1) * 4
             - i * (font_size + 4)
         )
         y = int(image_font_center[1] - font_height / 2)
         draw.text((x, y), textVertical, fill=color, font=ttfront)
+    
     # Save
     outPath = exportFilePath(imgPath, gid, uid)
     img.save(outPath)
@@ -108,54 +109,41 @@ def exportFilePath(originalFilePath: Path, gid: str, uid: str) -> Path:
     outPath: Path = originalFilePath.parent.parent.parent / "out" / f"{gid}_{uid}.png" 
     return outPath
 
-def decrement(text: str) -> List[str]:
-    length = len(text)
-    result = []
+def decrement(text: str) -> Tuple[int, List[str]]:
+    '''
+        Split the text, return the number of columns and text list
+        # TODO Now, it ONLY fit with 2 columns of text
+    '''
+    length: int = len(text)
+    result: List[str] = []
     cardinality = 9
     if length > 4 * cardinality:
         raise Exception
     
-    numberOfSlices = 1
+    col_num: int = 1
     while length > cardinality:
-        numberOfSlices += 1
+        col_num += 1
         length -= cardinality
-        
-    result.append(numberOfSlices)
     
     # Optimize for two columns
     space = " "
-    length = len(text)
-    if numberOfSlices == 2:
+    if col_num == 2:
         if length % 2 == 0:
             # even
             fillIn = space * int(9 - length / 2)
-            return [
-                numberOfSlices,
-                text[: int(length / 2)] + fillIn,
-                fillIn + text[int(length / 2) :],
-            ]
+            return col_num, [text[: int(length / 2)] + fillIn, fillIn + text[int(length / 2) :]]
         else:
             # odd number
             fillIn = space * int(9 - (length + 1) / 2)
-            return [
-                numberOfSlices,
-                text[: int((length + 1) / 2)] + fillIn,
-                fillIn + space + text[int((length + 1) / 2) :],
-            ]
+            return col_num, [text[: int((length + 1) / 2)] + fillIn, fillIn + space + text[int((length + 1) / 2) :]]
             
-    for i in range(0, numberOfSlices):
-        if i == numberOfSlices - 1 or numberOfSlices == 1:
+    for i in range(0, col_num):
+        if i == col_num - 1 or col_num == 1:
             result.append(text[i * cardinality :])
         else:
             result.append(text[i * cardinality : (i + 1) * cardinality])
             
-    return result
-
-def vertical(_str: List[str]) -> str:
-    _list = []
-    for s in _str:
-        _list.append(s)
-    return "\n".join(_list)
+    return col_num, result
 
 def theme_flag_check(_theme: str) -> bool:
     '''
@@ -166,7 +154,3 @@ def theme_flag_check(_theme: str) -> bool:
         data: Dict[str, bool] = json.load(f)
     
     return data.get((_theme + "_flag"), False)
-
-__all__ = [
-    drawing, theme_flag_check
-]

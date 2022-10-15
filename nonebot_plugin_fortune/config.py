@@ -1,4 +1,5 @@
-from nonebot import get_driver, logger
+from nonebot import get_driver
+from nonebot.log import logger
 from pydantic import BaseModel, Extra
 from typing import List, Dict
 from pathlib import Path
@@ -107,7 +108,7 @@ async def fortune_check() -> None:
         Try to get the latest copywriting from repo
     '''
     copywriting_path: Path = fortune_config.fortune_path / "fortune" / "copywriting.json"
-    url = "https://raw.fastgit.org/MinatoAquaCrews/nonebot_plugin_fortune/beta/nonebot_plugin_fortune/resource/fortune/copywriting.json"
+    url: str = "https://raw.fastgit.org/MinatoAquaCrews/nonebot_plugin_fortune/beta/nonebot_plugin_fortune/resource/fortune/copywriting.json"
     response = await download_url(url)
     if response is None:
         if not copywriting_path.exists():
@@ -125,16 +126,16 @@ async def fortune_check() -> None:
     fortune_setting_path: Path = fortune_config.fortune_path / "fortune_setting.json"
     
     if not fortune_data_path.exists():
-        logger.warning("fortune_data.json is missing, but initialized one...")
+        logger.warning("fortune_data.json is missing, initialized one...")
         
         with fortune_data_path.open("w", encoding="utf-8") as f:
             json.dump(dict(), f, ensure_ascii=False, indent=4)
 
     if not fortune_setting_path.exists():
-        url = "https://raw.fastgit.org/MinatoAquaCrews/nonebot_plugin_fortune/beta/nonebot_plugin_fortune/resource/fortune_setting.json"
+        url: str = "https://raw.fastgit.org/MinatoAquaCrews/nonebot_plugin_fortune/beta/nonebot_plugin_fortune/resource/fortune_setting.json"
         response = await download_url(url)
         if response is None:
-            logger.warning("fortune_setting.json is missing, but initialized one...")
+            logger.warning("fortune_setting.json is missing, initialized one...")
             
             content = {
                 "group_rule": {}, 
@@ -148,4 +149,4 @@ async def fortune_check() -> None:
             with fortune_setting_path.open("w", encoding="utf-8") as f:
                 json.dump(setting, f, ensure_ascii=False, indent=4)
             
-            logger.info(f"fortune_setting.json is missing, but downloaded from repo")
+            logger.info(f"fortune_setting.json is missing, downloaded it from repo")

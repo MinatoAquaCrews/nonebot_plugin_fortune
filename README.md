@@ -18,7 +18,7 @@ _🙏 今日运势 🙏_
     <img src="https://img.shields.io/badge/nonebot2-2.0.0b3+-green">
   </a>
   
-  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.8">
+  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.9a1">
     <img src="https://img.shields.io/github/v/release/MinatoAquaCrews/nonebot_plugin_fortune?color=orange">
 
   </a>
@@ -31,13 +31,13 @@ _🙏 今日运势 🙏_
 
 ## 版本
 
-v0.4.8 运势文案！全新的！
+v0.4.9a1 运势文案！持续更新！
 
 👉 [如何在v0.4.2或更早版本上更新抽签主题资源？](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/blob/beta/How-to-add-new-theme.md)
 
 ⚠ 适配nonebot2-2.0.0b3+
 
-[更新日志](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.8)
+[更新日志](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.9a1)
 
 ## 安装
 
@@ -106,7 +106,7 @@ v0.4.8 运势文案！全新的！
 
     ⚠ 将在`v0.5.x`弃用
 
-    指定凯露签，由于存在两张凯露的签底，配置凯露签的**路径列表**即可，其余类似，**请确保图片路径、格式输入正确**；
+    指定凯露签，由于存在两张凯露的签底，配置凯露签的**路径列表**即可；其余类似，**请确保图片路径、格式输入正确**！
 
 5. 占卜一下你的今日运势！🎉
 
@@ -122,27 +122,25 @@ v0.4.8 运势文案！全新的！
 
 5. `fortune_setting.json`已预置明日方舟、Asoul、原神、东方、Hololive、李清歌的指定抽签规则；
 
-6. 🔥 **重磅更新** 全新的运势文案！原`goodLuck.json`已移除，现`copywriting.json`整合了19种运势及共计600+条文案！
+6. 🔥 更多的运势文案！原`goodLuck.json`已移除，现`copywriting.json`整合了19种运势及共计600+条文案！
 
-	⚠ `version`字段记录文案版本，后续版本将实现从repo自动更新最新文案资源
-
-	⚠ 文案资源来自于hololive早安系列2019年第6.10～9.9期，有修改。
+	⚠ 文案资源来自于hololive早安系列2019年第6.10～9.22期，有修改。
 
 7. **新增** 抽签主题启用检查，当全部为`false`会抛出错误。
 
-8. TODO in `v0.5.x` 🥳
+8. TODO in `v0.5.x` ✨
 
 	- [ ] 优化设置主题、指定主题、及检索的方式；
 	- [ ] 文案排版算法；
 	- [ ] 新增功能：每日星座运势；
-	- [ ] 新增功能：资源缺失检查、自动下载：目前会尝试自动从repo中下载最新的`copywriting.json`；
+	- [x] 新增功能：资源缺失检查、自动下载；
 	- [ ] 新增资源：新的抽签主题资源！
 
 ## 命令
 
 1. 一般抽签：今日运势、抽签、运势；
 
-2. 指定主题抽签：[xx抽签]，例如：PCR抽签、holo抽签；[#18](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/issues/18)
+2. 指定主题抽签：[xx抽签]，例如：PCR抽签、holo抽签、碧蓝抽签；
 
 3. 指定签底并抽签：指定[xxx]签，在`./resource/fortune_setting.json`内手动配置；
 
@@ -152,15 +150,15 @@ v0.4.8 运势文案！全新的！
 
     - 设置[原神/pcr/东方/vtb/xxx]签：设置群抽签主题；
 
-    - **修改** 重置（抽签）主题：设置群抽签主题为随机；
+    - 重置（抽签）主题：设置群抽签主题为随机；
 
 5. 抽签设置：查看当前群抽签主题的配置；
 
-6. [超管] 刷新抽签：全局即刻刷新抽签，防止过0点未刷新的意外（虽然这个问题已经得到修复）；
+6. [超管] 刷新抽签：全局即刻刷新抽签，防止过0点未刷新；
 
 7. 今日运势帮助：显示插件帮助文案；
 
-8. **修改** 查看（抽签）主题：显示当前已启用主题；
+8. 查看（抽签）主题：显示当前已启用主题；
 
 ## 效果
 

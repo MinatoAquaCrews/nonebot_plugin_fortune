@@ -1,7 +1,7 @@
 from nonebot import get_driver
 from nonebot.log import logger
 from pydantic import BaseModel, Extra
-from typing import List, Dict
+from typing import List, Dict, Union
 from pathlib import Path
 try:
     import ujson as json
@@ -120,33 +120,92 @@ async def fortune_check() -> None:
         with copywriting_path.open("w", encoding="utf-8") as f:
             json.dump(docs, f, ensure_ascii=False, indent=4)
         
-        logger.info(f"Get the latest copywriting docs from repo, version: {version}")
+        logger.info(f"Got the latest copywriting docs from repo, version: {version}")
     
     fortune_data_path: Path = fortune_config.fortune_path / "fortune_data.json"
     fortune_setting_path: Path = fortune_config.fortune_path / "fortune_setting.json"
+    group_rules_path: Path = fortune_config.fortune_path / "group_rules.json"
+    specific_rules_path: Path = fortune_config.fortune_path / "specific_rules.json"
     
     if not fortune_data_path.exists():
         logger.warning("fortune_data.json is missing, initialized one...")
         
         with fortune_data_path.open("w", encoding="utf-8") as f:
             json.dump(dict(), f, ensure_ascii=False, indent=4)
-
-    if not fortune_setting_path.exists():
-        url: str = "https://raw.fastgit.org/MinatoAquaCrews/nonebot_plugin_fortune/beta/nonebot_plugin_fortune/resource/fortune_setting.json"
-        response = await download_url(url)
-        if response is None:
-            logger.warning("fortune_setting.json is missing, initialized one...")
+    
+    _flag = False
+    if not group_rules_path.exists():        
+        # In version 0.4.x, compatible job will be done automatically if group_rules.json doesn't exist
+        if fortune_setting_path.exists():
+            # Try to transfer from the old setting json
+            ret: bool = group_rules_transfer(fortune_setting_path, group_rules_path)
+            if ret:
+                logger.info("旧版 fortune_setting.json 文件中群聊抽签主题设置已更新至 group_rules.json")
+                _flag = True
+        
+        if not _flag:
+            # If failed or fortune_setting_path doesn't exist, initialize group_rules.json
+            with group_rules_path.open("w", encoding="utf-8") as f:
+                json.dump(dict(), f, ensure_ascii=False, indent=4)
             
-            content = {
-                "group_rule": {}, 
-                "specific_rule": {}
-            }
-            with fortune_setting_path.open("w", encoding="utf-8") as f:
-                json.dump(content, f, ensure_ascii=False, indent=4)
-        else:
-            setting = response.json()
+            logger.info("旧版 fortune_setting.json 文件中群聊抽签主题设置不存在，初始化 group_rules.json")
 
-            with fortune_setting_path.open("w", encoding="utf-8") as f:
-                json.dump(setting, f, ensure_ascii=False, indent=4)
-            
-            logger.info(f"fortune_setting.json is missing, downloaded it from repo")
+    _flag = False
+    if not specific_rules_path.exists():
+        # In version 0.4.x, data transfering will be done automatically if specific_rules.json doesn't exist
+        if fortune_setting_path.exists():
+            # Try to transfer from the old setting json
+            ret: bool = specific_rules_transfer(fortune_setting_path, specific_rules_path)
+            if ret:
+                logger.info("旧版 fortune_setting.json 文件中签底指定规则已更新至 specific_rules.json")
+                _flag = True
+        
+        if not _flag:
+            # Try to download it from repo
+            url = "https://raw.fastgit.org/MinatoAquaCrews/nonebot_plugin_fortune/beta/nonebot_plugin_fortune/resource/specific_rules.json"
+            response = await download_url(url)
+            if response is None:
+                # If failed, initialize specific_rules.json
+                with specific_rules_path.open("w", encoding="utf-8") as f:
+                    json.dump(dict(), f, ensure_ascii=False, indent=4)
+                
+                logger.info("旧版 fortune_setting.json 文件中签底指定规则不存在，初始化 specific_rules.json")
+            else:
+                setting = response.json()
+
+                with specific_rules_path.open("w", encoding="utf-8") as f:
+                    json.dump(setting, f, ensure_ascii=False, indent=4)
+                
+                logger.info(f"Downloaded specific_rules.json from repo")
+
+def group_rules_transfer(fortune_setting_dir: Path, group_rules_dir: Path) -> bool:
+    '''
+        Transfer the group_rule in fortune_setting.json to group_rules.json
+    '''
+    with open(fortune_setting_dir, 'r', encoding='utf-8') as fs:
+        _setting: Dict[str, Dict[str, Union[str, List[str]]]] = json.load(fs)
+        group_rules = _setting.get("group_rule", None)  # Old key is group_rule
+    
+        with open(group_rules_dir, 'w', encoding='utf-8') as fr:
+            if not group_rules:
+                json.dump(dict(), fr, ensure_ascii=False, indent=4)
+                return False
+            else:
+                json.dump(group_rules, fr, ensure_ascii=False, indent=4)
+                return True
+
+def specific_rules_transfer(fortune_setting_dir: Path, specific_rules_dir: Path) -> bool:
+    '''
+        Transfer the specific_rule in fortune_setting.json to specific_rules.json
+    '''
+    with open(fortune_setting_dir, 'r', encoding='utf-8') as fs:
+        _setting: Dict[str, Dict[str, Union[str, List[str]]]] = json.load(fs)
+        specific_rules = _setting.get("specific_rule", None)  # Old key is specific_rule
+        
+        with open(specific_rules_dir, 'w', encoding='utf-8') as fr:
+            if not specific_rules:
+                json.dump(dict(), fr, ensure_ascii=False, indent=4)
+                return False
+            else:
+                json.dump(specific_rules, fr, ensure_ascii=False, indent=4)
+                return True

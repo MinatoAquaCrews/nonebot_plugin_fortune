@@ -13,12 +13,12 @@ async def download_url(url: str) -> Union[httpx.Response, None]:
     async with httpx.AsyncClient() as client:
         for i in range(3):
             try:
-                resp = await client.get(url, timeout=10)
+                resp = await client.get(url, timeout=20)
                 if resp.status_code != 200:
                     continue
                 return resp
             except Exception:
-                logger.warning(f"Error occurred when downloading {url}, retry: {i}/3")
+                logger.warning(f"Error occurred when downloading {url}, retry: {i+1}/3")
     
     logger.warning(f"Abort downloading")
     return None

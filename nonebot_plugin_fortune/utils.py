@@ -26,31 +26,33 @@ def get_copywriting() -> Tuple[str, str]:
 
     return title, text
 
-def randomBasemap(_theme: str, _spec_path: Optional[str]) -> Path:
-    if isinstance(_spec_path, str):
-        p: Path = fortune_config.fortune_path / "img" / _spec_path
+def randomBasemap(theme: str, spec_path: Optional[str] = None) -> Path:
+    if isinstance(spec_path, str):
+        p: Path = fortune_config.fortune_path / "img" / spec_path
         return p
 
-    if _theme == "random":
+    if theme == "random":
         __p: Path = fortune_config.fortune_path / "img"
+        
         # Each dir is a theme, remember add _flag after the names of themes
         themes: List[str] = [f.name for f in __p.iterdir() if f.is_dir() and theme_flag_check(f.name)]
-        picked = random.choice(themes)
+        picked: str = random.choice(themes)
 
         _p: Path = __p / picked
-        # Each file is a posix path of images
-        images: List[Path] = [i for i in _p.iterdir() if i.is_file()]
-        p: Path = random.choice(images)
+        
+        # Each file is a posix path of images directory
+        images_dir: List[Path] = [i for i in _p.iterdir() if i.is_file()]
+        p: Path = random.choice(images_dir)
     else:
-        _p: Path = fortune_config.fortune_path / "img" / _theme
-        images: List[Path] = [i for i in _p.iterdir() if i.is_file()]
-        p: Path = random.choice(images)
+        _p: Path = fortune_config.fortune_path / "img" / theme
+        images_dir: List[Path] = [i for i in _p.iterdir() if i.is_file()]
+        p: Path = random.choice(images_dir)
     
     return p
 
-def drawing(_theme: str, _spec_path: Optional[str], gid: str, uid: str) -> Path:
+def drawing(gid: str, uid: str, theme: str, spec_path: Optional[str] = None) -> Path:
     # 1. Random choice a base image
-    imgPath: Path = randomBasemap(_theme, _spec_path)
+    imgPath: Path = randomBasemap(theme, spec_path)
     img: Image.Image = Image.open(imgPath)
     draw = ImageDraw.Draw(img)
     
@@ -145,12 +147,13 @@ def decrement(text: str) -> Tuple[int, List[str]]:
             
     return col_num, result
 
-def theme_flag_check(_theme: str) -> bool:
+def theme_flag_check(theme: str) -> bool:
     '''
         Read the config json, return the status of a theme
     '''
     flag_config_path: Path = fortune_config.fortune_path / "fortune_config.json"
+    
     with flag_config_path.open("r", encoding="utf-8") as f:
         data: Dict[str, bool] = json.load(f)
     
-    return data.get((_theme + "_flag"), False)
+        return data.get((theme + "_flag"), False)

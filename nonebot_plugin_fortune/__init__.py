@@ -35,9 +35,8 @@ refresh = on_fullmatch("刷新抽签", permission=SUPERUSER, priority=7, block=T
 @show.handle()
 async def _(event: GroupMessageEvent):
     gid: str = str(event.group_id)
-    theme: str = fortune_manager.get_setting(gid)
-    show_theme: str = MainThemeList[theme][0]
-    await show.finish(f"当前群抽签主题：{show_theme}")
+    theme: str = fortune_manager.get_group_theme(gid)
+    await show.finish(f"当前群抽签主题：{MainThemeList[theme][0]}")
 
 @theme_list.handle()
 async def _(event: GroupMessageEvent):
@@ -53,13 +52,13 @@ async def _(event: GroupMessageEvent, args: Message = CommandArg()):
     
     gid: str = str(event.group_id)
     uid: str = str(event.user_id)
-    nickname: str = event.sender.card if event.sender.card else event.sender.nickname # typing: ignore
+    nickname: str = event.sender.card if event.sender.card else event.sender.nickname
     
-    image_file, status = fortune_manager.divine(None, None, gid, uid, nickname)
+    is_first, image_file = fortune_manager.divine(gid, uid, nickname, None, None)
     if not image_file:
         await divine.finish("今日运势生成出错……") 
     
-    if not status:
+    if not is_first:
         msg = MessageSegment.text("你今天抽过签了，再给你看一次哦🤗\n") + MessageSegment.image(image_file)
     else:
         logger.info(f"User {event.user_id} | Group {event.group_id} 占卜了今日运势")
@@ -85,11 +84,11 @@ async def _(event: GroupMessageEvent, user_theme: str = Depends(get_user_theme))
                 uid: str = str(event.user_id)
                 nickname = event.sender.card if event.sender.card else event.sender.nickname
                 
-                image_file, status = fortune_manager.divine(theme, None, gid, uid, nickname)
+                is_first, image_file = fortune_manager.divine(gid, uid, nickname, theme, None)
                 if not image_file:
                     await divine_specific.finish("今日运势生成出错……") 
         
-                if not status:
+                if not is_first:
                     msg = MessageSegment.text("你今天抽过签了，再给你看一次哦🤗\n") + MessageSegment.image(image_file)
                 else:
                     logger.info(f"User {event.user_id} | Group {event.group_id} 占卜了今日运势")
@@ -121,29 +120,26 @@ async def _(event: GroupMessageEvent, user_theme: str = Depends(get_user_arg)):
 
 @limit_setting.handle()
 async def _(event: GroupMessageEvent, limit: str = Depends(get_user_arg)):
-    '''
-        指定签底抽签功能将在v0.5.x版本中弃用，但会保留在v0.4.x，届时请查看README说明
-    '''
-    logger.warning("The command of divining by indicating the basic image of a specific theme will be deprecated in version v0.5.x in the future, but will be reserved in v0.4.x")
+    logger.warning("指定签底抽签功能将在 v0.5.0 弃用")
 
     gid: str = str(event.group_id)
     uid: str = str(event.user_id)
-    nickname = event.sender.card if event.sender.card else event.sender.nickname
+    nickname: str = event.sender.card if event.sender.card else event.sender.nickname
     
     if limit == "随机":
-        image_file, status = fortune_manager.divine(None, None, gid, uid, nickname)
+        is_first, image_file = fortune_manager.divine(gid, uid, nickname, None, None)
         if not image_file:
             await limit_setting.finish("今日运势生成出错……") 
     else:
-        spec_path = fortune_manager.limit_setting_check(limit)
+        spec_path = fortune_manager.specific_check(limit)
         if not spec_path:
             await limit_setting.finish("还不可以指定这种签哦，请确认该签底对应主题开启或图片路径存在~")
         else:
-            image_file, status = fortune_manager.divine(None, spec_path, gid, uid, nickname)
+            is_first, image_file = fortune_manager.divine(gid, uid, nickname, None, spec_path)
             if not image_file:
                 await limit_setting.finish("今日运势生成出错……") 
         
-    if not status:
+    if not is_first:
         msg = MessageSegment.text("你今天抽过签了，再给你看一次哦🤗\n") + MessageSegment.image(image_file)
     else:
         logger.info(f"User {event.user_id} | Group {event.group_id} 占卜了今日运势")

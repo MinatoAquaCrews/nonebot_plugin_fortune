@@ -6,7 +6,7 @@ try:
 except ModuleNotFoundError:
     import json
 
-from .config import fortune_config, MainThemeList
+from .config import fortune_config, FortuneThemesDict
 from .utils import drawing, theme_flag_check
 
 class FortuneManager:
@@ -38,7 +38,7 @@ class FortuneManager:
             return None
         
         spec_path: str = random.choice(self._specific_rules[charac])
-        for theme in MainThemeList:
+        for theme in FortuneThemesDict:
             if theme in spec_path:
                 return spec_path if theme_flag_check(theme) else None
         
@@ -119,9 +119,9 @@ class FortuneManager:
             获取可设置的抽签主题
         '''
         msg: str = "可选抽签主题"
-        for theme in MainThemeList:
+        for theme in FortuneThemesDict:
             if theme != "random" and theme_flag_check(theme):
-                msg += f"\n{MainThemeList[theme][0]}"
+                msg += f"\n{FortuneThemesDict[theme][0]}"
         
         return msg
 

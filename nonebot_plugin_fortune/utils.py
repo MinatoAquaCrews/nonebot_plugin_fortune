@@ -85,21 +85,20 @@ def drawing(gid: str, uid: str, theme: str, spec_path: Optional[str] = None) -> 
     ttfront = ImageFont.truetype(fontPath["text"], font_size)
     slices, result = decrement(text)
     
-    textVertical = []
-    for i in range(0, slices):
-        font_height = len(result[i + 1]) * (font_size + 4)
-        textVertical = "\n".join(result[i])
-        x = int(
+    for i in range(slices):
+        font_height: int = len(result[i + 1]) * (font_size + 4)
+        textVertical: str = "\n".join(result[i])
+        x: int = int(
             image_font_center[0]
             + (slices - 2) * font_size / 2
             + (slices - 1) * 4
             - i * (font_size + 4)
         )
-        y = int(image_font_center[1] - font_height / 2)
+        y: int = int(image_font_center[1] - font_height / 2)
         draw.text((x, y), textVertical, fill=color, font=ttfront)
     
     # Save
-    outPath = exportFilePath(imgPath, gid, uid)
+    outPath: Path = exportFilePath(imgPath, gid, uid)
     img.save(outPath)
     return outPath
 
@@ -114,7 +113,7 @@ def exportFilePath(originalFilePath: Path, gid: str, uid: str) -> Path:
 def decrement(text: str) -> Tuple[int, List[str]]:
     '''
         Split the text, return the number of columns and text list
-        # TODO Now, it ONLY fit with 2 columns of text
+        TODO: Now, it ONLY fit with 2 columns of text
     '''
     length: int = len(text)
     result: List[str] = []

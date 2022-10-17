@@ -6,8 +6,7 @@ from nonebot.matcher import Matcher
 from nonebot import require
 from nonebot.adapters.onebot.v11 import GROUP, GROUP_ADMIN, GROUP_OWNER, Message, GroupMessageEvent, MessageSegment
 from .data_source import fortune_manager
-from .config import MainThemeList
-from nonebot_plugin_apscheduler import scheduler
+from .config import FortuneThemesDict
 
 require("nonebot_plugin_apscheduler")
 from nonebot_plugin_apscheduler import scheduler
@@ -24,7 +23,7 @@ __fortune_notes__ = f'''
 [查看主题] 查看群抽签主题'''.strip()
 
 divine = on_command("今日运势", aliases={"抽签", "运势"}, permission=GROUP, priority=8)
-divine_specific = on_regex(r"^\S+抽签$", permission=GROUP, priority=8)
+divine_specific = on_regex(r"^[^/]\S+抽签$", permission=GROUP, priority=8)
 limit_setting = on_regex(r"^指定(.*?)签$", permission=GROUP, priority=8)
 theme_setting = on_regex(r"^设置(.*?)签$", permission=SUPERUSER | GROUP_ADMIN | GROUP_OWNER, priority=8, block=True)
 reset = on_regex("^重置(抽签)?主题$", permission=SUPERUSER | GROUP_ADMIN | GROUP_OWNER, priority=8, block=True)
@@ -36,7 +35,7 @@ refresh = on_fullmatch("刷新抽签", permission=SUPERUSER, priority=7, block=T
 async def _(event: GroupMessageEvent):
     gid: str = str(event.group_id)
     theme: str = fortune_manager.get_group_theme(gid)
-    await show.finish(f"当前群抽签主题：{MainThemeList[theme][0]}")
+    await show.finish(f"当前群抽签主题：{FortuneThemesDict[theme][0]}")
 
 @theme_list.handle()
 async def _(event: GroupMessageEvent):
@@ -75,8 +74,8 @@ async def get_user_theme(matcher: Matcher, args: str = RegexMatched()) -> str:
 
 @divine_specific.handle()
 async def _(event: GroupMessageEvent, user_theme: str = Depends(get_user_theme)):
-    for theme in MainThemeList:
-        if user_theme in MainThemeList[theme]:
+    for theme in FortuneThemesDict:
+        if user_theme in FortuneThemesDict[theme]:
             if not fortune_manager.theme_enable_check(theme):
                 await divine_specific.finish("该抽签主题未启用~")
             else:
@@ -109,8 +108,8 @@ async def get_user_arg(matcher: Matcher, args: str = RegexMatched()) -> str:
 async def _(event: GroupMessageEvent, user_theme: str = Depends(get_user_arg)):
     gid: str = str(event.group_id)
     
-    for theme in MainThemeList:
-        if user_theme in MainThemeList[theme]:
+    for theme in FortuneThemesDict:
+        if user_theme in FortuneThemesDict[theme]:
             if not fortune_manager.divination_setting(theme, gid):
                 await theme_setting.finish("该抽签主题未启用~")
             else:

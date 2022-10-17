@@ -14,11 +14,11 @@ from .download import DownloadError, download_url
     抽签主题对应表，第一键值为“抽签设置”或“主题列表”展示的主题名称
     Key-Value: 主题资源文件夹名-设置主题别名
 '''
-MainThemeList: Dict[str, List[str]] = {
+FortuneThemesDict: Dict[str, List[str]] = {
     "random": ["随机"],
     "pcr": ["PCR", "公主链接", "公主连结", "Pcr", "pcr"],
     "genshin": ["原神", "Genshin Impact", "genshin", "Genshin", "op", "原批"],
-    "hololive": ["Hololive", "hololive", "Vtb", "vtb", "管人", "holo", "猴楼"],
+    "hololive": ["Hololive", "hololive", "Vtb", "vtb", "管人", "Holo", "holo", "猴楼"],
     "touhou": ["东方", "touhou", "Touhou", "车万"],
     "touhou_lostword": ["东方归言录", "东方lostword", "touhou lostword", "Touhou dlc"],
     "touhou_old": ["旧东方", "旧版东方", "老东方", "老版东方", "经典东方"],

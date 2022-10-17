@@ -78,6 +78,7 @@ def drawing(gid: str, uid: str, theme: str, spec_path: Optional[str] = None) -> 
         fill=color,
         font=ttfront,
     )
+    
     # Text rendering
     font_size = 25
     color = "#323232"
@@ -86,7 +87,7 @@ def drawing(gid: str, uid: str, theme: str, spec_path: Optional[str] = None) -> 
     slices, result = decrement(text)
     
     for i in range(slices):
-        font_height: int = len(result[i + 1]) * (font_size + 4)
+        font_height: int = len(result[i]) * (font_size + 4)
         textVertical: str = "\n".join(result[i])
         x: int = int(
             image_font_center[0]
@@ -128,6 +129,7 @@ def decrement(text: str) -> Tuple[int, List[str]]:
     
     # Optimize for two columns
     space = " "
+    length = len(text) # Value of length is changed!
     if col_num == 2:
         if length % 2 == 0:
             # even

@@ -49,7 +49,7 @@ class ResourceError(Exception):
 class PluginConfig(BaseModel, extra=Extra.ignore):
     fortune_path: Path = Path(__file__).parent / "resource"
 
-class ThemeFlagConfig(BaseModel, extra=Extra.ignore):
+class ThemesFlagConfig(BaseModel, extra=Extra.ignore):
     '''
         各主题抽签开关，仅在random抽签中生效
         请确保不全是False
@@ -78,19 +78,17 @@ class ThemeFlagConfig(BaseModel, extra=Extra.ignore):
 
 driver = get_driver()
 fortune_config: PluginConfig = PluginConfig.parse_obj(driver.config.dict())
-theme_flag_config: ThemeFlagConfig = ThemeFlagConfig.parse_obj(driver.config.dict())
+themes_flag_config: ThemesFlagConfig = ThemesFlagConfig.parse_obj(driver.config.dict())
 
 @driver.on_startup
 async def fortune_check() -> None:
-    flag_config_path: Path = fortune_config.fortune_path / "fortune_config.json"
-    
     if not fortune_config.fortune_path.exists():
         fortune_config.fortune_path.mkdir(parents=True, exist_ok=True)
     
     '''
         Check whether all themes disable
     '''
-    content = theme_flag_config.dict()
+    content = themes_flag_config.dict()
     _flag: bool = False
     for theme in content:
         if content.get(theme, False):
@@ -100,8 +98,9 @@ async def fortune_check() -> None:
     if not _flag:
         logger.warning("Fortune themes ALL disabled! Please check!")
         raise ResourceError("Fortune themes ALL disabled! Please check!")
-                
-    with flag_config_path.open("w", encoding="utf-8") as f:
+    
+    flags_config_path: Path = fortune_config.fortune_path / "fortune_config.json"            
+    with flags_config_path.open("w", encoding="utf-8") as f:
         json.dump(content, f, ensure_ascii=False, indent=4)
     
     '''

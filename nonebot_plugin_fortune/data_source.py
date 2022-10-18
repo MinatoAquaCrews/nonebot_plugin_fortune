@@ -7,7 +7,7 @@ except ModuleNotFoundError:
     import json
 
 from .config import fortune_config, FortuneThemesDict
-from .utils import drawing, theme_flag_check
+from .utils import drawing, themes_flag_check
 
 class FortuneManager:
     
@@ -40,7 +40,7 @@ class FortuneManager:
         spec_path: str = random.choice(self._specific_rules[charac])
         for theme in FortuneThemesDict:
             if theme in spec_path:
-                return spec_path if theme_flag_check(theme) else None
+                return spec_path if themes_flag_check(theme) else None
         
         return None
 
@@ -120,7 +120,7 @@ class FortuneManager:
         '''
         msg: str = "可选抽签主题"
         for theme in FortuneThemesDict:
-            if theme != "random" and theme_flag_check(theme):
+            if theme != "random" and themes_flag_check(theme):
                 msg += f"\n{FortuneThemesDict[theme][0]}"
         
         return msg
@@ -138,7 +138,7 @@ class FortuneManager:
         '''
             Check whether a theme is enable
         '''
-        return _theme == "random" or theme_flag_check(_theme)
+        return _theme == "random" or themes_flag_check(_theme)
 
     def divination_setting(self, theme: str, gid: str) -> bool:
         '''
@@ -196,7 +196,7 @@ class FortuneManager:
     
     def _load_specific_rules(self) -> None:
         '''
-            读取签底指定规则
+            读取签底指定规则 READ ONLY
         '''
         with open(self._specific_rules_file, "r", encoding="utf-8") as f:
             self._specific_rules = json.load(f)

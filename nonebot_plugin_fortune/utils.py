@@ -14,7 +14,6 @@ def get_copywriting() -> Tuple[str, str]:
         Read the copywriting.json, choice a luck with a random content
     '''
     _p: Path = fortune_config.fortune_path / "fortune" / "copywriting.json"
-    content = dict()
 
     with open(_p, "r", encoding="utf-8") as f:
         content = json.load(f).get("copywriting")
@@ -62,7 +61,7 @@ def drawing(gid: str, uid: str, theme: str, spec_path: Optional[str] = None) -> 
     # 3. Draw
     font_size = 45
     color = "#F5F5F5"
-    image_font_center = (140, 99)
+    image_font_center = [140, 99]
     fontPath = {
         "title": f"{fortune_config.fortune_path}/font/Mamelon.otf",
         "text": f"{fortune_config.fortune_path}/font/sakura.ttf",
@@ -130,6 +129,7 @@ def decrement(text: str) -> Tuple[int, List[str]]:
     # Optimize for two columns
     space = " "
     length = len(text) # Value of length is changed!
+    
     if col_num == 2:
         if length % 2 == 0:
             # even
@@ -139,8 +139,8 @@ def decrement(text: str) -> Tuple[int, List[str]]:
             # odd number
             fillIn = space * int(9 - (length + 1) / 2)
             return col_num, [text[: int((length + 1) / 2)] + fillIn, fillIn + space + text[int((length + 1) / 2) :]]
-            
-    for i in range(0, col_num):
+    
+    for i in range(col_num):
         if i == col_num - 1 or col_num == 1:
             result.append(text[i * cardinality :])
         else:
@@ -148,13 +148,13 @@ def decrement(text: str) -> Tuple[int, List[str]]:
             
     return col_num, result
 
-def theme_flag_check(theme: str) -> bool:
+def themes_flag_check(theme: str) -> bool:
     '''
         Read the config json, return the status of a theme
     '''
-    flag_config_path: Path = fortune_config.fortune_path / "fortune_config.json"
+    flags_config_path: Path = fortune_config.fortune_path / "fortune_config.json"
     
-    with flag_config_path.open("r", encoding="utf-8") as f:
+    with flags_config_path.open("r", encoding="utf-8") as f:
         data: Dict[str, bool] = json.load(f)
     
         return data.get((theme + "_flag"), False)

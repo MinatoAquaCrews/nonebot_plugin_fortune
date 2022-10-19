@@ -1,5 +1,6 @@
 from nonebot import on_command, on_regex, on_fullmatch
 from nonebot.log import logger
+from nonebot.plugin import PluginMetadata
 from nonebot.params import Depends, CommandArg, RegexMatched
 from nonebot.permission import SUPERUSER
 from nonebot.matcher import Matcher
@@ -12,15 +13,24 @@ require("nonebot_plugin_apscheduler")
 from nonebot_plugin_apscheduler import scheduler
 
 __fortune_version__ = "v0.4.9a1"
-__fortune_notes__ = f'''
-今日运势 {__fortune_version__}
-[今日运势/抽签/运势] 抽签
+__fortune_usage__ = f'''
+[今日运势/抽签/运势] 一般抽签
 [xx抽签]     指定主题抽签
 [指定xx签] 指定特殊角色签底，需要自己尝试哦~
 [设置xx签] 设置群抽签主题
 [重置主题] 重置群抽签主题
 [主题列表] 查看可选的抽签主题
 [查看主题] 查看群抽签主题'''.strip()
+
+__plugin_meta__ = PluginMetadata(
+    name="今日运势",
+    description="抽签！占卜你的今日运势🙏",
+    usage=__fortune_usage__,
+    extra={
+        "author": "KafCoppelia <k740677208@gmail.com>",
+        "version": __fortune_version__
+    }
+)
 
 divine = on_command("今日运势", aliases={"抽签", "运势"}, permission=GROUP, priority=8)
 divine_specific = on_regex(r"^[^/]\S+抽签$", permission=GROUP, priority=8)
@@ -47,7 +57,7 @@ async def _(event: GroupMessageEvent, args: Message = CommandArg()):
     arg: str = args.extract_plain_text()
     
     if "帮助" in arg[-2:]:
-        await divine.finish(__fortune_notes__)
+        await divine.finish(__fortune_usage__)
     
     gid: str = str(event.group_id)
     uid: str = str(event.user_id)
@@ -81,7 +91,7 @@ async def _(event: GroupMessageEvent, user_theme: str = Depends(get_user_theme))
             else:
                 gid: str = str(event.group_id)
                 uid: str = str(event.user_id)
-                nickname = event.sender.card if event.sender.card else event.sender.nickname
+                nickname: str = event.sender.card if event.sender.card else event.sender.nickname
                 
                 is_first, image_file = fortune_manager.divine(gid, uid, nickname, theme, None)
                 if not image_file:

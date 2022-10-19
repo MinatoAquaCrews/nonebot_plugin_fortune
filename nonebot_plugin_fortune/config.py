@@ -8,7 +8,7 @@ try:
 except ModuleNotFoundError:
     import json
     
-from .download import DownloadError, download_url
+from .download import DownloadError, download_resource
 
 '''
     抽签主题对应表，第一键值为“抽签设置”或“主题列表”展示的主题名称
@@ -107,8 +107,7 @@ async def fortune_check() -> None:
         Try to get the latest copywriting from repo
     '''
     copywriting_path: Path = fortune_config.fortune_path / "fortune" / "copywriting.json"
-    url: str = "https://raw.fastgit.org/MinatoAquaCrews/nonebot_plugin_fortune/beta/nonebot_plugin_fortune/resource/fortune/copywriting.json"
-    response = await download_url(url)
+    response = await download_resource("copywriting.json", "fortune")
     if response is None:
         if not copywriting_path.exists():
            raise DownloadError("Copywriting resource missing! Please check!")
@@ -161,8 +160,7 @@ async def fortune_check() -> None:
         
         if not _flag:
             # Try to download it from repo
-            url = "https://raw.fastgit.org/MinatoAquaCrews/nonebot_plugin_fortune/beta/nonebot_plugin_fortune/resource/specific_rules.json"
-            response = await download_url(url)
+            response = await download_resource("specific_rules.json")
             if response is None:
                 # If failed, initialize specific_rules.json
                 with specific_rules_path.open("w", encoding="utf-8") as f:

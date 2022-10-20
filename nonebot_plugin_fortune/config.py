@@ -122,7 +122,7 @@ async def fortune_check() -> None:
     '''
         Try to get the latest copywriting from the repository.
     '''
-    copywriting_path: Path = fortune_config.fortune_path / "fortune" / "copywrting.json"
+    copywriting_path: Path = fortune_config.fortune_path / "fortune" / "copywriting.json"
     if not copywriting_path.parent.exists():
         copywriting_path.parent.mkdir(parents=True, exist_ok=True)
     

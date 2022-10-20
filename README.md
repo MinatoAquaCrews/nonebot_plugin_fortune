@@ -15,10 +15,10 @@ _🙏 今日运势 🙏_
   </a>
   
   <a href="https://github.com/nonebot/nonebot2">
-    <img src="https://img.shields.io/badge/nonebot2-2.0.0b3+-green">
+    <img src="https://img.shields.io/badge/nonebot2-2.0.0rc1+-green">
   </a>
   
-  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.9a1">
+  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.9a2">
     <img src="https://img.shields.io/github/v/release/MinatoAquaCrews/nonebot_plugin_fortune?color=orange">
 
   </a>
@@ -31,13 +31,13 @@ _🙏 今日运势 🙏_
 
 ## 版本
 
-v0.4.9a1 运势文案！持续更新！
+v0.4.9a2 资源缺失自动检查！
 
 👉 [如何在v0.4.2或更早版本上更新抽签主题资源？](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/blob/beta/How-to-add-new-theme.md)
 
-⚠ 适配nonebot2-2.0.0b3+
+⚠️ 适配nonebot2-2.0.0rc1+
 
-[更新日志](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.9a1)
+[更新日志](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.9a2)
 
 ## 安装
 
@@ -45,13 +45,15 @@ v0.4.9a1 运势文案！持续更新！
 
     - 通过`pip`或`nb`；pypi无法发行过大安装包，由此安装的插件不包含`resource/img`下所有**抽签主题图片**，需单独下载，建议`zip`包下载后单独提取`resource/img`抽签主题图片，后更改`FORTUNE_PATH`配置即可；
     
-    - 通过`zip`或`git clone`安装：包含`resource`下所有主题抽签资源；
+    - 通过`zip`或`git clone`安装：包含`resource`下所有插件资源；
 
 2. 抽签主题图片`img`、字体`font`、文案`fortune`等资源均位于`./resource`下，可在`env`中设置`FORTUNE_PATH`；
 
     ```python
     FORTUNE_PATH="your_path_to_resource"  # For example, "./my-data/fortune"，其下有img、font、fortune文件夹等资源
     ```
+
+	⚠️️ **新增** 插件启动时，将自动检查资源是否缺失（除字体资源外），会尝试从repo中下载，但不保证成功
 
 3. 使用[FloatTech-zbpdata/Fortune](https://github.com/FloatTech/zbpdata)全部主题。在`env`下设置`xxx_FLAG`以启用或关闭抽签随机主题（默认全部开启），例如：
 
@@ -104,7 +106,7 @@ v0.4.9a1 运势文案！持续更新！
 
     *group_rule会自动生成，specific_rule可手动配置*
 
-    ⚠ 将在`v0.5.x`弃用
+    ⚠️ 将在`v0.5.x`弃用
 
     指定凯露签，由于存在两张凯露的签底，配置凯露签的**路径列表**即可；其余类似，**请确保图片路径、格式输入正确**！
 
@@ -116,7 +118,7 @@ v0.4.9a1 运势文案！持续更新！
 
 2. 可指定主题抽签；
 
-3. 每群每人一天限抽签1次，0点刷新（贪心的人是不会有好运的🤗）抽签信息并清除`./resource/out`下图片；
+3. 每群每人一天限抽签1次，0点刷新（贪心的人是不会有好运的🤗）抽签信息并清除`./resource/out`下生成的图片；
 
 4. 抽签的信息会保存在`./resource/fortune_data.json`内；群抽签设置及指定抽签规则保存在`./resource/fortune_setting.json`内；抽签生成的图片当天会保存在`./resource/out`下；
 
@@ -124,9 +126,9 @@ v0.4.9a1 运势文案！持续更新！
 
 6. 🔥 更多的运势文案！原`goodLuck.json`已移除，现`copywriting.json`整合了19种运势及共计600+条文案！
 
-	⚠ 文案资源来自于hololive早安系列2019年第6.10～9.22期，有修改。
+	⚠️ 文案资源来自于hololive早安系列2019年第6.10～9.22期，有修改。
 
-7. **新增** 抽签主题启用检查，当全部为`false`会抛出错误。
+7. 插件启动时将自动检查抽签主题启用情况，当全部为`false`会抛出错误。
 
 8. TODO in `v0.5.x` ✨
 
@@ -144,7 +146,7 @@ v0.4.9a1 运势文案！持续更新！
 
 3. 指定签底并抽签：指定[xxx]签，在`./resource/fortune_setting.json`内手动配置；
 
-	⚠ 将在`v0.5.x`弃用
+	⚠️ 将在`v0.5.x`弃用
 
 4. [群管或群主或超管] 配置抽签主题：
 

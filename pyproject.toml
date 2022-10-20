@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nonebot_plugin_fortune"
-version = "0.4.9a1"
+version = "0.4.9a2"
 description = "Fortune divination!"
 authors = ["KafCoppelia <k740677208@gmail.com>"]
 license = "MIT"
@@ -15,9 +15,9 @@ nonebot-plugin-apscheduler = "^0.1.3"
 ujson = "^5.1.0"
 pillow = "^9.0.0"
 httpx = "^0.23.0"
+aiofiles = "^0.8.0"
 
 [tool.poetry.dev-dependencies]
-aiofiles = "^0.8.0"
 aiocache = "^0.11.1"
 
 [build-system]

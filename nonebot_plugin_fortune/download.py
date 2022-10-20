@@ -3,9 +3,8 @@ from pathlib import Path
 from typing import Union, Optional
 import httpx
 import aiofiles
-from aiocache import cached
 
-class DownloadError(Exception):
+class ResourceError(Exception):
     def __init__(self, msg):
         self.msg = msg
         
@@ -26,29 +25,29 @@ async def download_url(url: str) -> Union[httpx.Response, None]:
     logger.warning(f"Abort downloading")
     return None
 
-async def download_resource(name: str, _type: Optional[str] = None, theme: Optional[str] = None) -> Union[httpx.Response, None]:
+async def download_resource(resource_dir: Path, name: str, _type: Optional[str] = None) -> bool:
     '''
-        Try to download resources, including fonts, fortune copywriting, images.
-        For fonts & copywriting, download and save into files when missing.
-        For images, cache or saving. Optional for user's setting
+        Try to download resources, including fonts, fortune copywriting, but not images.
+        For fonts & copywriting, download and save into files when missing. Otherwise, raise ResourceError
     '''
     base_url: str = "https://raw.fastgit.org/MinatoAquaCrews/nonebot_plugin_fortune/beta/nonebot_plugin_fortune/resource"
     
     if isinstance(_type, str):
-        if isinstance(theme, str):
-            url: str = base_url + "/" + f"{_type}" + "/" + f"{theme}" + "/" + f"{name}"
-        else:
-            url: str = base_url + "/" + f"{_type}" + "/" + f"{name}"
+        url: str = base_url + "/" + _type + "/" + name
     else:
         url: str = base_url + "/" + f"{name}"
     
-    return await download_url(url)
+    resp = await download_url(url)
+    if resp:
+        await save_resource(resource_dir, resp)
+        if name == "copywriting.json":
+            version = resp.json().get("version")
+            logger.info(f"Got the latest copywriting.json from repo, version: {version}")
+        
+        return True
 
-@cached(ttl=120)
-async def download_images(theme: str, name: str) -> Union[httpx.Response, None]:
-    url: str = "https://raw.fastgit.org/MinatoAquaCrews/nonebot_plugin_fortune/beta/nonebot_plugin_fortune/resource/img/" + f"{theme}/{name}"
-    return await download_url(url)
+    return False
 
-async def save_resource(resource_dir: Path, name: str, response: httpx.Response) -> None:
-    async with aiofiles.open(resource_dir / name, "wb") as f:
+async def save_resource(resource_dir: Path, response: httpx.Response) -> None:
+    async with aiofiles.open(resource_dir, "wb") as f:
         await f.write(response.content)

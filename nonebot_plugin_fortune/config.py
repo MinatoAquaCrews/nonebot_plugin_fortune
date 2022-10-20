@@ -44,8 +44,8 @@ class PluginConfig(BaseModel, extra=Extra.ignore):
 
 class ThemesFlagConfig(BaseModel, extra=Extra.ignore):
     '''
-        各主题抽签开关，仅在random抽签中生效
-        请确保不全是False
+        Switches of themes only valid in random divination.
+        Make sure NOT ALL FALSE!
     '''
     amazing_grace_flag: bool = True
     arknights_flag: bool = True
@@ -79,7 +79,7 @@ async def fortune_check() -> None:
         fortune_config.fortune_path.mkdir(parents=True, exist_ok=True)
     
     '''
-        Check whether all themes are disable
+        Check whether all themes are disable.
     '''
     content = themes_flag_config.dict()
     _flag: bool = False
@@ -91,34 +91,36 @@ async def fortune_check() -> None:
     if not _flag:
         raise ResourceError("Fortune themes ALL disabled! Please check!")
     
+    # Save fortune themes config
     flags_config_path: Path = fortune_config.fortune_path / "fortune_config.json"            
     with flags_config_path.open("w", encoding="utf-8") as f:
         json.dump(content, f, ensure_ascii=False, indent=4)
     
     '''
         Check fonts.
-        # FIXME raw.fastgit.org download fonts always failed!
+        TODO download fonts from raw.fastgit.org is ALWAYS FAILED!
+        In version v0.4.x, disable downloading. 
     '''
     fonts_path: Path = fortune_config.fortune_path / "font"
     if not fonts_path.exists():
         fonts_path.mkdir(parents=True, exist_ok=True)
     
     if not (fonts_path / "Mamelon.otf").exists():
-        ret = await download_resource((fonts_path / "Mamelon.otf"), "Mamelon.otf", "font")
-        if ret:
-            logger.info(f"Downloaded Mamelon.otf from repo")
-        else:
-            raise ResourceError(f"Resource Mamelon.otf is missing! Please check!")
+        # ret = await download_resource((fonts_path / "Mamelon.otf"), "Mamelon.otf", "font")
+        # if ret:
+        #     logger.info(f"Downloaded Mamelon.otf from repo")
+        # else:
+        raise ResourceError(f"Resource Mamelon.otf is missing! Please check!")
     
     if not (fonts_path / "sakura.ttf").exists():
-        ret = await download_resource((fonts_path / "sakura.ttf"), "sakura.ttf", "font")
-        if ret:
-            logger.info(f"Downloaded sakura.ttf from repo")
-        else:
-            raise ResourceError(f"Resource sakura.ttf is missing! Please check!")
+        # ret = await download_resource((fonts_path / "sakura.ttf"), "sakura.ttf", "font")
+        # if ret:
+        #     logger.info(f"Downloaded sakura.ttf from repo")
+        # else:
+        raise ResourceError(f"Resource sakura.ttf is missing! Please check!")
     
     '''
-        Try to get the latest copywriting from repo
+        Try to get the latest copywriting from the repository.
     '''
     copywriting_path: Path = fortune_config.fortune_path / "fortune" / "copywrting.json"
     if not copywriting_path.parent.exists():
@@ -153,7 +155,7 @@ async def fortune_check() -> None:
                 _flag = True
         
         if not _flag:
-            # If failed or fortune_setting_path doesn't exist, initialize group_rules.json
+            # If failed or fortune_setting_path doesn't exist, initialize group_rules.json instead
             with group_rules_path.open("w", encoding="utf-8") as f:
                 json.dump(dict(), f, ensure_ascii=False, indent=4)
             
@@ -161,12 +163,13 @@ async def fortune_check() -> None:
 
     _flag = False
     if not specific_rules_path.exists():
-        # In version 0.4.x, data transfering will be done automatically if specific_rules.json doesn't exist
+        # In version 0.4.9 and 0.4.10, data transfering will be done automatically if specific_rules.json doesn't exist
         if fortune_setting_path.exists():
             # Try to transfer from the old setting json
             ret = specific_rules_transfer(fortune_setting_path, specific_rules_path)
             if ret:
                 logger.info("旧版 fortune_setting.json 文件中签底指定规则已更新至 specific_rules.json")
+                logger.warning("指定签底抽签功能将在 v0.5.x 弃用")
                 _flag = True
         
         if not _flag:
@@ -175,11 +178,12 @@ async def fortune_check() -> None:
             if ret:
                 logger.info(f"Downloaded specific_rules.json from repo")
             else:
-                # If failed, initialize specific_rules.json
+                # If failed, initialize specific_rules.json instead
                 with specific_rules_path.open("w", encoding="utf-8") as f:
                     json.dump(dict(), f, ensure_ascii=False, indent=4)
                 
                 logger.info("旧版 fortune_setting.json 文件中签底指定规则不存在，初始化 specific_rules.json")
+                logger.warning("指定签底抽签功能将在 v0.5.x 弃用")
 
 def group_rules_transfer(fortune_setting_dir: Path, group_rules_dir: Path) -> bool:
     '''

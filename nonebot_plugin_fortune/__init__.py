@@ -129,7 +129,7 @@ async def _(event: GroupMessageEvent, user_theme: str = Depends(get_user_arg)):
 
 @limit_setting.handle()
 async def _(event: GroupMessageEvent, limit: str = Depends(get_user_arg)):
-    logger.warning("指定签底抽签功能将在 v0.5.0 弃用")
+    logger.warning("指定签底抽签功能将在 v0.5.x 弃用")
 
     gid: str = str(event.group_id)
     uid: str = str(event.user_id)

@@ -1,23 +1,24 @@
-from nonebot import get_driver, logger
+from nonebot import get_driver
+from nonebot.log import logger
 from pydantic import BaseModel, Extra
-from typing import List, Dict
+from typing import List, Dict, Union
 from pathlib import Path
 try:
     import ujson as json
 except ModuleNotFoundError:
     import json
-    
-from .download import DownloadError, download_url
+
+from .download import ResourceError, download_resource
 
 '''
     抽签主题对应表，第一键值为“抽签设置”或“主题列表”展示的主题名称
     Key-Value: 主题资源文件夹名-设置主题别名
 '''
-MainThemeList: Dict[str, List[str]] = {
+FortuneThemesDict: Dict[str, List[str]] = {
     "random": ["随机"],
     "pcr": ["PCR", "公主链接", "公主连结", "Pcr", "pcr"],
     "genshin": ["原神", "Genshin Impact", "genshin", "Genshin", "op", "原批"],
-    "hololive": ["Hololive", "hololive", "Vtb", "vtb", "管人", "holo", "猴楼"],
+    "hololive": ["Hololive", "hololive", "Vtb", "vtb", "管人", "Holo", "holo", "猴楼"],
     "touhou": ["东方", "touhou", "Touhou", "车万"],
     "touhou_lostword": ["东方归言录", "东方lostword", "touhou lostword", "Touhou dlc"],
     "touhou_old": ["旧东方", "旧版东方", "老东方", "老版东方", "经典东方"],
@@ -38,20 +39,13 @@ MainThemeList: Dict[str, List[str]] = {
     "amazing_grace": ["奇异恩典"]
 }
 
-class ResourceError(Exception):
-    def __init__(self, msg):
-        self.msg = msg
-        
-    def __str__(self):
-        return self.msg
-
 class PluginConfig(BaseModel, extra=Extra.ignore):
     fortune_path: Path = Path(__file__).parent / "resource"
 
-class ThemeFlagConfig(BaseModel, extra=Extra.ignore):
+class ThemesFlagConfig(BaseModel, extra=Extra.ignore):
     '''
-        各主题抽签开关，仅在random抽签中生效
-        请确保不全是False
+        Switches of themes only valid in random divination.
+        Make sure NOT ALL FALSE!
     '''
     amazing_grace_flag: bool = True
     arknights_flag: bool = True
@@ -77,19 +71,17 @@ class ThemeFlagConfig(BaseModel, extra=Extra.ignore):
 
 driver = get_driver()
 fortune_config: PluginConfig = PluginConfig.parse_obj(driver.config.dict())
-theme_flag_config: ThemeFlagConfig = ThemeFlagConfig.parse_obj(driver.config.dict())
+themes_flag_config: ThemesFlagConfig = ThemesFlagConfig.parse_obj(driver.config.dict())
 
 @driver.on_startup
 async def fortune_check() -> None:
-    flag_config_path: Path = fortune_config.fortune_path / "fortune_config.json"
-    
     if not fortune_config.fortune_path.exists():
         fortune_config.fortune_path.mkdir(parents=True, exist_ok=True)
     
     '''
-        Check whether all themes disable
+        Check whether all themes are disable.
     '''
-    content = theme_flag_config.dict()
+    content = themes_flag_config.dict()
     _flag: bool = False
     for theme in content:
         if content.get(theme, False):
@@ -97,55 +89,130 @@ async def fortune_check() -> None:
             break
     
     if not _flag:
-        logger.warning("Fortune themes ALL disabled! Please check!")
         raise ResourceError("Fortune themes ALL disabled! Please check!")
-                
-    with flag_config_path.open("w", encoding="utf-8") as f:
+    
+    # Save fortune themes config
+    flags_config_path: Path = fortune_config.fortune_path / "fortune_config.json"            
+    with flags_config_path.open("w", encoding="utf-8") as f:
         json.dump(content, f, ensure_ascii=False, indent=4)
     
     '''
-        Try to get the latest copywriting from repo
+        Check fonts.
+        TODO download fonts from raw.fastgit.org is ALWAYS FAILED!
+        In version v0.4.x, disable downloading. 
+    '''
+    fonts_path: Path = fortune_config.fortune_path / "font"
+    if not fonts_path.exists():
+        fonts_path.mkdir(parents=True, exist_ok=True)
+    
+    if not (fonts_path / "Mamelon.otf").exists():
+        # ret = await download_resource((fonts_path / "Mamelon.otf"), "Mamelon.otf", "font")
+        # if ret:
+        #     logger.info(f"Downloaded Mamelon.otf from repo")
+        # else:
+        raise ResourceError(f"Resource Mamelon.otf is missing! Please check!")
+    
+    if not (fonts_path / "sakura.ttf").exists():
+        # ret = await download_resource((fonts_path / "sakura.ttf"), "sakura.ttf", "font")
+        # if ret:
+        #     logger.info(f"Downloaded sakura.ttf from repo")
+        # else:
+        raise ResourceError(f"Resource sakura.ttf is missing! Please check!")
+    
+    '''
+        Try to get the latest copywriting from the repository.
     '''
     copywriting_path: Path = fortune_config.fortune_path / "fortune" / "copywriting.json"
-    url = "https://raw.fastgit.org/MinatoAquaCrews/nonebot_plugin_fortune/beta/nonebot_plugin_fortune/resource/fortune/copywriting.json"
-    response = await download_url(url)
-    if response is None:
-        if not copywriting_path.exists():
-           raise DownloadError("Copywriting resource missing! Please check!")
-    else:
-        docs = response.json()
-        version = docs.get("version")
-
-        with copywriting_path.open("w", encoding="utf-8") as f:
-            json.dump(docs, f, ensure_ascii=False, indent=4)
-        
-        logger.info(f"Get the latest copywriting docs from repo, version: {version}")
+    if not copywriting_path.parent.exists():
+        copywriting_path.parent.mkdir(parents=True, exist_ok=True)
     
+    ret = await download_resource(copywriting_path, "copywriting.json", "fortune")
+    if not ret and not copywriting_path.exists():
+        raise ResourceError(f"Resource copywriting.json is missing! Please check!")
+    
+    '''
+        Check rules and data json files
+    '''
     fortune_data_path: Path = fortune_config.fortune_path / "fortune_data.json"
     fortune_setting_path: Path = fortune_config.fortune_path / "fortune_setting.json"
+    group_rules_path: Path = fortune_config.fortune_path / "group_rules.json"
+    specific_rules_path: Path = fortune_config.fortune_path / "specific_rules.json"
     
     if not fortune_data_path.exists():
-        logger.warning("fortune_data.json is missing, but initialized one...")
+        logger.warning("Resource fortune_data.json is missing, initialized one...")
         
         with fortune_data_path.open("w", encoding="utf-8") as f:
             json.dump(dict(), f, ensure_ascii=False, indent=4)
-
-    if not fortune_setting_path.exists():
-        url = "https://raw.fastgit.org/MinatoAquaCrews/nonebot_plugin_fortune/beta/nonebot_plugin_fortune/resource/fortune_setting.json"
-        response = await download_url(url)
-        if response is None:
-            logger.warning("fortune_setting.json is missing, but initialized one...")
+    
+    _flag = False
+    if not group_rules_path.exists():        
+        # In version 0.4.x, compatible job will be done automatically if group_rules.json doesn't exist
+        if fortune_setting_path.exists():
+            # Try to transfer from the old setting json
+            ret = group_rules_transfer(fortune_setting_path, group_rules_path)
+            if ret:
+                logger.info("旧版 fortune_setting.json 文件中群聊抽签主题设置已更新至 group_rules.json")
+                _flag = True
+        
+        if not _flag:
+            # If failed or fortune_setting_path doesn't exist, initialize group_rules.json instead
+            with group_rules_path.open("w", encoding="utf-8") as f:
+                json.dump(dict(), f, ensure_ascii=False, indent=4)
             
-            content = {
-                "group_rule": {}, 
-                "specific_rule": {}
-            }
-            with fortune_setting_path.open("w", encoding="utf-8") as f:
-                json.dump(content, f, ensure_ascii=False, indent=4)
-        else:
-            setting = response.json()
+            logger.info("旧版 fortune_setting.json 文件中群聊抽签主题设置不存在，初始化 group_rules.json")
 
-            with fortune_setting_path.open("w", encoding="utf-8") as f:
-                json.dump(setting, f, ensure_ascii=False, indent=4)
-            
-            logger.info(f"fortune_setting.json is missing, but downloaded from repo")
+    _flag = False
+    if not specific_rules_path.exists():
+        # In version 0.4.9 and 0.4.10, data transfering will be done automatically if specific_rules.json doesn't exist
+        if fortune_setting_path.exists():
+            # Try to transfer from the old setting json
+            ret = specific_rules_transfer(fortune_setting_path, specific_rules_path)
+            if ret:
+                logger.info("旧版 fortune_setting.json 文件中签底指定规则已更新至 specific_rules.json")
+                logger.warning("指定签底抽签功能将在 v0.5.x 弃用")
+                _flag = True
+        
+        if not _flag:
+            # Try to download it from repo
+            ret = await download_resource(specific_rules_path, "specific_rules.json")
+            if ret:
+                logger.info(f"Downloaded specific_rules.json from repo")
+            else:
+                # If failed, initialize specific_rules.json instead
+                with specific_rules_path.open("w", encoding="utf-8") as f:
+                    json.dump(dict(), f, ensure_ascii=False, indent=4)
+                
+                logger.info("旧版 fortune_setting.json 文件中签底指定规则不存在，初始化 specific_rules.json")
+                logger.warning("指定签底抽签功能将在 v0.5.x 弃用")
+
+def group_rules_transfer(fortune_setting_dir: Path, group_rules_dir: Path) -> bool:
+    '''
+        Transfer the group_rule in fortune_setting.json to group_rules.json
+    '''
+    with open(fortune_setting_dir, 'r', encoding='utf-8') as fs:
+        _setting: Dict[str, Dict[str, Union[str, List[str]]]] = json.load(fs)
+        group_rules = _setting.get("group_rule", None)  # Old key is group_rule
+    
+        with open(group_rules_dir, 'w', encoding='utf-8') as fr:
+            if not group_rules:
+                json.dump(dict(), fr, ensure_ascii=False, indent=4)
+                return False
+            else:
+                json.dump(group_rules, fr, ensure_ascii=False, indent=4)
+                return True
+
+def specific_rules_transfer(fortune_setting_dir: Path, specific_rules_dir: Path) -> bool:
+    '''
+        Transfer the specific_rule in fortune_setting.json to specific_rules.json
+    '''
+    with open(fortune_setting_dir, 'r', encoding='utf-8') as fs:
+        _setting: Dict[str, Dict[str, Union[str, List[str]]]] = json.load(fs)
+        specific_rules = _setting.get("specific_rule", None)  # Old key is specific_rule
+        
+        with open(specific_rules_dir, 'w', encoding='utf-8') as fr:
+            if not specific_rules:
+                json.dump(dict(), fr, ensure_ascii=False, indent=4)
+                return False
+            else:
+                json.dump(specific_rules, fr, ensure_ascii=False, indent=4)
+                return True

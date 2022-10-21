@@ -18,7 +18,7 @@ _🙏 今日运势 🙏_
     <img src="https://img.shields.io/badge/nonebot2-2.0.0rc1+-green">
   </a>
   
-  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.9rc1">
+  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.9">
     <img src="https://img.shields.io/github/v/release/MinatoAquaCrews/nonebot_plugin_fortune?color=orange">
 
   </a>
@@ -31,13 +31,13 @@ _🙏 今日运势 🙏_
 
 ## 版本
 
-v0.4.9rc1 资源缺失自动检查！
+v0.4.9 资源缺失自动检查！
 
 👉 [如何在v0.4.2或更早版本上更新抽签主题资源？](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/blob/beta/How-to-add-new-theme.md)
 
 ⚠️ 适配nonebot2-2.0.0rc1+
 
-[更新日志](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.9rc1)
+[更新日志](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.9)
 
 ## 安装
 
@@ -53,7 +53,7 @@ v0.4.9rc1 资源缺失自动检查！
     FORTUNE_PATH="your_path_to_resource"  # For example, "./my-data/fortune"，其下有img、font、fortune文件夹等资源
     ```
 
-	⚠️️ **新增** 插件启动时，将自动检查资源是否缺失（除字体资源外），会尝试从repo中下载，但不保证成功
+	⚠️️ **新增** 插件启动时，将自动检查资源是否缺失（除字体与图片资源），会尝试从repo中下载，但不保证成功
 
 3. 使用[FloatTech-zbpdata/Fortune](https://github.com/FloatTech/zbpdata)全部主题。在`env`下设置`xxx_FLAG`以启用或关闭抽签随机主题（默认全部开启），例如：
 
@@ -114,7 +114,7 @@ v0.4.9rc1 资源缺失自动检查！
 
 ## 功能
 
-1. 随机抽取今日运势，配置多种抽签主题：原神、PCR、Hololive、东方、东方归言录、明日方舟、旧版东方、赛马娘、阴阳师、碧蓝航线、碧蓝幻想、战双帕弥什，galgame主题等……
+1. 随机抽取今日运势，配置多种抽签主题：原神、PCR、Hololive、东方、东方归言录、明日方舟、赛马娘、阴阳师、碧蓝航线、碧蓝幻想、战双帕弥什，galgame主题等……
 
 2. 可指定主题抽签；
 
@@ -124,9 +124,9 @@ v0.4.9rc1 资源缺失自动检查！
 
 5. `fortune_setting.json`已预置明日方舟、Asoul、原神、东方、Hololive、李清歌的指定抽签规则；
 
-6. 🔥 更多的运势文案！原`goodLuck.json`已移除，现`copywriting.json`整合了19种运势及共计600+条文案！
+6. 🔥 更多的运势文案！`copywriting.json`整合了19种运势及共计700+条文案！
 
-	⚠️ 文案资源来自于hololive早安系列2019年第6.10～9.22期，有修改。
+	⚠️ 文案资源来自于Hololive早安系列2019年第6.10～9.22期，有修改。
 
 7. 插件启动时将自动检查抽签主题启用情况，当全部为`false`会抛出错误。
 
@@ -142,7 +142,7 @@ v0.4.9rc1 资源缺失自动检查！
 
 1. 一般抽签：今日运势、抽签、运势；
 
-2. 指定主题抽签：[xx抽签]，例如：PCR抽签、holo抽签、碧蓝抽签；
+2. 指定主题抽签：[xx抽签]，例如：pcr抽签、holo抽签、碧蓝抽签；
 
 3. 指定签底并抽签：指定[xxx]签，在`./resource/fortune_setting.json`内手动配置；
 
@@ -174,12 +174,12 @@ v0.4.9rc1 资源缺失自动检查！
 
 ## 抽签图片及文案资源
 
-1. [opqqq-plugin](https://github.com/opq-osc/opqqq-plugin)：原神、pcr、hololive抽签主题；
+1. [opqqq-plugin](https://github.com/opq-osc/opqqq-plugin)：原神、PCR、Hololive抽签主题；
 
 2. 感谢江樂丝提供东方签底；
 
-3. 东方归言录(touhou_lostword)：[KafCoppelia](https://github.com/KafCoppelia)；
+3. 东方归言录(Touhou Lostword)：[KafCoppelia](https://github.com/KafCoppelia)；
 
 4. [FloatTech-zbpdata/Fortune](https://github.com/FloatTech/zbpdata)：其余主题签；
 
-5. 新版运势文案资源：[KafCoppelia](https://github.com/KafCoppelia)。`copywriting.json`整合了関係運、全体運、勉強運、金運、仕事運、恋愛運、総合運、大吉、中吉、小吉、吉、半吉、末吉、末小吉、凶、小凶、半凶、末凶、大凶及700+条运势文案！来自于hololive早安系列2019年第6.10～9.22期，有修改。
+5. 新版运势文案资源：[KafCoppelia](https://github.com/KafCoppelia)。`copywriting.json`整合了関係運、全体運、勉強運、金運、仕事運、恋愛運、総合運、大吉、中吉、小吉、吉、半吉、末吉、末小吉、凶、小凶、半凶、末凶、大凶及700+条运势文案！来自于Hololive早安系列2019年第6.10～9.22期，有修改。

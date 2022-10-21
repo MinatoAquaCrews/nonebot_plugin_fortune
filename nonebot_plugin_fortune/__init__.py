@@ -12,7 +12,7 @@ from .config import FortuneThemesDict
 require("nonebot_plugin_apscheduler")
 from nonebot_plugin_apscheduler import scheduler
 
-__fortune_version__ = "v0.4.9rc1"
+__fortune_version__ = "v0.4.9"
 __fortune_usage__ = f'''
 [今日运势/抽签/运势] 一般抽签
 [xx抽签]     指定主题抽签

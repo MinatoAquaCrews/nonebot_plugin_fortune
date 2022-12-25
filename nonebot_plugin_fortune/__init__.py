@@ -12,8 +12,8 @@ from .config import FortuneThemesDict
 require("nonebot_plugin_apscheduler")
 from nonebot_plugin_apscheduler import scheduler
 
-__fortune_version__ = "v0.4.9"
-__fortune_usage__ = f'''
+__fortune_version__ = "v0.4.10a1"
+__fortune_usages__ = f'''
 [今日运势/抽签/运势] 一般抽签
 [xx抽签]     指定主题抽签
 [指定xx签] 指定特殊角色签底，需要自己尝试哦~
@@ -25,7 +25,7 @@ __fortune_usage__ = f'''
 __plugin_meta__ = PluginMetadata(
     name="今日运势",
     description="抽签！占卜你的今日运势🙏",
-    usage=__fortune_usage__,
+    usage=__fortune_usages__,
     extra={
         "author": "KafCoppelia <k740677208@gmail.com>",
         "version": __fortune_version__
@@ -57,7 +57,7 @@ async def _(event: GroupMessageEvent, args: Message = CommandArg()):
     arg: str = args.extract_plain_text()
     
     if "帮助" in arg[-2:]:
-        await divine.finish(__fortune_usage__)
+        await divine.finish(__fortune_usages__)
     
     gid: str = str(event.group_id)
     uid: str = str(event.user_id)

@@ -36,9 +36,9 @@ _🙏 今日运势 🙏_
 
 v0.4.10a1
 
-👉 [如何在v0.4.2或更早版本上更新抽签主题资源？](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/blob/beta/How-to-add-new-theme.md)
-
 ⚠️ 适配nonebot2-2.0.0rc1+
+
+👉 [如何添加自己的抽签主题资源？欢迎贡献！🙏](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/blob/beta/How-to-add-new-theme.md)
 
 [更新日志](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.10a1)
 
@@ -46,23 +46,23 @@ v0.4.10a1
 
 1. 安装方式：
 
-    - 通过`pip`或`nb`；pypi无法发行过大安装包，由此安装的插件不包含`resource/img`下所有**抽签主题图片**，需单独下载，建议`zip`包下载后单独提取`resource/img`抽签主题图片，后更改`FORTUNE_PATH`配置即可；
+    - 通过`pip`或`nb`；pypi无法发行过大安装包，由此安装的插件不包含`resource/img`下**所有抽签主题图片**，需单独下载，建议`zip`包下载后单独提取`resource/img`抽签主题图片，后更改`FORTUNE_PATH`配置即可；
     
     - 通过`zip`或`git clone`安装：包含`resource`下所有插件资源；
 
 2. 抽签主题图片`img`、字体`font`、文案`fortune`等资源均位于`./resource`下，可在`env`中设置`FORTUNE_PATH`；
 
     ```python
-    FORTUNE_PATH="your_path_to_resource"  # For example, "./my-data/fortune"，其下有img、font、fortune文件夹等资源
+    FORTUNE_PATH="your-path-to-resource"    # For example, "./my-data/fortune"，其下有img、font、fortune文件夹等资源
     ```
 
-	⚠️️ **新增** 插件启动时，将自动检查资源是否缺失（除字体与图片资源），会尝试从repo中下载，但不保证成功
+	⚠️️ 插件启动时，将自动检查资源是否缺失（**除字体与图片**资源），会尝试从repo中下载
 
-3. 使用[FloatTech-zbpdata/Fortune](https://github.com/FloatTech/zbpdata)全部主题。在`env`下设置`xxx_FLAG`以启用或关闭抽签随机主题（默认全部开启），例如：
+3. 在`env`下设置`xxx_FLAG`以启用或关闭抽签随机主题（默认全部开启），例如：
 
     ```python
     ARKNIGHTS_FLAG=true         # 明日方舟
-    ASOUL_FLAG=false            # A-SOUL
+    ASOUL_FLAG=true             # A-SOUL
     AZURE_FLAG=true             # 碧蓝航线
     GENSHIN_FLAG=true           # 原神
     ONMYOJI_FLAG=false          # 阴阳师
@@ -80,8 +80,9 @@ v0.4.10a1
     LIQINGGE_FLAG=true          # 李清歌
     HOSHIZORA_FLAG=true         # 星空列车与白的旅行
     SAKURA_FLAG=true            # 樱色之云绯色之恋
-    SUMMER_POCKETS_FLAG=true    # 夏日口袋
-    AMAZING_GRACE_FLAG=true     # 奇异恩典·圣夜的小镇
+    SUMMER_POCKETS_FLAG=false   # 夏日口袋
+    AMAZING_GRACE_FLAG=false    # 奇异恩典·圣夜的小镇
+    ARK_ORDER_FLAG=true         # 方舟指令换装皮肤
     ```
 
     **请确保不全为`false`，否则会抛出错误**
@@ -139,7 +140,7 @@ v0.4.10a1
 	- [ ] 文案排版算法；
 	- [ ] 新增功能：每日星座运势；
 	- [x] 新增功能：资源缺失检查、自动下载；
-	- [ ] 新增资源：新的抽签主题资源！
+	- [x] 新增资源：新的抽签主题资源！方舟指令！
 
 ## 命令
 
@@ -153,7 +154,7 @@ v0.4.10a1
 
 4. [群管或群主或超管] 配置抽签主题：
 
-    - 设置[原神/pcr/东方/vtb/xxx]签：设置群抽签主题；
+    - 设置[原神/pcr/东方/vtb/方舟]签：设置群抽签主题；
 
     - 重置（抽签）主题：设置群抽签主题为随机；
 
@@ -183,6 +184,8 @@ v0.4.10a1
 
 3. 东方归言录(Touhou Lostword)：[KafCoppelia](https://github.com/KafCoppelia)；
 
-4. [FloatTech-zbpdata/Fortune](https://github.com/FloatTech/zbpdata)：其余主题签；
+4. 方舟指令(Ark Order)：[KafCoppelia](https://github.com/KafCoppelia)；
 
-5. 新版运势文案资源：[KafCoppelia](https://github.com/KafCoppelia)。`copywriting.json`整合了関係運、全体運、勉強運、金運、仕事運、恋愛運、総合運、大吉、中吉、小吉、吉、半吉、末吉、末小吉、凶、小凶、半凶、末凶、大凶及700+条运势文案！来自于Hololive早安系列2019年第6.10～9.22期，有修改。
+5. [FloatTech-zbpdata/Fortune](https://github.com/FloatTech/zbpdata)：其余主题签；
+
+6. 运势文案：[KafCoppelia](https://github.com/KafCoppelia)。`copywriting.json` 整合了関係運、全体運、勉強運、金運、仕事運、恋愛運、総合運、大吉、中吉、小吉、吉、半吉、末吉、末小吉、凶、小凶、半凶、末凶、大凶及700+条运势文案！来源于Hololive早安系列2019年第6.10～9.22期，有修改。

@@ -36,7 +36,8 @@ FortuneThemesDict: Dict[str, List[str]] = {
     "hoshizora": ["星空列车与白的旅行", "星空列车"],
     "sakura": ["樱色之云绯色之恋", "樱云之恋", "樱云绯恋", "樱云"],
     "summer_pockets": ["夏日口袋", "夏兜", "sp", "SP"],
-    "amazing_grace": ["奇异恩典"]
+    "amazing_grace": ["奇异恩典"],
+    "ark_order": ["方舟指令"]
 }
 
 class PluginConfig(BaseModel, extra=Extra.ignore):
@@ -68,6 +69,7 @@ class ThemesFlagConfig(BaseModel, extra=Extra.ignore):
     hoshizora_flag: bool = True
     sakura_flag: bool = True 
     summer_pockets_flag: bool = True
+    ark_order_flag: bool = True
 
 driver = get_driver()
 fortune_config: PluginConfig = PluginConfig.parse_obj(driver.config.dict())

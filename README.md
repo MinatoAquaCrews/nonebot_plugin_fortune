@@ -82,7 +82,6 @@ v0.4.10a1
     SAKURA_FLAG=true            # 樱色之云绯色之恋
     SUMMER_POCKETS_FLAG=false   # 夏日口袋
     AMAZING_GRACE_FLAG=false    # 奇异恩典·圣夜的小镇
-    ARK_ORDER_FLAG=true         # 方舟指令换装皮肤
     ```
 
     **请确保不全为`false`，否则会抛出错误**
@@ -110,7 +109,7 @@ v0.4.10a1
 
     *group_rule会自动生成，specific_rule可手动配置*
 
-    ⚠️ 将在`v0.5.x`弃用
+    ⚠️ 将在`v0.5.0`弃用
 
     指定凯露签，由于存在两张凯露的签底，配置凯露签的**路径列表**即可；其余类似，**请确保图片路径、格式输入正确**！
 
@@ -134,13 +133,13 @@ v0.4.10a1
 
 7. 插件启动时将自动检查抽签主题启用情况，当全部为`false`会抛出错误。
 
-8. TODO in `v0.5.x` ✨
+8. TODO in `v0.5.0` ✨
 
 	- [ ] 优化设置主题、指定主题、及检索的方式；
 	- [ ] 文案排版算法；
 	- [ ] 新增功能：每日星座运势；
 	- [x] 新增功能：资源缺失检查、自动下载；
-	- [x] 新增资源：新的抽签主题资源！方舟指令！
+	- [ ] 新增资源：新的抽签主题资源！
 
 ## 命令
 
@@ -150,7 +149,7 @@ v0.4.10a1
 
 3. 指定签底并抽签：指定[xxx]签，在`./resource/fortune_setting.json`内手动配置；
 
-	⚠️ 将在`v0.5.x`弃用
+	⚠️ 将在`v0.5.0`弃用
 
 4. [群管或群主或超管] 配置抽签主题：
 
@@ -160,11 +159,9 @@ v0.4.10a1
 
 5. 抽签设置：查看当前群抽签主题的配置；
 
-6. [超管] 刷新抽签：全局即刻刷新抽签，防止过0点未刷新；
+6. 今日运势帮助：显示插件帮助文案；
 
-7. 今日运势帮助：显示插件帮助文案；
-
-8. 查看（抽签）主题：显示当前已启用主题；
+7. 查看（抽签）主题：显示当前已启用主题；
 
 ## 效果
 
@@ -184,8 +181,6 @@ v0.4.10a1
 
 3. 东方归言录(Touhou Lostword)：[KafCoppelia](https://github.com/KafCoppelia)；
 
-4. 方舟指令(Ark Order)：[KafCoppelia](https://github.com/KafCoppelia)；
+4. [FloatTech-zbpdata/Fortune](https://github.com/FloatTech/zbpdata)：其余主题签；
 
-5. [FloatTech-zbpdata/Fortune](https://github.com/FloatTech/zbpdata)：其余主题签；
-
-6. 运势文案：[KafCoppelia](https://github.com/KafCoppelia)。`copywriting.json` 整合了関係運、全体運、勉強運、金運、仕事運、恋愛運、総合運、大吉、中吉、小吉、吉、半吉、末吉、末小吉、凶、小凶、半凶、末凶、大凶及700+条运势文案！来源于Hololive早安系列2019年第6.10～9.22期，有修改。
+5. 运势文案：[KafCoppelia](https://github.com/KafCoppelia)。`copywriting.json` 整合了関係運、全体運、勉強運、金運、仕事運、恋愛運、総合運、大吉、中吉、小吉、吉、半吉、末吉、末小吉、凶、小凶、半凶、末凶、大凶及700+条运势文案！来源于Hololive早安系列2019年第6.10～9.22期，有修改。

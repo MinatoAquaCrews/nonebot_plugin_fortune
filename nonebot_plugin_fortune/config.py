@@ -91,7 +91,7 @@ async def fortune_check() -> None:
         fortune_config.fortune_path.mkdir(parents=True, exist_ok=True)
 
     '''
-        Check whether all themes are disable.
+        Check whether all themes are DISABLE.
     '''
     content = themes_flag_config.dict()
     _flag: bool = False
@@ -103,7 +103,10 @@ async def fortune_check() -> None:
     if not _flag:
         raise ResourceError("Fortune themes ALL disabled! Please check!")
 
-    # Save fortune themes config
+    '''
+        Save fortune themes config.
+        Currently, the fortune_config.json is useless.
+    '''
     flags_config_path: Path = fortune_config.fortune_path / "fortune_config.json"
     with flags_config_path.open("w", encoding="utf-8") as f:
         json.dump(content, f, ensure_ascii=False, indent=4)
@@ -116,18 +119,10 @@ async def fortune_check() -> None:
         fonts_path.mkdir(parents=True, exist_ok=True)
 
     if not (fonts_path / "Mamelon.otf").exists():
-        # ret = await download_resource((fonts_path / "Mamelon.otf"), "Mamelon.otf", "font")
-        # if ret:
-        #     logger.info(f"Downloaded Mamelon.otf from repo")
-        # else:
-        raise ResourceError(f"Resource Mamelon.otf is missing! Please check!")
+        raise ResourceError("Resource Mamelon.otf is missing! Please check!")
 
     if not (fonts_path / "sakura.ttf").exists():
-        # ret = await download_resource((fonts_path / "sakura.ttf"), "sakura.ttf", "font")
-        # if ret:
-        #     logger.info(f"Downloaded sakura.ttf from repo")
-        # else:
-        raise ResourceError(f"Resource sakura.ttf is missing! Please check!")
+        raise ResourceError("Resource sakura.ttf is missing! Please check!")
 
     '''
         Try to get the latest copywriting from the repository.
@@ -157,7 +152,7 @@ async def fortune_check() -> None:
     else:
         '''
             In version 0.4.10, the format of fortune_data.json is changed from v0.4.9 and older.
-            1. Remove useless key "nickname"
+            1. Remove useless keys "gid", "uid" and "nickname"
             2. Transfer the key "is_divined" to "last_sign_date"
         '''
         with open(fortune_data_path, 'r', encoding='utf-8') as f:
@@ -172,6 +167,16 @@ async def fortune_check() -> None:
                     '''
                     try:
                         _data[gid][uid].pop("nickname")
+                    except KeyError:
+                        pass
+                    
+                    try:
+                        _data[gid][uid].pop("gid")
+                    except KeyError:
+                        pass
+                    
+                    try:
+                        _data[gid][uid].pop("uid")
                     except KeyError:
                         pass
                     
@@ -236,31 +241,33 @@ def group_rules_transfer(fortune_setting_dir: Path, group_rules_dir: Path) -> bo
     '''
         Transfer the group_rule in fortune_setting.json to group_rules.json
     '''
-    with open(fortune_setting_dir, 'r', encoding='utf-8') as fs:
-        _setting: Dict[str, Dict[str, Union[str, List[str]]]] = json.load(fs)
-        group_rules = _setting.get("group_rule", None)  # Old key is group_rule
+    with open(fortune_setting_dir, 'r', encoding='utf-8') as f:
+        _setting: Dict[str, Dict[str, Union[str, List[str]]]] = json.load(f)
+    
+    group_rules = _setting.get("group_rule", None)  # Old key is group_rule
 
-        with open(group_rules_dir, 'w', encoding='utf-8') as fr:
-            if group_rules is None:
-                json.dump(dict(), fr, ensure_ascii=False, indent=4)
-                return False
-            else:
-                json.dump(group_rules, fr, ensure_ascii=False, indent=4)
-                return True
+    with open(group_rules_dir, 'w', encoding='utf-8') as f:
+        if group_rules is None:
+            json.dump(dict(), f, ensure_ascii=False, indent=4)
+            return False
+        else:
+            json.dump(group_rules, f, ensure_ascii=False, indent=4)
+            return True
 
 
 def specific_rules_transfer(fortune_setting_dir: Path, specific_rules_dir: Path) -> bool:
     '''
         Transfer the specific_rule in fortune_setting.json to specific_rules.json
     '''
-    with open(fortune_setting_dir, 'r', encoding='utf-8') as fs:
-        _setting: Dict[str, Dict[str, Union[str, List[str]]]] = json.load(fs)
-        specific_rules = _setting.get("specific_rule", None)  # Old key is specific_rule
+    with open(fortune_setting_dir, 'r', encoding='utf-8') as f:
+        _setting: Dict[str, Dict[str, Union[str, List[str]]]] = json.load(f)
+    
+    specific_rules = _setting.get("specific_rule", None)  # Old key is specific_rule
 
-        with open(specific_rules_dir, 'w', encoding='utf-8') as fr:
-            if not specific_rules:
-                json.dump(dict(), fr, ensure_ascii=False, indent=4)
-                return False
-            else:
-                json.dump(specific_rules, fr, ensure_ascii=False, indent=4)
-                return True
+    with open(specific_rules_dir, 'w', encoding='utf-8') as f:
+        if not specific_rules:
+            json.dump(dict(), f, ensure_ascii=False, indent=4)
+            return False
+        else:
+            json.dump(specific_rules, f, ensure_ascii=False, indent=4)
+            return True

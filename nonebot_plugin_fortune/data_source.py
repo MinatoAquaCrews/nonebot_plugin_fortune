@@ -10,8 +10,7 @@ from .utils import drawing, themes_flag_check
 class FortuneManager:
 
     def __init__(self):
-        self._user_data: Dict[str, Dict[str,
-                                        Dict[str, Union[str, bool, int]]]] = dict()
+        self._user_data: Dict[str, Dict[str, Dict[str, Union[str, int, date]]]] = dict()
         self._group_rules: Dict[str, str] = dict()
         self._specific_rules: Dict[str, List[str]] = dict()
         self._user_data_file: Path = fortune_config.fortune_path / "fortune_data.json"
@@ -66,17 +65,16 @@ class FortuneManager:
 
         if not self._multi_divine_check(gid, uid, now_time):
             try:
-                image_file = drawing(gid, uid, theme, spec_path)
+                img_path = drawing(gid, uid, theme, spec_path)
             except Exception:
                 return True, None
 
             # Record the sign-in time
             self._end_data_handle(gid, uid, now_time)
-            return True, image_file
+            return True, img_path
         else:
-            image_file: Path = fortune_config.fortune_path / \
-                "out" / f"{gid}_{uid}.png"
-            return False, image_file
+            img_path: Path = fortune_config.fortune_path / "out" / f"{gid}_{uid}.png"
+            return False, img_path
 
     def clean_out_pics(self) -> None:
         '''
@@ -104,10 +102,7 @@ class FortuneManager:
 
         if uid not in self._user_data[gid]:
             self._user_data[gid][uid] = {
-                "gid": gid,
-                "uid": uid,
-                # Last sign-in date. YY-MM-DD
-                "last_sign_date": 0
+                "last_sign_date": 0 # Last sign-in date. YY-MM-DD
             }
 
         self._save_data()

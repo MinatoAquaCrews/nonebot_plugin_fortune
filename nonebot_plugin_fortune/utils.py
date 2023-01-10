@@ -1,9 +1,9 @@
 from PIL import Image, ImageDraw, ImageFont
-from typing import Optional, Tuple, Dict, List
+from typing import Optional, Tuple, List
 from pathlib import Path
 import random
 import json
-from .config import fortune_config
+from .config import fortune_config, themes_flag_config
 
 
 def get_copywriting() -> Tuple[str, str]:
@@ -23,7 +23,7 @@ def get_copywriting() -> Tuple[str, str]:
     return title, text
 
 
-def randomBasemap(theme: str, spec_path: Optional[str] = None) -> Path:
+def random_basemap(theme: str, spec_path: Optional[str] = None) -> Path:
     if isinstance(spec_path, str):
         p: Path = fortune_config.fortune_path / "img" / spec_path
         return p
@@ -31,9 +31,8 @@ def randomBasemap(theme: str, spec_path: Optional[str] = None) -> Path:
     if theme == "random":
         __p: Path = fortune_config.fortune_path / "img"
 
-        # Each dir is a theme, remember add _flag after the names of themes
-        themes: List[str] = [f.name for f in __p.iterdir(
-        ) if f.is_dir() and themes_flag_check(f.name)]
+        # Each dir is a theme. Add "_flag" after the names of themes
+        themes: List[str] = [f.name for f in __p.iterdir() if f.is_dir() and themes_flag_check(f.name + "_flag")]
         picked: str = random.choice(themes)
 
         _p: Path = __p / picked
@@ -51,7 +50,7 @@ def randomBasemap(theme: str, spec_path: Optional[str] = None) -> Path:
 
 def drawing(gid: str, uid: str, theme: str, spec_path: Optional[str] = None) -> Path:
     # 1. Random choice a base image
-    imgPath: Path = randomBasemap(theme, spec_path)
+    imgPath: Path = random_basemap(theme, spec_path)
     img: Image.Image = Image.open(imgPath)
     draw = ImageDraw.Draw(img)
 
@@ -98,18 +97,13 @@ def drawing(gid: str, uid: str, theme: str, spec_path: Optional[str] = None) -> 
         draw.text((x, y), textVertical, fill=color, font=ttfront)
 
     # Save
-    outPath: Path = exportFilePath(imgPath, gid, uid)
+    outDir: Path = fortune_config.fortune_path / "out"
+    if not outDir.exists():
+        outDir.mkdir(exist_ok=True, parents=True)
+    
+    outPath = outDir / f"{gid}_{uid}.png"
+
     img.save(outPath)
-    return outPath
-
-
-def exportFilePath(originalFilePath: Path, gid: str, uid: str) -> Path:
-    dirPath: Path = fortune_config.fortune_path / "out"
-    if not dirPath.exists():
-        dirPath.mkdir(exist_ok=True, parents=True)
-
-    outPath: Path = originalFilePath.parent.parent.parent / \
-        "out" / f"{gid}_{uid}.png"
     return outPath
 
 
@@ -154,11 +148,6 @@ def decrement(text: str) -> Tuple[int, List[str]]:
 
 def themes_flag_check(theme: str) -> bool:
     '''
-        Read the config json, return the status of a theme
+        check wether a theme is enabled in themes_flag_config
     '''
-    flags_config_path: Path = fortune_config.fortune_path / "fortune_config.json"
-
-    with flags_config_path.open("r", encoding="utf-8") as f:
-        data: Dict[str, bool] = json.load(f)
-
-        return data.get((theme + "_flag"), False)
+    return themes_flag_config.dict().get(theme, False)

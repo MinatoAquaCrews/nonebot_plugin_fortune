@@ -12,7 +12,7 @@ from .config import FortuneThemesDict
 require("nonebot_plugin_apscheduler")
 from nonebot_plugin_apscheduler import scheduler
 
-__fortune_version__ = "v0.4.10a1"
+__fortune_version__ = "v0.4.10a2"
 __fortune_usages__ = f'''
 [今日运势/抽签/运势] 一般抽签
 [xx抽签]     指定主题抽签
@@ -65,7 +65,7 @@ async def _(event: GroupMessageEvent, args: Message = CommandArg()):
     uid: str = str(event.user_id)
 
     is_first, image_file = fortune_manager.divine(gid, uid, None, None)
-    if not image_file:
+    if image_file is None:
         await general_divine.finish("今日运势生成出错……")
 
     if not is_first:
@@ -99,7 +99,7 @@ async def _(event: GroupMessageEvent, user_theme: str = Depends(get_user_theme))
 
                 is_first, image_file = fortune_manager.divine(
                     gid, uid, theme, None)
-                if not image_file:
+                if image_file is None:
                     await specific_divine.finish("今日运势生成出错……")
 
                 if not is_first:
@@ -145,7 +145,7 @@ async def _(event: GroupMessageEvent, limit: str = Depends(get_user_arg)):
 
     if limit == "随机":
         is_first, image_file = fortune_manager.divine(gid, uid, None, None)
-        if not image_file:
+        if image_file is None:
             await limit_setting.finish("今日运势生成出错……")
     else:
         spec_path = fortune_manager.specific_check(limit)
@@ -154,7 +154,7 @@ async def _(event: GroupMessageEvent, limit: str = Depends(get_user_arg)):
         else:
             is_first, image_file = fortune_manager.divine(
                 gid, uid, None, spec_path)
-            if not image_file:
+            if image_file is None:
                 await limit_setting.finish("今日运势生成出错……")
 
     if not is_first:

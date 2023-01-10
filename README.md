@@ -18,7 +18,7 @@ _🙏 今日运势 🙏_
     <img src="https://img.shields.io/badge/nonebot2-2.0.0rc1+-green">
   </a>
   
-  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.10a1">
+  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.10a2">
     <img src="https://img.shields.io/github/v/release/MinatoAquaCrews/nonebot_plugin_fortune?color=orange">
   </a>
 
@@ -34,13 +34,13 @@ _🙏 今日运势 🙏_
 
 ## 版本
 
-v0.4.10a1
+v0.4.10a2
 
 ⚠️ 适配nonebot2-2.0.0rc1+
 
 👉 [如何添加自己的抽签主题资源？欢迎贡献！🙏](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/blob/beta/How-to-add-new-theme.md)
 
-[更新日志](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.10a1)
+[更新日志](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.10a2)
 
 ## 安装
 
@@ -56,7 +56,7 @@ v0.4.10a1
     FORTUNE_PATH="your-path-to-resource"    # For example, "./my-data/fortune"，其下有img、font、fortune文件夹等资源
     ```
 
-	⚠️️ 插件启动时，将自动检查资源是否缺失（**除字体与图片**资源），会尝试从repo中下载
+	⚠️️ 插件启动时，将自动检查资源是否缺失（**除字体与图片**资源）
 
 3. 在`env`下设置`xxx_FLAG`以启用或关闭抽签随机主题（默认全部开启），例如：
 

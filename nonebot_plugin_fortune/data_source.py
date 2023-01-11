@@ -87,9 +87,9 @@ class FortuneManager:
     def _init_user_data(self, gid: str, uid: str) -> None:
         '''
             初始化用户信息：
-            - 群聊不在群组规则内，初始化
-            - 群聊不在抽签数据内，初始化
-            - 用户不在抽签数据内，初始化
+            1. 群聊不在群组规则内，初始化
+            2. 群聊不在抽签数据内，初始化
+            3. 用户不在抽签数据内，初始化
         '''
         self._load_data()
         self._load_group_rules()
@@ -149,7 +149,7 @@ class FortuneManager:
 
     def get_group_theme(self, gid: str) -> str:
         '''
-            获取当前群抽签主题，若没有数据则置随机
+            获取当前群抽签主题，若没有数据则初始化为随机
         '''
         self._load_group_rules()
 

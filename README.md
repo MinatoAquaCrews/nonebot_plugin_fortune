@@ -18,48 +18,51 @@ _🙏 今日运势 🙏_
     <img src="https://img.shields.io/badge/nonebot2-2.0.0rc1+-green">
   </a>
   
-  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.9">
+  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.10">
     <img src="https://img.shields.io/github/v/release/MinatoAquaCrews/nonebot_plugin_fortune?color=orange">
-
   </a>
 
   <a href="https://www.codefactor.io/repository/github/MinatoAquaCrews/nonebot_plugin_fortune">
     <img src="https://img.shields.io/codefactor/grade/github/MinatoAquaCrews/nonebot_plugin_fortune/beta?color=red">
+  </a>
+
+  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune">
+    <img src="https://img.shields.io/pypi/dm/nonebot_plugin_fortune">
   </a>
   
 </p>
 
 ## 版本
 
-v0.4.9 资源缺失自动检查！
-
-👉 [如何在v0.4.2或更早版本上更新抽签主题资源？](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/blob/beta/How-to-add-new-theme.md)
+v0.4.10
 
 ⚠️ 适配nonebot2-2.0.0rc1+
 
-[更新日志](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.9)
+👉 [如何添加自己的抽签主题资源？欢迎贡献！🙏](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/blob/beta/How-to-add-new-theme.md)
+
+[更新日志](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.10)
 
 ## 安装
 
 1. 安装方式：
 
-    - 通过`pip`或`nb`；pypi无法发行过大安装包，由此安装的插件不包含`resource/img`下所有**抽签主题图片**，需单独下载，建议`zip`包下载后单独提取`resource/img`抽签主题图片，后更改`FORTUNE_PATH`配置即可；
+    - 通过`pip`或`nb`；pypi无法发行过大安装包，由此安装的插件不包含`resource/img`下**所有抽签主题图片**，需单独下载，建议`zip`包下载后单独提取`resource/img`抽签主题图片，后更改`FORTUNE_PATH`配置即可；
     
     - 通过`zip`或`git clone`安装：包含`resource`下所有插件资源；
 
 2. 抽签主题图片`img`、字体`font`、文案`fortune`等资源均位于`./resource`下，可在`env`中设置`FORTUNE_PATH`；
 
     ```python
-    FORTUNE_PATH="your_path_to_resource"  # For example, "./my-data/fortune"，其下有img、font、fortune文件夹等资源
+    FORTUNE_PATH="your-path-to-resource"    # For example, "./my-data/fortune"，其下有img、font、fortune文件夹等资源
     ```
 
-	⚠️️ **新增** 插件启动时，将自动检查资源是否缺失（除字体与图片资源），会尝试从repo中下载，但不保证成功
+	⚠️️ 插件启动时，将自动检查资源是否缺失（**除字体与图片**资源）
 
-3. 使用[FloatTech-zbpdata/Fortune](https://github.com/FloatTech/zbpdata)全部主题。在`env`下设置`xxx_FLAG`以启用或关闭抽签随机主题（默认全部开启），例如：
+3. 在`env`下设置`xxx_FLAG`以启用或关闭抽签随机主题（默认全部开启），例如：
 
     ```python
     ARKNIGHTS_FLAG=true         # 明日方舟
-    ASOUL_FLAG=false            # A-SOUL
+    ASOUL_FLAG=true             # A-SOUL
     AZURE_FLAG=true             # 碧蓝航线
     GENSHIN_FLAG=true           # 原神
     ONMYOJI_FLAG=false          # 阴阳师
@@ -77,8 +80,8 @@ v0.4.9 资源缺失自动检查！
     LIQINGGE_FLAG=true          # 李清歌
     HOSHIZORA_FLAG=true         # 星空列车与白的旅行
     SAKURA_FLAG=true            # 樱色之云绯色之恋
-    SUMMER_POCKETS_FLAG=true    # 夏日口袋
-    AMAZING_GRACE_FLAG=true     # 奇异恩典·圣夜的小镇
+    SUMMER_POCKETS_FLAG=false   # 夏日口袋
+    AMAZING_GRACE_FLAG=false    # 奇异恩典·圣夜的小镇
     ```
 
     **请确保不全为`false`，否则会抛出错误**
@@ -106,7 +109,7 @@ v0.4.9 资源缺失自动检查！
 
     *group_rule会自动生成，specific_rule可手动配置*
 
-    ⚠️ 将在`v0.5.x`弃用
+    ⚠️ 将在`v0.5.0`弃用
 
     指定凯露签，由于存在两张凯露的签底，配置凯露签的**路径列表**即可；其余类似，**请确保图片路径、格式输入正确**！
 
@@ -130,7 +133,7 @@ v0.4.9 资源缺失自动检查！
 
 7. 插件启动时将自动检查抽签主题启用情况，当全部为`false`会抛出错误。
 
-8. TODO in `v0.5.x` ✨
+8. TODO in `v0.5.0` ✨
 
 	- [ ] 优化设置主题、指定主题、及检索的方式；
 	- [ ] 文案排版算法；
@@ -146,21 +149,19 @@ v0.4.9 资源缺失自动检查！
 
 3. 指定签底并抽签：指定[xxx]签，在`./resource/fortune_setting.json`内手动配置；
 
-	⚠️ 将在`v0.5.x`弃用
+	⚠️ 将在`v0.5.0`弃用
 
 4. [群管或群主或超管] 配置抽签主题：
 
-    - 设置[原神/pcr/东方/vtb/xxx]签：设置群抽签主题；
+    - 设置[原神/pcr/东方/vtb/方舟]签：设置群抽签主题；
 
     - 重置（抽签）主题：设置群抽签主题为随机；
 
 5. 抽签设置：查看当前群抽签主题的配置；
 
-6. [超管] 刷新抽签：全局即刻刷新抽签，防止过0点未刷新；
+6. 今日运势帮助：显示插件帮助文案；
 
-7. 今日运势帮助：显示插件帮助文案；
-
-8. 查看（抽签）主题：显示当前已启用主题；
+7. 查看（抽签）主题：显示当前已启用主题；
 
 ## 效果
 
@@ -182,4 +183,4 @@ v0.4.9 资源缺失自动检查！
 
 4. [FloatTech-zbpdata/Fortune](https://github.com/FloatTech/zbpdata)：其余主题签；
 
-5. 新版运势文案资源：[KafCoppelia](https://github.com/KafCoppelia)。`copywriting.json`整合了関係運、全体運、勉強運、金運、仕事運、恋愛運、総合運、大吉、中吉、小吉、吉、半吉、末吉、末小吉、凶、小凶、半凶、末凶、大凶及700+条运势文案！来自于Hololive早安系列2019年第6.10～9.22期，有修改。
+5. 运势文案：[KafCoppelia](https://github.com/KafCoppelia)。`copywriting.json` 整合了関係運、全体運、勉強運、金運、仕事運、恋愛運、総合運、大吉、中吉、小吉、吉、半吉、末吉、末小吉、凶、小凶、半凶、末凶、大凶及700+条运势文案！来源于Hololive早安系列2019年第6.10～9.22期，有修改。

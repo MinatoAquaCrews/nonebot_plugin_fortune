@@ -10,7 +10,7 @@ _🙏 今日运势 🙏_
 </div>
 <p align="center">
   
-  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/blob/beta/LICENSE">
+  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/blob/master/LICENSE">
     <img src="https://img.shields.io/github/license/MinatoAquaCrews/nonebot_plugin_fortune?color=blue">
   </a>
   
@@ -23,7 +23,7 @@ _🙏 今日运势 🙏_
   </a>
 
   <a href="https://www.codefactor.io/repository/github/MinatoAquaCrews/nonebot_plugin_fortune">
-    <img src="https://img.shields.io/codefactor/grade/github/MinatoAquaCrews/nonebot_plugin_fortune/beta?color=red">
+    <img src="https://img.shields.io/codefactor/grade/github/MinatoAquaCrews/nonebot_plugin_fortune/master?color=red">
   </a>
 
   <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune">
@@ -38,7 +38,7 @@ v0.4.10
 
 ⚠️ 适配nonebot2-2.0.0rc1+
 
-👉 [如何添加自己的抽签主题资源？欢迎贡献！🙏](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/blob/beta/How-to-add-new-theme.md)
+👉 [如何添加自己的抽签主题资源？欢迎贡献！🙏](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/blob/master/How-to-add-new-theme.md)
 
 [更新日志](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.10)
 

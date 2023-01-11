@@ -18,7 +18,7 @@ _🙏 今日运势 🙏_
     <img src="https://img.shields.io/badge/nonebot2-2.0.0rc1+-green">
   </a>
   
-  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.10a2">
+  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.10">
     <img src="https://img.shields.io/github/v/release/MinatoAquaCrews/nonebot_plugin_fortune?color=orange">
   </a>
 
@@ -34,13 +34,13 @@ _🙏 今日运势 🙏_
 
 ## 版本
 
-v0.4.10a2
+v0.4.10
 
 ⚠️ 适配nonebot2-2.0.0rc1+
 
 👉 [如何添加自己的抽签主题资源？欢迎贡献！🙏](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/blob/beta/How-to-add-new-theme.md)
 
-[更新日志](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.10a2)
+[更新日志](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.10)
 
 ## 安装
 

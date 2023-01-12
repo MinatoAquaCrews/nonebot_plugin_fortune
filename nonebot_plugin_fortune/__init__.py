@@ -12,7 +12,7 @@ from .config import FortuneThemesDict
 require("nonebot_plugin_apscheduler")
 from nonebot_plugin_apscheduler import scheduler
 
-__fortune_version__ = "v0.4.10"
+__fortune_version__ = "v0.4.10.fix1"
 __fortune_usages__ = f'''
 [今日运势/抽签/运势] 一般抽签
 [xx抽签]     指定主题抽签
@@ -50,7 +50,7 @@ async def _(event: GroupMessageEvent):
 
 @themes_list.handle()
 async def _(event: GroupMessageEvent):
-    msg: str = fortune_manager.get_main_theme_list()
+    msg: str = fortune_manager.get_available_themes()
     await themes_list.finish(msg)
 
 

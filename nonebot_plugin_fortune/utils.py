@@ -31,8 +31,8 @@ def random_basemap(theme: str, spec_path: Optional[str] = None) -> Path:
     if theme == "random":
         __p: Path = fortune_config.fortune_path / "img"
 
-        # Each dir is a theme. Add "_flag" after the names of themes
-        themes: List[str] = [f.name for f in __p.iterdir() if f.is_dir() and themes_flag_check(f.name + "_flag")]
+        # Each dir is a theme.
+        themes: List[str] = [f.name for f in __p.iterdir() if f.is_dir() and theme_flag_check(f.name)]
         picked: str = random.choice(themes)
 
         _p: Path = __p / picked
@@ -146,8 +146,8 @@ def decrement(text: str) -> Tuple[int, List[str]]:
     return col_num, result
 
 
-def themes_flag_check(theme: str) -> bool:
+def theme_flag_check(theme: str) -> bool:
     '''
         check wether a theme is enabled in themes_flag_config
     '''
-    return themes_flag_config.dict().get(theme, False)
+    return themes_flag_config.dict().get(theme + "_flag", False)

@@ -9,7 +9,7 @@ from .download import ResourceError, download_resource
 
 '''
     抽签主题对应表，第一键值为“抽签设置”或“主题列表”展示的主题名称
-    Key-Value: 主题资源文件夹名-设置主题别名
+    Key-Value: 主题资源文件夹名-主题别名
 '''
 FortuneThemesDict: Dict[str, List[str]] = {
     "random": ["随机"],
@@ -102,14 +102,6 @@ async def fortune_check() -> None:
 
     if not _flag:
         raise ResourceError("Fortune themes ALL disabled! Please check!")
-
-    '''
-        Save fortune themes config.
-        Currently, the fortune_config.json is useless.
-    '''
-    flags_config_path: Path = fortune_config.fortune_path / "fortune_config.json"
-    with flags_config_path.open("w", encoding="utf-8") as f:
-        json.dump(content, f, ensure_ascii=False, indent=4)
 
     '''
         Check fonts.

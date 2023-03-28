@@ -20,7 +20,7 @@ async def download_url(url: str) -> Union[httpx.Response, None]:
                 resp = await client.get(url, timeout=20)
                 if resp.status_code != 200:
                     continue
-                return resp
+                return resp.json()
             except Exception:
                 logger.warning(f"Error occurred when downloading {url}, retry: {i+1}/3")
 
@@ -33,8 +33,9 @@ async def download_resource(resource_dir: Path, name: str, _type: Optional[str] 
         Try to download resources, including fonts, fortune copywriting, but not images.
         For fonts & copywriting, download and save into files when missing. Otherwise, raise ResourceError
     '''
-    base_url: str = "https://raw.githubusercontent.com/MinatoAquaCrews/nonebot_plugin_fortune/master/nonebot_plugin_fortune/resource"
-
+    
+    base_url: str = "https://raw.gitmirror.com/MinatoAquaCrews/nonebot_plugin_fortune/master/nonebot_plugin_fortune/resource"
+    
     if isinstance(_type, str):
         url: str = base_url + "/" + _type + "/" + name
     else:
@@ -44,7 +45,7 @@ async def download_resource(resource_dir: Path, name: str, _type: Optional[str] 
     if resp:
         await save_resource(resource_dir, resp)
         if name == "copywriting.json":
-            version = resp.json().get("version")
+            version = resp.get("version")
             logger.info(f"Got the latest copywriting.json from repo, version: {version}")
 
         return True

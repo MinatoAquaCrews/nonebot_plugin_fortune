@@ -26,7 +26,7 @@
     ```python
     ...
     "touhou":   ["东方", "touhou", "Touhou", "车万"],
-    "touhou_old": 
+    "touhou_old":
                 ["旧东方", "旧版东方", "老东方", "老版东方", "经典东方"],
     ...
     ```
@@ -34,9 +34,9 @@
     ```python
     ...
     "touhou":   ["东方", "touhou", "Touhou", "车万"],
-    "touhou_lostword": 
+    "touhou_lostword":
                 ["东方归言录", "东方lostword", "touhou lostword", "Touhou dlc"],
-    "touhou_old": 
+    "touhou_old":
                 ["旧东方", "旧版东方", "老东方", "老版东方", "经典东方"],
     ...
     ```

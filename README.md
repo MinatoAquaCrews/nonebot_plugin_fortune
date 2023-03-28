@@ -9,15 +9,15 @@ _🙏 今日运势 🙏_
 
 </div>
 <p align="center">
-  
+
   <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/blob/master/LICENSE">
     <img src="https://img.shields.io/github/license/MinatoAquaCrews/nonebot_plugin_fortune?color=blue">
   </a>
-  
+
   <a href="https://github.com/nonebot/nonebot2">
     <img src="https://img.shields.io/badge/nonebot2-2.0.0rc1+-green">
   </a>
-  
+
   <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.10.post1">
     <img src="https://img.shields.io/github/v/release/MinatoAquaCrews/nonebot_plugin_fortune?color=orange">
   </a>
@@ -29,7 +29,7 @@ _🙏 今日运势 🙏_
   <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune">
     <img src="https://img.shields.io/pypi/dm/nonebot_plugin_fortune">
   </a>
-  
+
 </p>
 
 ## 版本
@@ -47,7 +47,7 @@ v0.4.10.post1
 1. 安装方式：
 
     - 通过`pip`或`nb`；pypi无法发行过大安装包，由此安装的插件不包含`resource/img`下**所有抽签主题图片**，需单独下载，建议`zip`包下载后单独提取`resource/img`抽签主题图片，后更改`FORTUNE_PATH`配置即可；
-    
+
     - 通过`zip`或`git clone`安装：包含`resource`下所有插件资源；
 
 2. 抽签主题图片`img`、字体`font`、文案`fortune`等资源均位于`./resource`下，可在`env`中设置`FORTUNE_PATH`；

@@ -100,7 +100,7 @@ def drawing(gid: str, uid: str, theme: str, spec_path: Optional[str] = None) -> 
     outDir: Path = fortune_config.fortune_path / "out"
     if not outDir.exists():
         outDir.mkdir(exist_ok=True, parents=True)
-    
+
     outPath = outDir / f"{gid}_{uid}.png"
 
     img.save(outPath)

@@ -161,17 +161,17 @@ async def fortune_check() -> None:
                         _data[gid][uid].pop("nickname")
                     except KeyError:
                         pass
-                    
+
                     try:
                         _data[gid][uid].pop("gid")
                     except KeyError:
                         pass
-                    
+
                     try:
                         _data[gid][uid].pop("uid")
                     except KeyError:
                         pass
-                    
+
                     try:
                         is_divined: bool = _data[gid][uid].pop("is_divined")
                         if is_divined:
@@ -180,7 +180,7 @@ async def fortune_check() -> None:
                             _data[gid][uid].update({"last_sign_date": 0})
                     except KeyError:
                         pass
-                    
+
         with open(fortune_data_path, "w", encoding="utf-8") as f:
             json.dump(_data, f, ensure_ascii=False,indent=4, cls=DateTimeEncoder)
 
@@ -235,7 +235,7 @@ def group_rules_transfer(fortune_setting_dir: Path, group_rules_dir: Path) -> bo
     '''
     with open(fortune_setting_dir, 'r', encoding='utf-8') as f:
         _setting: Dict[str, Dict[str, Union[str, List[str]]]] = json.load(f)
-    
+
     group_rules = _setting.get("group_rule", None)  # Old key is group_rule
 
     with open(group_rules_dir, 'w', encoding='utf-8') as f:
@@ -253,7 +253,7 @@ def specific_rules_transfer(fortune_setting_dir: Path, specific_rules_dir: Path)
     '''
     with open(fortune_setting_dir, 'r', encoding='utf-8') as f:
         _setting: Dict[str, Dict[str, Union[str, List[str]]]] = json.load(f)
-    
+
     specific_rules = _setting.get("specific_rule", None)  # Old key is specific_rule
 
     with open(specific_rules_dir, 'w', encoding='utf-8') as f:

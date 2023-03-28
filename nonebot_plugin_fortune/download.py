@@ -33,8 +33,9 @@ async def download_resource(resource_dir: Path, name: str, _type: Optional[str] 
         Try to download resources, including fonts, fortune copywriting, but not images.
         For fonts & copywriting, download and save into files when missing. Otherwise, raise ResourceError
     '''
+    
     base_url: str = "https://raw.gitmirror.com/MinatoAquaCrews/nonebot_plugin_fortune/master/nonebot_plugin_fortune/resource"
-
+    
     if isinstance(_type, str):
         url: str = base_url + "/" + _type + "/" + name
     else:

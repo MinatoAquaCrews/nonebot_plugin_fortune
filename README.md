@@ -45,72 +45,67 @@ _🙏 今日运势 🙏_
 
 1. 安装方式：
 
-	- 通过 `pip` 或 `nb`；pypi无法发行过大安装包，由此安装的插件不包含 `resource/img` 下**所有抽签主题图片**，需单独下载。建议 `zip` 包下载后提取 `resource` 下所有资源至本地，后更改 `FORTUNE_PATH` 配置即可；
+   - 通过 `pip` 或 `nb`；pypi无法发行过大安装包，由此安装的插件不包含 `resource/img` 下**所有抽签主题图片**，需单独下载。建议 `zip` 包下载后提取 `resource` 下所有资源至本地，后更改 `FORTUNE_PATH` 配置即可；
 
-	- 通过 `zip` 或 `git clone` 安装：包含 `resource` 下所有插件资源；
+   - 通过 `zip` 或 `git clone` 安装：包含 `resource` 下所有插件资源；
 
 2. 抽签主题图片 `img` 、字体 `font` 、文案 `fortune` 等资源均位于 `./resource` 下，可在 `env` 中设置 `FORTUNE_PATH`；
 
-	```python
-	FORTUNE_PATH="your-path-to-resource"    # For example, "./my-data/fortune"，其下有img、font、fortune文件夹等资源
-	```
+   ```python
+   FORTUNE_PATH="your-path-to-resource"    # For example, "./my-data/fortune"，其下有img、font、fortune文件夹等资源
+   ```
 
-	⚠️️ 插件启动时，将自动检查资源是否缺失（**除字体与图片**资源）
+   ⚠️️ 插件启动时，将自动检查资源是否缺失（**除字体与图片**资源）
 
 3. 在 `env` 下设置 `xxx_FLAG` 以启用或关闭抽签随机主题（默认全部开启），例如：
 
-	```python
-	ARKNIGHTS_FLAG=true         # 明日方舟
-	ASOUL_FLAG=true             # A-SOUL
-	AZURE_FLAG=true             # 碧蓝航线
-	GENSHIN_FLAG=true           # 原神
-	ONMYOJI_FLAG=false          # 阴阳师
-	PCR_FLAG=true               # 公主连结
-	TOUHOU_FLAG=true            # 东方
-	TOUHOU_LOSTWORD_FLAG=true   # 东方归言录
-	TOUHOU_OLD_FLAG=false       # 东方旧版
-	HOLOLIVE_FLAG=true          # Hololive
-	PUNISHING_FLAG=true         # 战双帕弥什
-	GRANBLUE_FANTASY_FLAG=true  # 碧蓝幻想
-	PRETTY_DERBY_FLAG=true      # 赛马娘
-	DC4_FLAG=false              # dc4
-	EINSTEIN_FLAG=true          # 爱因斯坦携爱敬上
-	SWEET_ILLUSION_FLAG=true    # 灵感满溢的甜蜜创想
-	LIQINGGE_FLAG=true          # 李清歌
-	HOSHIZORA_FLAG=true         # 星空列车与白的旅行
-	SAKURA_FLAG=true            # 樱色之云绯色之恋
-	SUMMER_POCKETS_FLAG=false   # 夏日口袋
-	AMAZING_GRACE_FLAG=false    # 奇异恩典·圣夜的小镇
-	```
+   ```python
+   ARKNIGHTS_FLAG=true         # 明日方舟
+   ASOUL_FLAG=true             # A-SOUL
+   AZURE_FLAG=true             # 碧蓝航线
+   GENSHIN_FLAG=true           # 原神
+   ONMYOJI_FLAG=false          # 阴阳师
+   PCR_FLAG=true               # 公主连结
+   TOUHOU_FLAG=true            # 东方
+   TOUHOU_LOSTWORD_FLAG=true   # 东方归言录
+   TOUHOU_OLD_FLAG=false       # 东方旧版
+   HOLOLIVE_FLAG=true          # Hololive
+   PUNISHING_FLAG=true         # 战双帕弥什
+   GRANBLUE_FANTASY_FLAG=true  # 碧蓝幻想
+   PRETTY_DERBY_FLAG=true      # 赛马娘
+   DC4_FLAG=false              # dc4
+   EINSTEIN_FLAG=true          # 爱因斯坦携爱敬上
+   SWEET_ILLUSION_FLAG=true    # 灵感满溢的甜蜜创想
+   LIQINGGE_FLAG=true          # 李清歌
+   HOSHIZORA_FLAG=true         # 星空列车与白的旅行
+   SAKURA_FLAG=true            # 樱色之云绯色之恋
+   SUMMER_POCKETS_FLAG=false   # 夏日口袋
+   AMAZING_GRACE_FLAG=false    # 奇异恩典·圣夜的小镇
+   ```
 
-	**请确保不全为 `false`，否则会抛出错误**
+   **请确保不全为 `false`，否则会抛出错误**
 
 4. 在 `resource/fortune_setting.json` 内配置**指定抽签**规则，例如：
 
-	```json
-	{
-		"group_rule": {
-			"123456789": "random",
-			"987654321": "azure",
-			"123454321": "granblue_fantasy"
-		},
-		"specific_rule": {
-			"凯露": [
-				"pcr\/frame_1.jpg",
-				"pcr\/frame_2.jpg"
-			],
-			"可可萝": [
-				"pcr\/frame_41.jpg"
-			]
-		}
-	}
-	```
+   ```json
+   {
+     "group_rule": {
+       "123456789": "random",
+       "987654321": "azure",
+       "123454321": "granblue_fantasy"
+     },
+     "specific_rule": {
+       "凯露": ["pcr/frame_1.jpg", "pcr/frame_2.jpg"],
+       "可可萝": ["pcr/frame_41.jpg"]
+     }
+   }
+   ```
 
-	*group_rule会自动生成，specific_rule可手动配置*
+   _group_rule会自动生成，specific_rule可手动配置_
 
-	⚠️ 将在 `v0.5.0` 弃用
+   ⚠️ 将在 `v0.5.0` 弃用
 
-	指定凯露签，由于存在两张凯露的签底，配置凯露签的**路径列表**即可；其余类似，**请确保图片路径、格式输入正确**！
+   指定凯露签，由于存在两张凯露的签底，配置凯露签的**路径列表**即可；其余类似，**请确保图片路径、格式输入正确**！
 
 5. 占卜一下你的今日运势！🎉
 
@@ -128,15 +123,15 @@ _🙏 今日运势 🙏_
 
 6. 🔥 更多的运势文案！`copywriting.json` 整合了19种运势及共计700+条文案！
 
-	⚠️ 文案资源来自于Hololive早安系列2019年第6.10～9.22期，有修改。
+   ⚠️ 文案资源来自于Hololive早安系列2019年第6.10～9.22期，有修改。
 
 7. TODO in `v0.5.0` ✨
 
-	- [ ] 优化设置主题、指定主题、及检索的方式；
-	- [ ] 文案排版算法；
-	- [ ] 新增功能：每日星座运势；
-	- [x] 新增功能：资源缺失检查、自动下载；
-	- [ ] 新增资源：新的抽签主题资源！
+   - [ ] 优化设置主题、指定主题、及检索的方式；
+   - [ ] 文案排版算法；
+   - [ ] 新增功能：每日星座运势；
+   - [x] 新增功能：资源缺失检查、自动下载；
+   - [ ] 新增资源：新的抽签主题资源！
 
 ## 命令
 
@@ -146,13 +141,13 @@ _🙏 今日运势 🙏_
 
 3. 指定签底并抽签：指定[xxx]签，在 `resource/fortune_setting.json` 内手动配置；
 
-	⚠️ 将在 `v0.5.0` 弃用
+   ⚠️ 将在 `v0.5.0` 弃用
 
 4. [群管或群主或超管] 配置抽签主题：
 
-	- 设置[原神/pcr/东方/vtb/方舟]签：设置群抽签主题；
+   - 设置[原神/pcr/东方/vtb/方舟]签：设置群抽签主题；
 
-	- 重置（抽签）主题：设置群抽签主题为随机；
+   - 重置（抽签）主题：设置群抽签主题为随机；
 
 5. 抽签设置：查看当前群抽签主题的配置；
 

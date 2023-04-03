@@ -1,18 +1,20 @@
-from nonebot import on_command, on_regex, on_fullmatch
+from nonebot_plugin_apscheduler import scheduler
+from nonebot import on_command, on_fullmatch, on_regex, require
+from nonebot.adapters.onebot.v11 import (GROUP, GROUP_ADMIN, GROUP_OWNER,
+                                         GroupMessageEvent, Message,
+                                         MessageSegment)
 from nonebot.log import logger
-from nonebot.plugin import PluginMetadata
-from nonebot.params import Depends, CommandArg, RegexMatched
-from nonebot.permission import SUPERUSER
 from nonebot.matcher import Matcher
-from nonebot import require
-from nonebot.adapters.onebot.v11 import GROUP, GROUP_ADMIN, GROUP_OWNER, Message, GroupMessageEvent, MessageSegment
-from .data_source import fortune_manager
+from nonebot.params import CommandArg, Depends, RegexMatched
+from nonebot.permission import SUPERUSER
+from nonebot.plugin import PluginMetadata
+
 from .config import FortuneThemesDict
+from .data_source import FortuneManager, fortune_manager
 
 require("nonebot_plugin_apscheduler")
-from nonebot_plugin_apscheduler import scheduler
 
-__fortune_version__ = "v0.4.10.post1"
+__fortune_version__ = "v0.4.10.post2"
 __fortune_usages__ = f'''
 [今日运势/抽签/运势] 一般抽签
 [xx抽签]     指定主题抽签
@@ -28,15 +30,18 @@ __plugin_meta__ = PluginMetadata(
     usage=__fortune_usages__,
     extra={
         "author": "KafCoppelia <k740677208@gmail.com>",
-        "version": __fortune_version__
+                "version": __fortune_version__
     }
 )
 
-general_divine = on_command("今日运势", aliases={"抽签", "运势"}, permission=GROUP, priority=8)
+general_divine = on_command(
+    "今日运势", aliases={"抽签", "运势"}, permission=GROUP, priority=8)
 specific_divine = on_regex(r"^[^/]\S+抽签$", permission=GROUP, priority=8)
 limit_setting = on_regex(r"^指定(.*?)签$", permission=GROUP, priority=8)
-change_theme = on_regex(r"^设置(.*?)签$", permission=SUPERUSER | GROUP_ADMIN | GROUP_OWNER, priority=8, block=True)
-reset_themes = on_regex("^重置(抽签)?主题$", permission=SUPERUSER | GROUP_ADMIN | GROUP_OWNER, priority=8, block=True)
+change_theme = on_regex(r"^设置(.*?)签$", permission=SUPERUSER |
+                        GROUP_ADMIN | GROUP_OWNER, priority=8, block=True)
+reset_themes = on_regex("^重置(抽签)?主题$", permission=SUPERUSER |
+                        GROUP_ADMIN | GROUP_OWNER, priority=8, block=True)
 themes_list = on_fullmatch("主题列表", permission=GROUP, priority=8, block=True)
 show_themes = on_regex("^查看(抽签)?主题$", permission=GROUP, priority=8, block=True)
 
@@ -50,7 +55,7 @@ async def _(event: GroupMessageEvent):
 
 @themes_list.handle()
 async def _(event: GroupMessageEvent):
-    msg: str = fortune_manager.get_available_themes()
+    msg: str = FortuneManager.get_available_themes()
     await themes_list.finish(msg)
 
 
@@ -69,10 +74,12 @@ async def _(event: GroupMessageEvent, args: Message = CommandArg()):
         await general_divine.finish("今日运势生成出错……")
 
     if not is_first:
-        msg = MessageSegment.text("你今天抽过签了，再给你看一次哦🤗\n") + MessageSegment.image(image_file)
+        msg = MessageSegment.text("你今天抽过签了，再给你看一次哦🤗\n") + \
+            MessageSegment.image(image_file)
     else:
         logger.info(f"User {uid} | Group {gid} 占卜了今日运势")
-        msg = MessageSegment.text("✨今日运势✨\n") + MessageSegment.image(image_file)
+        msg = MessageSegment.text("✨今日运势✨\n") + \
+            MessageSegment.image(image_file)
 
     await general_divine.finish(msg, at_sender=True)
 
@@ -89,7 +96,7 @@ async def get_user_theme(matcher: Matcher, args: str = RegexMatched()) -> str:
 async def _(event: GroupMessageEvent, user_theme: str = Depends(get_user_theme)):
     for theme in FortuneThemesDict:
         if user_theme in FortuneThemesDict[theme]:
-            if not fortune_manager.theme_enable_check(theme):
+            if not FortuneManager.theme_enable_check(theme):
                 await specific_divine.finish("该抽签主题未启用~")
             else:
                 gid: str = str(event.group_id)
@@ -101,10 +108,12 @@ async def _(event: GroupMessageEvent, user_theme: str = Depends(get_user_theme))
                     await specific_divine.finish("今日运势生成出错……")
 
                 if not is_first:
-                    msg = MessageSegment.text("你今天抽过签了，再给你看一次哦🤗\n") + MessageSegment.image(image_file)
+                    msg = MessageSegment.text(
+                        "你今天抽过签了，再给你看一次哦🤗\n") + MessageSegment.image(image_file)
                 else:
                     logger.info(f"User {uid} | Group {gid} 占卜了今日运势")
-                    msg = MessageSegment.text("✨今日运势✨\n") + MessageSegment.image(image_file)
+                    msg = MessageSegment.text(
+                        "✨今日运势✨\n") + MessageSegment.image(image_file)
 
             await specific_divine.finish(msg, at_sender=True)
 
@@ -149,15 +158,18 @@ async def _(event: GroupMessageEvent, limit: str = Depends(get_user_arg)):
         if not spec_path:
             await limit_setting.finish("还不可以指定这种签哦，请确认该签底对应主题开启或图片路径存在~")
         else:
-            is_first, image_file = fortune_manager.divine(gid, uid, None, spec_path)
+            is_first, image_file = fortune_manager.divine(
+                gid, uid, None, spec_path)
             if image_file is None:
                 await limit_setting.finish("今日运势生成出错……")
 
     if not is_first:
-        msg = MessageSegment.text("你今天抽过签了，再给你看一次哦🤗\n") + MessageSegment.image(image_file)
+        msg = MessageSegment.text("你今天抽过签了，再给你看一次哦🤗\n") + \
+            MessageSegment.image(image_file)
     else:
         logger.info(f"User {uid} | Group {gid} 占卜了今日运势")
-        msg = MessageSegment.text("✨今日运势✨\n") + MessageSegment.image(image_file)
+        msg = MessageSegment.text("✨今日运势✨\n") + \
+            MessageSegment.image(image_file)
 
     await limit_setting.finish(msg, at_sender=True)
 
@@ -174,5 +186,5 @@ async def _(event: GroupMessageEvent):
 # 清空昨日生成的图片
 @scheduler.scheduled_job("cron", hour=0, minute=0, misfire_grace_time=60)
 async def _():
-    fortune_manager.clean_out_pics()
+    FortuneManager.clean_out_pics()
     logger.info("昨日运势图片已清空！")

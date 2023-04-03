@@ -1,14 +1,16 @@
-from PIL import Image, ImageDraw, ImageFont
-from typing import Optional, Tuple, List
-from pathlib import Path
-import random
 import json
+import random
+from pathlib import Path
+from typing import List, Optional, Tuple
+
+from PIL import Image, ImageDraw, ImageFont
+
 from .config import fortune_config, themes_flag_config
 
 
 def get_copywriting() -> Tuple[str, str]:
     '''
-        Read the copywriting.json, choice a luck with a random content
+            Read the copywriting.json, choice a luck with a random content
     '''
     _p: Path = fortune_config.fortune_path / "fortune" / "copywriting.json"
 
@@ -32,7 +34,8 @@ def random_basemap(theme: str, spec_path: Optional[str] = None) -> Path:
         __p: Path = fortune_config.fortune_path / "img"
 
         # Each dir is a theme.
-        themes: List[str] = [f.name for f in __p.iterdir() if f.is_dir() and theme_flag_check(f.name)]
+        themes: List[str] = [f.name for f in __p.iterdir(
+        ) if f.is_dir() and theme_flag_check(f.name)]
         picked: str = random.choice(themes)
 
         _p: Path = __p / picked
@@ -100,7 +103,7 @@ def drawing(gid: str, uid: str, theme: str, spec_path: Optional[str] = None) -> 
     outDir: Path = fortune_config.fortune_path / "out"
     if not outDir.exists():
         outDir.mkdir(exist_ok=True, parents=True)
-    
+
     outPath = outDir / f"{gid}_{uid}.png"
 
     img.save(outPath)
@@ -109,8 +112,8 @@ def drawing(gid: str, uid: str, theme: str, spec_path: Optional[str] = None) -> 
 
 def decrement(text: str) -> Tuple[int, List[str]]:
     '''
-        Split the text, return the number of columns and text list
-        TODO: Now, it ONLY fit with 2 columns of text
+            Split the text, return the number of columns and text list
+            TODO: Now, it ONLY fit with 2 columns of text
     '''
     length: int = len(text)
     result: List[str] = []
@@ -148,6 +151,6 @@ def decrement(text: str) -> Tuple[int, List[str]]:
 
 def theme_flag_check(theme: str) -> bool:
     '''
-        check wether a theme is enabled in themes_flag_config
+            check wether a theme is enabled in themes_flag_config
     '''
     return themes_flag_config.dict().get(theme + "_flag", False)

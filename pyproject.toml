@@ -1,13 +1,16 @@
 [tool.poetry]
 name = "nonebot_plugin_fortune"
-version = "0.4.10.post1"
+version = "0.4.10.post2"
 description = "Fortune divination!"
 authors = ["KafCoppelia <k740677208@gmail.com>"]
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/MinatoAquaCrews/nonebot_plugin_fortune"
-keywords = ["nonebot2", "nonebot-plugin", "Fortune"]
+homepage = "https://github.com/MinatoAquaCrews/nonebot_plugin_fortune"
+documentation = "https://github.com/MinatoAquaCrews/nonebot_plugin_fortune#readme"
+keywords = ["nonebot2", "nonebot-plugin", "Fortune", "MinatoAquaCrews"]
 packages = [{include = "nonebot_plugin_fortune"}]
+exclude = ["nonebot_plugin_fortune/resource/img"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -18,7 +21,8 @@ pillow = "^9.0.0"
 httpx = "^0.23.0"
 aiofiles = "^0.8.0"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
+autopep8 = "^2.0.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -27,4 +31,5 @@ build-backend = "poetry.core.masonry.api"
 [[tool.poetry.source]]
 name = "tencentyun"
 url = "https://mirrors.tencent.com/pypi/simple"
-default = true
+default = false
+secondary = false

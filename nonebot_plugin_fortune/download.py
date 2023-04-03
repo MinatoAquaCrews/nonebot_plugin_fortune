@@ -2,7 +2,7 @@ from nonebot.log import logger
 from pathlib import Path
 from typing import Optional, Dict, Any
 import httpx
-import aiofiles
+import json
 
 
 class ResourceError(Exception):
@@ -47,7 +47,7 @@ async def download_resource(resource_dir: Path, name: str, _type: Optional[str] 
 
 	resp = await download_url(url)
 	if resp:
-		await save_resource(resource_dir, resp)
+		save_json(resource_dir, resp)
 		if name == "copywriting.json":
 			version: float = resp.get("version", 0)
 			logger.info(
@@ -58,6 +58,6 @@ async def download_resource(resource_dir: Path, name: str, _type: Optional[str] 
 	return False
 
 
-async def save_resource(resource_dir: Path, response: Dict[str, Any]) -> None:
-	async with aiofiles.open(resource_dir, "w") as f:
-		await f.write(response)
+def save_json(_file: Path, _data: Dict[str, Any]) -> None:
+    with open(_file, 'w', encoding='utf-8') as f:
+        json.dump(_data, f, ensure_ascii=False, indent=4)

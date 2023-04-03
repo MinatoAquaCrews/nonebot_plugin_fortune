@@ -78,7 +78,9 @@ class ThemesFlagConfig(BaseModel, extra=Extra.ignore):
 				break
 
 		if not flag:
-			raise ResourceError("Fortune themes ALL disabled! Please check!")
+			raise ValueError("Fortune themes ALL disabled! Please check!")
+
+		return values
 
 
 class DateTimeEncoder(json.JSONEncoder):

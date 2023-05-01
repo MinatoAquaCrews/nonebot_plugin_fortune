@@ -1,4 +1,3 @@
-from nonebot_plugin_apscheduler import scheduler
 from nonebot import on_command, on_fullmatch, on_regex, require
 from nonebot.adapters.onebot.v11 import (GROUP, GROUP_ADMIN, GROUP_OWNER,
                                          GroupMessageEvent, Message,
@@ -8,6 +7,7 @@ from nonebot.matcher import Matcher
 from nonebot.params import CommandArg, Depends, RegexMatched
 from nonebot.permission import SUPERUSER
 from nonebot.plugin import PluginMetadata
+from nonebot_plugin_apscheduler import scheduler
 
 from .config import FortuneThemesDict
 from .data_source import FortuneManager, fortune_manager

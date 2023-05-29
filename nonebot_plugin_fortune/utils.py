@@ -1,5 +1,6 @@
 import json
 import random
+import os
 from pathlib import Path
 from typing import List, Optional, Tuple
 
@@ -8,27 +9,34 @@ from PIL import Image, ImageDraw, ImageFont
 from .config import fortune_config, themes_flag_config
 
 
-def get_copywriting() -> Tuple[str, str]:
+def get_copywriting(filename: str) -> Tuple[str, str]:
     '''
             Read the copywriting.json, choice a luck with a random content
     '''
     _p: Path = fortune_config.fortune_path / "fortune" / "copywriting.json"
+    _prob:Path = fortune_config.fortune_path / "fortune" / "choice.json"
 
     with open(_p, "r", encoding="utf-8") as f:
         content = json.load(f).get("copywriting")
+    
+    with open(_prob, "r", encoding="utf-8") as f:
+        probabilities = json.load(f)
+        probability = probabilities.get(filename)
 
-    luck = random.choice(content)
 
-    title: str = luck.get("good-luck")
-    text: str = random.choice(luck.get("content"))
+    luck = random.choices(content, weights=probability, k=1)
+
+    title: str = luck[0].get("good-luck")
+    text: str = random.choice(luck[0].get("content"))
 
     return title, text
 
 
-def random_basemap(theme: str, spec_path: Optional[str] = None) -> Path:
+def random_basemap(theme: str, spec_path: Optional[str] = None) -> Tuple[Path, str]:
     if isinstance(spec_path, str):
         p: Path = fortune_config.fortune_path / "img" / spec_path
-        return p
+        filename: str = p.name
+        return p, filename
 
     if theme == "random":
         __p: Path = fortune_config.fortune_path / "img"
@@ -39,6 +47,7 @@ def random_basemap(theme: str, spec_path: Optional[str] = None) -> Path:
         picked: str = random.choice(themes)
 
         _p: Path = __p / picked
+        filename: str = p.name
 
         # Each file is a posix path of images directory
         images_dir: List[Path] = [i for i in _p.iterdir() if i.is_file()]
@@ -47,13 +56,17 @@ def random_basemap(theme: str, spec_path: Optional[str] = None) -> Path:
         _p: Path = fortune_config.fortune_path / "img" / theme
         images_dir: List[Path] = [i for i in _p.iterdir() if i.is_file()]
         p: Path = random.choice(images_dir)
+        filename: str = p.name
 
-    return p
+    return p, filename
 
 
 def drawing(gid: str, uid: str, theme: str, spec_path: Optional[str] = None) -> Path:
     # 1. Random choice a base image
-    imgPath: Path = random_basemap(theme, spec_path)
+    imgPath: Path
+    filename_with_extension: str
+    imgPath, filename_with_extension = random_basemap(theme, spec_path)
+    filename, _ = os.path.splitext(filename_with_extension)
     img: Image.Image = Image.open(imgPath)
     draw = ImageDraw.Draw(img)
 

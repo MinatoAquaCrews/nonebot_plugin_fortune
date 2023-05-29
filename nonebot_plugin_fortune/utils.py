@@ -1,6 +1,6 @@
 import json
-import random
 import os
+import random
 from pathlib import Path
 from typing import List, Optional, Tuple
 
@@ -14,15 +14,14 @@ def get_copywriting(filename: str) -> Tuple[str, str]:
             Read the copywriting.json, choice a luck with a random content
     '''
     _p: Path = fortune_config.fortune_path / "fortune" / "copywriting.json"
-    _prob:Path = fortune_config.fortune_path / "fortune" / "choice.json"
+    _prob: Path = fortune_config.fortune_path / "fortune" / "choice.json"
 
     with open(_p, "r", encoding="utf-8") as f:
         content = json.load(f).get("copywriting")
-    
+
     with open(_prob, "r", encoding="utf-8") as f:
         probabilities = json.load(f)
         probability = probabilities.get(filename)
-
 
     luck = random.choices(content, weights=probability, k=1)
 

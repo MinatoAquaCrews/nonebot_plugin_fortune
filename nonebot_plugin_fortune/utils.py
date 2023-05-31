@@ -46,7 +46,7 @@ def random_basemap(theme: str, spec_path: Optional[str] = None) -> Tuple[Path, s
         picked: str = random.choice(themes)
 
         _p: Path = __p / picked
-        filename: str = p.name
+        filename: str = _p.name
 
         # Each file is a posix path of images directory
         images_dir: List[Path] = [i for i in _p.iterdir() if i.is_file()]

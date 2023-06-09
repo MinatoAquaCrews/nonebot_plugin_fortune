@@ -2,7 +2,9 @@ import json
 import random
 from pathlib import Path
 from typing import List, Optional, Tuple
+
 from PIL import Image, ImageDraw, ImageFont
+
 from .config import fortune_config, themes_flag_config
 
 
@@ -133,21 +135,21 @@ def decrement(text: str) -> Tuple[int, List[str]]:
             fillIn = space * int(9 - length / 2)
             return col_num, [
                 text[: int(length / 2)] + fillIn,
-                fillIn + text[int(length / 2) :],
+                fillIn + text[int(length / 2):],
             ]
         else:
             # odd number
             fillIn = space * int(9 - (length + 1) / 2)
             return col_num, [
                 text[: int((length + 1) / 2)] + fillIn,
-                fillIn + space + text[int((length + 1) / 2) :],
+                fillIn + space + text[int((length + 1) / 2):],
             ]
 
     for i in range(col_num):
         if i == col_num - 1 or col_num == 1:
-            result.append(text[i * cardinality :])
+            result.append(text[i * cardinality:])
         else:
-            result.append(text[i * cardinality : (i + 1) * cardinality])
+            result.append(text[i * cardinality: (i + 1) * cardinality])
 
     return col_num, result
 

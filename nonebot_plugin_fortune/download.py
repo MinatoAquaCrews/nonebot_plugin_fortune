@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 from typing import Any, Dict, Optional
+
 import httpx
 from nonebot.log import logger
 
@@ -26,7 +27,8 @@ async def download_url(url: str) -> Optional[Dict[str, Any]]:
                 return resp.json()
 
             except Exception:
-                logger.warning(f"Error occurred when downloading {url}, retry: {i+1}/3")
+                logger.warning(
+                    f"Error occurred when downloading {url}, retry: {i+1}/3")
 
     logger.warning("Abort downloading")
     return None

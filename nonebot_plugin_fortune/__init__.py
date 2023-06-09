@@ -1,18 +1,18 @@
-from nonebot import on_command, on_fullmatch, on_regex, on_endswith, require
+from .data_source import FortuneManager, fortune_manager
+from .config import FortuneThemesDict
+from nonebot_plugin_apscheduler import scheduler
+from nonebot import on_command, on_endswith, on_fullmatch, on_regex, require
 from nonebot.adapters.onebot.v11 import (GROUP, GROUP_ADMIN, GROUP_OWNER,
                                          GroupMessageEvent, Message,
                                          MessageSegment)
 from nonebot.log import logger
 from nonebot.matcher import Matcher
+from nonebot.params import CommandArg, Depends, RegexMatched
 from nonebot.permission import SUPERUSER
 from nonebot.plugin import PluginMetadata
-from nonebot.params import CommandArg, Depends, RegexMatched
 
 require("nonebot_plugin_apscheduler")
-from nonebot_plugin_apscheduler import scheduler
 
-from .config import FortuneThemesDict
-from .data_source import FortuneManager, fortune_manager
 
 __fortune_version__ = "v0.4.10.post2"
 __fortune_usages__ = f'''

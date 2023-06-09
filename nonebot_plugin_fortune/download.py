@@ -34,11 +34,13 @@ async def download_url(url: str) -> Optional[Dict[str, Any]]:
     return None
 
 
-async def download_resource(resource_dir: Path, name: str, _type: Optional[str] = None) -> bool:
-    '''
-            Try to download resources, json but not images.
-            For fonts & copywriting, download and save into files when missing. Otherwise, raise ResourceError.
-    '''
+async def download_resource(
+    resource_dir: Path, name: str, _type: Optional[str] = None
+) -> bool:
+    """
+    Try to download resources, json but not images.
+    For fonts & copywriting, download and save into files when missing. Otherwise, raise ResourceError.
+    """
     base_url: str = "https://raw.fgit.ml/MinatoAquaCrews/nonebot_plugin_fortune/master/nonebot_plugin_fortune/resource"
 
     if isinstance(_type, str):
@@ -52,7 +54,8 @@ async def download_resource(resource_dir: Path, name: str, _type: Optional[str] 
         if name == "copywriting.json":
             version: float = resp.get("version", 0)
             logger.info(
-                f"Got the latest copywriting.json from repo, version: {version}")
+                f"Got the latest copywriting.json from repo, version: {version}"
+            )
 
         return True
 
@@ -60,5 +63,5 @@ async def download_resource(resource_dir: Path, name: str, _type: Optional[str] 
 
 
 def save_json(_file: Path, _data: Dict[str, Any]) -> None:
-    with open(_file, 'w', encoding='utf-8') as f:
+    with open(_file, "w", encoding="utf-8") as f:
         json.dump(_data, f, ensure_ascii=False, indent=4)

@@ -1,5 +1,7 @@
+from .data_source import FortuneManager, fortune_manager
+from .config import FortuneThemesDict
 from nonebot_plugin_apscheduler import scheduler
-from nonebot import on_command, on_fullmatch, on_regex, require
+from nonebot import on_command, on_endswith, on_fullmatch, on_regex, require
 from nonebot.adapters.onebot.v11 import (GROUP, GROUP_ADMIN, GROUP_OWNER,
                                          GroupMessageEvent, Message,
                                          MessageSegment)
@@ -9,10 +11,8 @@ from nonebot.params import CommandArg, Depends, RegexMatched
 from nonebot.permission import SUPERUSER
 from nonebot.plugin import PluginMetadata
 
-from .config import FortuneThemesDict
-from .data_source import FortuneManager, fortune_manager
-
 require("nonebot_plugin_apscheduler")
+
 
 __fortune_version__ = "v0.4.10.post2"
 __fortune_usages__ = f'''
@@ -35,11 +35,13 @@ __plugin_meta__ = PluginMetadata(
 )
 
 general_divine = on_command(
-    "今日运势", aliases={"抽签", "运势"}, permission=GROUP, priority=8)
-specific_divine = on_regex(r"^[^/]\S+抽签$", permission=GROUP, priority=8)
+    "今日运势", aliases={"抽签", "运势"}, permission=GROUP, priority=8, block=True)
+specific_divine = on_endswith("抽签", permission=GROUP, priority=9, block=True)
+# 优先级 9, 并阻断消息传播, 防止用户发送抽签时同时触发 xxx抽签
 limit_setting = on_regex(r"^指定(.*?)签$", permission=GROUP, priority=8)
-change_theme = on_regex(r"^设置(.*?)签$", permission=SUPERUSER |
-                        GROUP_ADMIN | GROUP_OWNER, priority=8, block=True)
+# 指定签底抽签功能将在 v0.5.x 弃用, 不做修改
+change_theme = on_command("设置", permission=SUPERUSER |
+                          GROUP_ADMIN | GROUP_OWNER, priority=8, block=True)
 reset_themes = on_regex("^重置(抽签)?主题$", permission=SUPERUSER |
                         GROUP_ADMIN | GROUP_OWNER, priority=8, block=True)
 themes_list = on_fullmatch("主题列表", permission=GROUP, priority=8, block=True)
@@ -93,7 +95,9 @@ async def get_user_theme(matcher: Matcher, args: str = RegexMatched()) -> str:
 
 
 @specific_divine.handle()
-async def _(event: GroupMessageEvent, user_theme: str = Depends(get_user_theme)):
+async def _(event: GroupMessageEvent):
+    # 为什么 on_endswith() 用 Message = CommandArg() 会被 sikp ...
+    user_theme = str(event.message).replace(" ", '').replace("抽签", '')
     for theme in FortuneThemesDict:
         if user_theme in FortuneThemesDict[theme]:
             if not FortuneManager.theme_enable_check(theme):
@@ -129,7 +133,14 @@ async def get_user_arg(matcher: Matcher, args: str = RegexMatched()) -> str:
 
 
 @change_theme.handle()
-async def _(event: GroupMessageEvent, user_theme: str = Depends(get_user_arg)):
+async def _(event: GroupMessageEvent, msg: Message = CommandArg()):
+    message = msg.extract_plain_text().strip()
+    # 为使效果同使用正则响应器, 这里做一下判断
+    if message.endswith("签"):
+        user_theme = message.replace(" ", '').replace("签", '')
+    else:
+        await change_theme.finish()
+
     gid: str = str(event.group_id)
 
     for theme in FortuneThemesDict:

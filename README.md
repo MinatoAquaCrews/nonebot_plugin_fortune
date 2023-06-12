@@ -15,7 +15,7 @@ _🙏 今日运势 🙏_
 	<img src="https://img.shields.io/badge/nonebot2-2.0.0rc4+-green">
   </a>
 
-  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.11">
+  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.11.post1">
 	<img src="https://img.shields.io/github/v/release/MinatoAquaCrews/nonebot_plugin_fortune?color=orange">
   </a>
 
@@ -35,7 +35,7 @@ _🙏 今日运势 🙏_
 
 ## 版本
 
-[v0.4.11](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.11)
+[v0.4.11.post1](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.11.post1)
 
 ⚠️ 适配nonebot2-2.0.0rc4+
 

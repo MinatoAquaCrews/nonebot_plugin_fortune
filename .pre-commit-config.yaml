@@ -12,10 +12,10 @@ repos:
       - id: isort
         stages: [commit]
 
-  - repo: https://github.com/pre-commit/mirrors-autopep8
-    rev: v2.0.2
+  - repo: https://github.com/psf/black
+    rev: 23.3.0
     hooks:
-      - id: autopep8
+      - id: black
         stages: [commit]
 
   - repo: https://github.com/pre-commit/mirrors-prettier
@@ -34,3 +34,4 @@ repos:
       - id: check-added-large-files
       - id: mixed-line-ending
       - id: check-json
+      - id: check-toml

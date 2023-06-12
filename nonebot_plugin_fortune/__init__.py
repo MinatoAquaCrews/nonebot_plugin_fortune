@@ -1,4 +1,3 @@
-from nonebot_plugin_apscheduler import scheduler
 from typing import Annotated
 
 from nonebot import on_command, on_fullmatch, on_regex, require
@@ -15,8 +14,9 @@ from .config import FortuneThemesDict
 from .data_source import FortuneManager, fortune_manager
 
 require("nonebot_plugin_apscheduler")
+from nonebot_plugin_apscheduler import scheduler # isort:skip
 
-__fortune_version__ = "v0.4.11"
+__fortune_version__ = "v0.4.11.post1"
 __fortune_usages__ = f"""
 [今日运势/抽签/运势] 一般抽签
 [xx抽签]     指定主题抽签

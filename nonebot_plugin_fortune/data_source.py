@@ -10,8 +10,7 @@ from .utils import drawing, theme_flag_check
 
 class FortuneManager:
     def __init__(self):
-        self._user_data: Dict[str, Dict[str,
-                                        Dict[str, Union[str, int, date]]]] = dict()
+        self._user_data: Dict[str, Dict[str, Dict[str, Union[str, int, date]]]] = dict()
         self._group_rules: Dict[str, str] = dict()
         self._specific_rules: Dict[str, List[str]] = dict()
         self._user_data_file: Path = fortune_config.fortune_path / "fortune_data.json"
@@ -32,7 +31,8 @@ class FortuneManager:
 
         last_sign_date: datetime = datetime.strptime(
             # type: ignore
-            self._user_data[gid][uid]["last_sign_date"], "%Y-%m-%d"
+            self._user_data[gid][uid]["last_sign_date"],
+            "%Y-%m-%d",
         )
 
         return last_sign_date.date() == nowtime
@@ -84,8 +84,7 @@ class FortuneManager:
             self._end_data_handle(gid, uid, now_time)
             return True, img_path
         else:
-            img_path: Path = fortune_config.fortune_path / \
-                "out" / f"{gid}_{uid}.png"
+            img_path: Path = fortune_config.fortune_path / "out" / f"{gid}_{uid}.png"
             return False, img_path
 
     @staticmethod

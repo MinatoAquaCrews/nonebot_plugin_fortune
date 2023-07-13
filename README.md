@@ -62,6 +62,7 @@ _🙏 今日运势 🙏_
    ```python
    ARKNIGHTS_FLAG=true         # 明日方舟
    ASOUL_FLAG=true             # A-SOUL
+   WSGR_FLAG=true              # 战舰少女R
    AZURE_FLAG=true             # 碧蓝航线
    GENSHIN_FLAG=true           # 原神
    ONMYOJI_FLAG=false          # 阴阳师

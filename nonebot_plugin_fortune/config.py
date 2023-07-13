@@ -15,6 +15,7 @@ from .download import ResourceError, download_resource
 """
 FortuneThemesDict: Dict[str, List[str]] = {
     "random": ["随机"],
+	"WSGR": ["战舰少女R","舰r","舰R","wsgr","WSGR","战舰少女r"]
     "pcr": ["PCR", "公主链接", "公主连结", "Pcr", "pcr"],
     "genshin": ["原神", "Genshin Impact", "genshin", "Genshin", "op", "原批"],
     "hololive": ["Hololive", "hololive", "Vtb", "vtb", "管人", "Holo", "holo", "猴楼"],
@@ -36,6 +37,7 @@ FortuneThemesDict: Dict[str, List[str]] = {
     "sakura": ["樱色之云绯色之恋", "樱云之恋", "樱云绯恋", "樱云"],
     "summer_pockets": ["夏日口袋", "夏兜", "sp", "SP"],
     "amazing_grace": ["奇异恩典"],
+	
 }
 
 
@@ -50,6 +52,7 @@ class ThemesFlagConfig(BaseModel, extra=Extra.ignore):
     """
 
     amazing_grace_flag: bool = True
+	WSGR_flag: bool = True
     arknights_flag: bool = True
     asoul_flag: bool = True
     azure_flag: bool = True

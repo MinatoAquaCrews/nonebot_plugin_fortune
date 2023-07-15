@@ -15,7 +15,7 @@ _🙏 今日运势 🙏_
 	<img src="https://img.shields.io/badge/nonebot2-^2.0.0rc4-green">
   </a>
 
-  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.12a1">
+  <a href="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.12">
 	<img src="https://img.shields.io/github/v/release/MinatoAquaCrews/nonebot_plugin_fortune?color=orange">
   </a>
 
@@ -35,7 +35,7 @@ _🙏 今日运势 🙏_
 
 ## 版本
 
-[v0.4.12a1](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.12a1)
+[v0.4.12](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune/releases/tag/v0.4.12)
 
 ⚠️ 适配nonebot2 `^2.0.0rc4`
 
@@ -176,6 +176,6 @@ _🙏 今日运势 🙏_
 
 4. [FloatTech-zbpdata/Fortune](https://github.com/FloatTech/zbpdata)：其余主题签；
 
-5. 战舰少女R(Warship Girls R)：[veadex](https://github.com/veadex)；
+5. 战舰少女R(Warship Girls R)：[veadex](https://github.com/veadex)、[EsfahanMakarov](https://github.com/EsfahanMakarov)；
 
 6. 运势文案：[KafCoppelia](https://github.com/KafCoppelia)。`copywriting.json` 整合了関係運、全体運、勉強運、金運、仕事運、恋愛運、総合運、大吉、中吉、小吉、吉、半吉、末吉、末小吉、凶、小凶、半凶、末凶、大凶及700+条运势文案！来源于Hololive早安系列2019年第6.10～9.22期，有修改。

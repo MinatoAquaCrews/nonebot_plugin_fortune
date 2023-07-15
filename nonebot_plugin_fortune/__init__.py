@@ -15,13 +15,13 @@ from nonebot.params import CommandArg, Depends, RegexStr
 from nonebot.permission import SUPERUSER
 from nonebot.plugin import PluginMetadata
 
-from .config import FortuneThemesDict
+from .config import FortuneConfig, FortuneThemesDict
 from .data_source import FortuneManager, fortune_manager
 
 require("nonebot_plugin_apscheduler")
 from nonebot_plugin_apscheduler import scheduler  # isort:skip
 
-__fortune_version__ = "v0.4.11.post1"
+__fortune_version__ = "v0.4.12a1"
 __fortune_usages__ = f"""
 [今日运势/抽签/运势] 一般抽签
 [xx抽签]     指定主题抽签
@@ -35,6 +35,9 @@ __plugin_meta__ = PluginMetadata(
     name="今日运势",
     description="抽签！占卜你的今日运势🙏",
     usage=__fortune_usages__,
+    type="application",
+    homepage="https://github.com/MinatoAquaCrews/nonebot_plugin_fortune",
+    config=FortuneConfig,
     extra={
         "author": "KafCoppelia <k740677208@gmail.com>",
         "version": __fortune_version__,

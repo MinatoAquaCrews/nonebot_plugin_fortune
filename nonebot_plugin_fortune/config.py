@@ -15,27 +15,28 @@ from .download import ResourceError, download_resource
 """
 FortuneThemesDict: Dict[str, List[str]] = {
     "random": ["随机"],
-    "pcr": ["PCR", "公主链接", "公主连结", "Pcr", "pcr"],
+    "amazing_grace": ["奇异恩典"],
+    "arknights": ["明日方舟", "方舟", "arknights", "鹰角", "Arknights", "舟游"],
+    "asoul": ["Asoul", "asoul", "a手", "A手", "as", "As"],
+    "azure": ["碧蓝航线", "碧蓝", "azure", "Azure"],
+    "dc4": ["dc4", "DC4", "Dc4"],
+    "einstein": ["爱因斯坦携爱敬上", "爱因斯坦", "einstein", "Einstein"],
     "genshin": ["原神", "Genshin Impact", "genshin", "Genshin", "op", "原批"],
-    "hololive": ["Hololive", "hololive", "Vtb", "vtb", "管人", "Holo", "holo", "猴楼"],
+    "granblue_fantasy": ["碧蓝幻想", "Granblue Fantasy", "granblue fantasy", "幻想"],
+    "hololive": ["Hololive", "hololive", "Vtb", "vtb", "管人", "Holo", "holo", "管人痴"],
+    "hoshizora": ["星空列车与白的旅行", "星空列车"],
+    "liqingge": ["李清歌", "清歌"],
+    "onmyoji": ["阴阳师", "yys", "Yys", "痒痒鼠"],
+    "pcr": ["PCR", "公主链接", "公主连结", "Pcr", "pcr"],
+    "pretty_derby": ["赛马娘", "马", "马娘", "赛马"],
+    "punishing": ["战双", "战双帕弥什"],
+    "sakura": ["樱色之云绯色之恋", "樱云之恋", "樱云绯恋", "樱云"],
+    "summer_pockets": ["夏日口袋", "夏兜", "sp", "SP"],
+    "sweet_illusion": ["灵感满溢的甜蜜创想", "甜蜜一家人", "富婆妹"],
     "touhou": ["东方", "touhou", "Touhou", "车万"],
     "touhou_lostword": ["东方归言录", "东方lostword", "touhou lostword"],
     "touhou_old": ["旧东方", "旧版东方", "老东方", "老版东方", "经典东方"],
-    "onmyoji": ["阴阳师", "yys", "Yys", "痒痒鼠"],
-    "azure": ["碧蓝航线", "碧蓝", "azure", "Azure"],
-    "asoul": ["Asoul", "asoul", "a手", "A手", "as", "As"],
-    "arknights": ["明日方舟", "方舟", "arknights", "鹰角", "Arknights", "舟游"],
-    "granblue_fantasy": ["碧蓝幻想", "Granblue Fantasy", "granblue fantasy", "幻想"],
-    "punishing": ["战双", "战双帕弥什"],
-    "pretty_derby": ["赛马娘", "马", "马娘", "赛马"],
-    "dc4": ["dc4", "DC4", "Dc4"],
-    "einstein": ["爱因斯坦携爱敬上", "爱因斯坦", "einstein", "Einstein"],
-    "sweet_illusion": ["灵感满溢的甜蜜创想", "甜蜜一家人", "富婆妹"],
-    "liqingge": ["李清歌", "清歌"],
-    "hoshizora": ["星空列车与白的旅行", "星空列车"],
-    "sakura": ["樱色之云绯色之恋", "樱云之恋", "樱云绯恋", "樱云"],
-    "summer_pockets": ["夏日口袋", "夏兜", "sp", "SP"],
-    "amazing_grace": ["奇异恩典"],
+    "warship_girls_r": ["战舰少女R", "舰r", "舰R", "wsgr", "WSGR", "战舰少女r"],
 }
 
 
@@ -53,23 +54,24 @@ class ThemesFlagConfig(BaseModel, extra=Extra.ignore):
     arknights_flag: bool = True
     asoul_flag: bool = True
     azure_flag: bool = True
+    dc4_flag: bool = True
+    einstein_flag: bool = True
     genshin_flag: bool = True
+    granblue_fantasy_flag: bool = True
+    hololive_flag: bool = True
+    hoshizora_flag: bool = True
+    liqingge_flag: bool = True
     onmyoji_flag: bool = True
     pcr_flag: bool = True
+    pretty_derby_flag: bool = True
+    punishing_flag: bool = True
+    sakura_flag: bool = True
+    summer_pockets_flag: bool = True
+    sweet_illusion_flag: bool = True
     touhou_flag: bool = True
     touhou_lostword_flag: bool = True
     touhou_old_flag: bool = True
-    hololive_flag: bool = True
-    granblue_fantasy_flag: bool = True
-    punishing_flag: bool = True
-    pretty_derby_flag: bool = True
-    dc4_flag: bool = True
-    einstein_flag: bool = True
-    sweet_illusion_flag: bool = True
-    liqingge_flag: bool = True
-    hoshizora_flag: bool = True
-    sakura_flag: bool = True
-    summer_pockets_flag: bool = True
+    warship_girls_r_flag: bool = True
 
     @root_validator
     def check_all_disabled(cls, values) -> None:
@@ -84,6 +86,10 @@ class ThemesFlagConfig(BaseModel, extra=Extra.ignore):
             raise ValueError("Fortune themes ALL disabled! Please check!")
 
         return values
+
+
+class FortuneConfig(PluginConfig, ThemesFlagConfig):
+    pass
 
 
 class DateTimeEncoder(json.JSONEncoder):

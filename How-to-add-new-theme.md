@@ -1,46 +1,28 @@
-## 如何在`v0.4.2` 或更早版本上更新抽签主题资源？
+## 如何添加更多的抽签主题资源？
 
-`v0.4.3` 新增东方归言录(touhou_lostword)全新抽签主题资源！
+1. 将新的主题目录放置在 `./img` 下；
 
-1. 将新资源文件夹放置在`./img`下；
-
-2. 修改`config.py` 的`ThemesFlagConfig`，添加`touhou_lostword_flag` 标志，例如：
+2. 修改 `config.py` 中的 `ThemesFlagConfig`，添加 `new_theme_flag` 标志，例如：
 
    ```python
    ...
    touhou_flag: bool = True
-   touhou_lostword_flag: bool = True
-   touhou_olg_flag: bool = True
+   new_theme_flag: bool = True
    ...
    ```
 
-   之后可在`.env`下设置以启用或关闭该主题：
+   之后可在 `.env` 下设置以启用或关闭该主题：
 
    ```python
-   TOUHOU_LOSTWORD_FLAG=true
+   NEW_THEME_FLAG=true
    ```
 
-3. 修改`utils.py` 的`FortuneThemesDict`，添加键值对：
-
-   从
+3. 修改 `utils.py` 中的 `FortuneThemesDict`，添加键值对：
 
    ```python
    ...
    "touhou":   ["东方", "touhou", "Touhou", "车万"],
-   "touhou_old":
-               ["旧东方", "旧版东方", "老东方", "老版东方", "经典东方"],
-   ...
-   ```
-
-   至
-
-   ```python
-   ...
-   "touhou":   ["东方", "touhou", "Touhou", "车万"],
-   "touhou_lostword":
-               ["东方归言录", "东方lostword", "touhou lostword", "Touhou dlc"],
-   "touhou_old":
-               ["旧东方", "旧版东方", "老东方", "老版东方", "经典东方"],
+   "new_theme":["新主题", "新的主题"],
    ...
    ```
 

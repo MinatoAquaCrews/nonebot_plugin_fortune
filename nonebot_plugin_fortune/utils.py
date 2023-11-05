@@ -74,8 +74,8 @@ def drawing(gid: str, uid: str, theme: str, spec_path: Optional[str] = None) -> 
     font_height = bbox[3] - bbox[1]
     draw.text(
         (
-        image_font_center[0] - font_length / 2,
-        image_font_center[1] - font_height / 2,
+            image_font_center[0] - font_length / 2,
+            image_font_center[1] - font_height / 2,
         ),
         title,
         fill=color,

@@ -34,7 +34,7 @@ async def download_url(url: str) -> Optional[Dict[str, Any]]:
 
 
 async def download_resource(
-    resource_dir: Path, name: str,base_proxy:str, _type: Optional[str] = None
+    resource_dir: Path, name: str, base_proxy: str, _type: Optional[str] = None
 ) -> bool:
     """
     Try to download resources, json but not images.

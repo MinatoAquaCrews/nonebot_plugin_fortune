@@ -1,25 +1,22 @@
 from typing import Annotated
 
 from nonebot import on_command, on_fullmatch, on_regex, require
-from nonebot.adapters.onebot.v11 import (
-    GROUP,
-    GROUP_ADMIN,
-    GROUP_OWNER,
-)
-from nonebot.adapters import Event,Message
+from nonebot.adapters import Event, Message
+from nonebot.adapters.onebot.v11 import GROUP, GROUP_ADMIN, GROUP_OWNER
 from nonebot.log import logger
 from nonebot.matcher import Matcher
 from nonebot.params import CommandArg, Depends, RegexStr
 from nonebot.permission import SUPERUSER
-from nonebot.plugin import PluginMetadata,inherit_supported_adapters
-from .utils import get_group_or_person
+from nonebot.plugin import PluginMetadata, inherit_supported_adapters
+
 from .config import FortuneConfig, FortuneThemesDict
 from .data_source import FortuneManager, fortune_manager
+from .utils import get_group_or_person
 
 require("nonebot_plugin_apscheduler")
 require("nonebot_plugin_saa")
-from  nonebot_plugin_saa import MessageFactory,Image,Text   # noqa: E402
 from nonebot_plugin_apscheduler import scheduler  # noqa: E402
+from nonebot_plugin_saa import Image, MessageFactory, Text  # noqa: E402
 
 __fortune_version__ = "v0.4.12"
 __fortune_usages__ = """
@@ -65,20 +62,20 @@ show_themes = on_regex("^查看(抽签)?主题$", permission=GROUP, priority=8, 
 
 
 @show_themes.handle()
-async def _(event: Event,matcher:Matcher):
+async def _(event: Event, matcher: Matcher):
     gid: str = get_group_or_person(event.get_session_id())
     theme: str = fortune_manager.get_group_theme(gid)
     await matcher.finish(f"当前群抽签主题：{FortuneThemesDict[theme][0]}")
 
 
 @themes_list.handle()
-async def _(matcher:Matcher):
+async def _(matcher: Matcher):
     msg: str = FortuneManager.get_available_themes()
     await matcher.finish(msg)
 
 
 @general_divine.handle()
-async def _(event: Event, args: Annotated[Message, CommandArg()],matcher:Matcher):
+async def _(event: Event, args: Annotated[Message, CommandArg()], matcher: Matcher):
     arg: str = args.extract_plain_text()
 
     if "帮助" in arg[-2:]:
@@ -92,18 +89,16 @@ async def _(event: Event, args: Annotated[Message, CommandArg()],matcher:Matcher
         await matcher.finish("今日运势生成出错……")
 
     if not is_first:
-        msg = MessageFactory([Text("你今天抽过签了，再给你看一次哦🤗\n") ,Image(image_file)])
+        msg = MessageFactory([Text("你今天抽过签了，再给你看一次哦🤗\n"), Image(image_file)])
     else:
         logger.info(f"User {uid} | Group {gid} 占卜了今日运势")
-        msg = MessageFactory([Text("✨今日运势✨\n")  ,Image(image_file)])
+        msg = MessageFactory([Text("✨今日运势✨\n"), Image(image_file)])
 
-    await msg.finish( at_sender=True)
+    await msg.finish(at_sender=True)
 
 
 @specific_divine.handle()
-async def _(
-    matcher: Matcher, event: Event, user_themes: Annotated[str, RegexStr()]
-):
+async def _(matcher: Matcher, event: Event, user_themes: Annotated[str, RegexStr()]):
     user_theme: str = user_themes[:-2]
     if len(user_theme) < 1:
         await matcher.finish("输入参数错误")
@@ -121,12 +116,14 @@ async def _(
                     await specific_divine.finish("今日运势生成出错……")
 
                 if not is_first:
-                    msg = MessageFactory([Text("你今天抽过签了，再给你看一次哦🤗\n") ,Image(image_file)])
+                    msg = MessageFactory(
+                        [Text("你今天抽过签了，再给你看一次哦🤗\n"), Image(image_file)]
+                    )
                 else:
                     logger.info(f"User {uid} | Group {gid} 占卜了今日运势")
-                    msg = MessageFactory([Text("✨今日运势✨\n")  ,Image(image_file)])
+                    msg = MessageFactory([Text("✨今日运势✨\n"), Image(image_file)])
 
-            await matcher.finish(msg, at_sender=True)
+            await msg.finish(at_sender=True)
 
     await matcher.finish("还没有这种抽签主题哦~")
 
@@ -141,7 +138,7 @@ async def get_user_arg(matcher: Matcher, args: Annotated[str, RegexStr()]) -> st
 
 @change_theme.handle()
 async def _(
-    event: Event,matcher:Matcher, user_theme: Annotated[str, Depends(get_user_arg)]
+    event: Event, matcher: Matcher, user_theme: Annotated[str, Depends(get_user_arg)]
 ):
     gid: str = get_group_or_person(event.get_session_id())
 
@@ -176,16 +173,16 @@ async def _(event: Event, limit: Annotated[str, Depends(get_user_arg)]):
                 await limit_setting.finish("今日运势生成出错……")
 
     if not is_first:
-        msg = MessageFactory([Text("你今天抽过签了，再给你看一次哦🤗\n") ,Image(image_file)])
+        msg = MessageFactory([Text("你今天抽过签了，再给你看一次哦🤗\n"), Image(image_file)])
     else:
         logger.info(f"User {uid} | Group {gid} 占卜了今日运势")
-        msg = MessageFactory([Text("✨今日运势✨\n")  ,Image(image_file)])
+        msg = MessageFactory([Text("✨今日运势✨\n"), Image(image_file)])
 
-    await limit_setting.finish(msg, at_sender=True)
+    await msg.finish(at_sender=True)
 
 
 @reset_themes.handle()
-async def _(event: Event,matcher:Matcher):
+async def _(event: Event, matcher: Matcher):
     gid: str = get_group_or_person(event.get_session_id())
     if not fortune_manager.divination_setting("random", gid):
         await matcher.finish("重置群抽签主题失败！")

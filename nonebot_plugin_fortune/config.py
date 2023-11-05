@@ -132,8 +132,10 @@ async def fortune_check() -> None:
     )
     if not copywriting_path.parent.exists():
         copywriting_path.parent.mkdir(parents=True, exist_ok=True)
-    
-    ret = await download_resource(copywriting_path, "copywriting.json", fortune_config.github_proxy,"fortune")
+
+    ret = await download_resource(
+        copywriting_path, "copywriting.json", fortune_config.github_proxy, "fortune"
+    )
     if not ret and not copywriting_path.exists():
         raise ResourceError("Resource copywriting.json is missing! Please check!")
 
@@ -230,7 +232,9 @@ async def fortune_check() -> None:
 
         if not _flag:
             # Try to download it from repo
-            ret = await download_resource(specific_rules_path, "specific_rules.json")
+            ret = await download_resource(
+                specific_rules_path, "specific_rules.json", fortune_config.github_proxy
+            )
             if ret:
                 logger.info("Downloaded specific_rules.json from repo")
             else:

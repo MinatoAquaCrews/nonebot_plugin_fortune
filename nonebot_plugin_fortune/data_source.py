@@ -31,7 +31,7 @@ class FortuneManager:
 
         last_sign_date: datetime = datetime.strptime(
             # type: ignore
-            self._user_data[gid][uid]["last_sign_date"],
+            self._user_data[gid][uid]["last_sign_date"],  # type: ignore
             "%Y-%m-%d",
         )
 

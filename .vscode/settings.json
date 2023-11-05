@@ -1,0 +1,17 @@
+{
+  "python.languageServer": "Pylance",
+  "python.analysis.typeCheckingMode": "basic",
+  "editor.formatOnSave": true,
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    }
+  },
+  "isort.args": [
+    "--profile",
+    "black"
+  ],
+  "python.formatting.provider": "black"
+}

@@ -10,17 +10,11 @@
   "editor.codeActionsOnSave": {
     "source.organizeImports": true
   },
-  "isort.args": [
-    "--profile",
-    "black"
-  ],
+  "isort.args": ["--profile", "black"],
   "editor.suggestSelection": "first",
   "editor.tabCompletion": "on",
   "editor.wordWrap": "on",
   "editor.wordWrapColumn": 100,
   "python.formatting.provider": "black",
-  "python.formatting.blackArgs": [
-    "--line-length",
-    "100"
-  ]
+  "python.formatting.blackArgs": ["--line-length", "100"]
 }

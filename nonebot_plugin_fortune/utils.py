@@ -68,11 +68,14 @@ def drawing(gid: str, uid: str, theme: str, spec_path: Optional[str] = None) -> 
         "text": f"{fortune_config.fortune_path}/font/sakura.ttf",
     }
     ttfront = ImageFont.truetype(fontPath["title"], font_size)
-    font_length = ttfront.getsize(title)
+    # font_length = ttfront.getsize(title)
+    bbox = ttfront.getbbox(title)
+    font_length = bbox[2] - bbox[0]
+    font_height = bbox[3] - bbox[1]
     draw.text(
         (
-            image_font_center[0] - font_length[0] / 2,
-            image_font_center[1] - font_length[1] / 2,
+        image_font_center[0] - font_length / 2,
+        image_font_center[1] - font_height / 2,
         ),
         title,
         fill=color,
@@ -159,3 +162,11 @@ def theme_flag_check(theme: str) -> bool:
     check wether a theme is enabled in themes_flag_config
     """
     return themes_flag_config.dict().get(theme + "_flag", False)
+
+
+def get_group_or_person(seesion: str) -> str:
+    try:
+        uid = seesion.split("_")
+        return uid[1]
+    except ValueError:
+        return seesion

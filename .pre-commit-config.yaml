@@ -13,7 +13,7 @@ repos:
         stages: [commit]
 
   - repo: https://github.com/psf/black
-    rev: 23.9.1
+    rev: 23.10.1
     hooks:
       - id: black
         stages: [commit]
@@ -26,7 +26,7 @@ repos:
         stages: [commit]
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v4.5.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer

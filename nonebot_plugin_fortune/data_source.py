@@ -31,7 +31,7 @@ class FortuneManager:
 
         last_sign_date: datetime = datetime.strptime(
             # type: ignore
-            self._user_data[gid][uid]["last_sign_date"],
+            self._user_data[gid][uid]["last_sign_date"],  # type: ignore
             "%Y-%m-%d",
         )
 
@@ -60,7 +60,7 @@ class FortuneManager:
         uid: str,
         _theme: Optional[str] = None,
         spec_path: Optional[str] = None,
-    ) -> Tuple[bool, Optional[Path]]:
+    ) -> Tuple[bool, Optional[bytes]]:
         """
         今日运势抽签，主题已确认合法
         """
@@ -82,10 +82,14 @@ class FortuneManager:
 
             # Record the sign-in time
             self._end_data_handle(gid, uid, now_time)
-            return True, img_path
+            with img_path.open(mode="rb") as f:
+                img_file = f.read()
+            return True, img_file
         else:
             img_path: Path = fortune_config.fortune_path / "out" / f"{gid}_{uid}.png"
-            return False, img_path
+            with img_path.open(mode="rb") as f:
+                img_file = f.read()
+            return False, img_file
 
     @staticmethod
     def clean_out_pics() -> None:

@@ -82,12 +82,12 @@ class FortuneManager:
 
             # Record the sign-in time
             self._end_data_handle(gid, uid, now_time)
-            with open (img_path, "rb") as f:
+            with open(img_path, "rb") as f:
                 img_bytes: bytes = f.read()
             return True, img_bytes
         else:
             img_path: Path = fortune_config.fortune_path / "out" / f"{gid}_{uid}.png"
-            with open (img_path, "rb") as f:
+            with open(img_path, "rb") as f:
                 img_bytes: bytes = f.read()
             return False, img_bytes
 

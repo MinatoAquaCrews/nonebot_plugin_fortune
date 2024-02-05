@@ -40,7 +40,9 @@ async def download_resource(
     Try to download resources, json but not images.
     For fonts & copywriting, download and save into files when missing. Otherwise, raise ResourceError.
     """
-    base_url: str = "https://raw.fgit.ml/MinatoAquaCrews/nonebot_plugin_fortune/master/nonebot_plugin_fortune/resource"
+    base_url: str = (
+        "https://raw.fgit.ml/MinatoAquaCrews/nonebot_plugin_fortune/master/nonebot_plugin_fortune/resource"
+    )
 
     if isinstance(_type, str):
         url: str = base_url + "/" + _type + "/" + name

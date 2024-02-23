@@ -42,6 +42,7 @@ async def download_resource(
     """
     if not base_proxy.endswith("/") or not base_proxy.endswith("\\"):
         base_proxy += "/"
+
     base_url: str = f"{base_proxy}MinatoAquaCrews/nonebot_plugin_fortune/master/nonebot_plugin_fortune/resource"
 
     if isinstance(_type, str):

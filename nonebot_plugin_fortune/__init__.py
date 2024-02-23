@@ -42,7 +42,9 @@ __plugin_meta__ = PluginMetadata(
     },
 )
 
-general_divine = on_command("今日运势", aliases={"抽签", "运势"}, priority=8)
+general_divine = on_command(
+    "今日运势", aliases={"抽签", "运势"}, permission=GROUP, priority=8
+)
 specific_divine = on_regex(r"^[^/]\S+抽签$", permission=GROUP, priority=8)
 limit_setting = on_regex(r"^指定(.*?)签$", permission=GROUP, priority=8)
 change_theme = on_regex(
@@ -166,7 +168,9 @@ async def _(event: Event, limit: Annotated[str, Depends(get_user_arg)]):
     else:
         spec_path = fortune_manager.specific_check(limit)
         if not spec_path:
-            await limit_setting.finish("还不可以指定这种签哦，请确认该签底对应主题开启或图片路径存在~")
+            await limit_setting.finish(
+                "还不可以指定这种签哦，请确认该签底对应主题开启或图片路径存在~"
+            )
         else:
             is_first, image_file = fortune_manager.divine(gid, uid, None, spec_path)
             if image_file is None:

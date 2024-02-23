@@ -51,6 +51,7 @@ FortuneThemesDict: Dict[str, List[str]] = {
 
 class PluginConfig(BaseModel, extra=Extra.ignore):
     fortune_path: Path = Path(__file__).parent / "resource"
+    github_proxy: str = "https://github.com/"
 
 
 class ThemesFlagConfig(BaseModel, extra=Extra.ignore):
@@ -126,10 +127,10 @@ async def fortune_check() -> None:
     if not fonts_path.exists():
         fonts_path.mkdir(parents=True, exist_ok=True)
 
-    if not (fonts_path / "Mamelon.otf").exists():
+    if not (fonts_path / "Mamelon.otf").is_file():
         raise ResourceError("Resource Mamelon.otf is missing! Please check!")
 
-    if not (fonts_path / "sakura.ttf").exists():
+    if not (fonts_path / "sakura.ttf").is_file():
         raise ResourceError("Resource sakura.ttf is missing! Please check!")
 
     """
@@ -141,7 +142,9 @@ async def fortune_check() -> None:
     if not copywriting_path.parent.exists():
         copywriting_path.parent.mkdir(parents=True, exist_ok=True)
 
-    ret = await download_resource(copywriting_path, "copywriting.json", "fortune")
+    ret = await download_resource(
+        copywriting_path, "copywriting.json", fortune_config.github_proxy, "fortune"
+    )
     if not ret and not copywriting_path.exists():
         raise ResourceError("Resource copywriting.json is missing! Please check!")
 
@@ -244,9 +247,11 @@ async def fortune_check() -> None:
 
         if not _flag:
             # Try to download it from repo
-            ret = await download_resource(specific_rules_path, "specific_rules.json")
+            ret = await download_resource(
+                specific_rules_path, "specific_rules.json", fortune_config.github_proxy
+            )
             if ret:
-                logger.info(f"Downloaded specific_rules.json from repo")
+                logger.info("Downloaded specific_rules.json from repo")
             else:
                 # If failed, initialize specific_rules.json instead
                 with specific_rules_path.open("w", encoding="utf-8") as f:

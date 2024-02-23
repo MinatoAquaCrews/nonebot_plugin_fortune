@@ -34,15 +34,16 @@ async def download_url(url: str) -> Optional[Dict[str, Any]]:
 
 
 async def download_resource(
-    resource_dir: Path, name: str, _type: Optional[str] = None
+    resource_dir: Path, name: str, base_proxy: str, _type: Optional[str] = None
 ) -> bool:
     """
     Try to download resources, json but not images.
     For fonts & copywriting, download and save into files when missing. Otherwise, raise ResourceError.
     """
-    base_url: str = (
-        "https://raw.fgit.ml/MinatoAquaCrews/nonebot_plugin_fortune/master/nonebot_plugin_fortune/resource"
-    )
+    if not base_proxy.endswith("/") or not base_proxy.endswith("\\"):
+        base_proxy += "/"
+
+    base_url: str = f"{base_proxy}MinatoAquaCrews/nonebot_plugin_fortune/master/nonebot_plugin_fortune/resource"
 
     if isinstance(_type, str):
         url: str = base_url + "/" + _type + "/" + name

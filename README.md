@@ -53,6 +53,7 @@ _🙏 今日运势 🙏_
 
    ```shell
    FORTUNE_PATH="your-path-to-resource"    # For example, "./my-data/fortune"，其下有img、font、fortune文件夹等资源
+   GITHUB_PROXY="https://github.com/"     # 可以自行设置代理
    ```
 
    ⚠️️ 插件启动时，将自动检查资源是否缺失（**除字体与图片**资源）

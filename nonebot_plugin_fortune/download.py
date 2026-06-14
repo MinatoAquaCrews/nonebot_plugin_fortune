@@ -18,16 +18,16 @@ class ResourceError(Exception):
 
 async def download_url(url: str) -> Optional[Dict[str, Any]]:
     async with httpx.AsyncClient() as client:
-        for i in range(3):
+        for i in range(2):
             try:
-                resp = await client.get(url, timeout=20)
+                resp = await client.get(url, timeout=10)
                 if resp.status_code != 200:
                     continue
 
                 return resp.json()
 
             except Exception:
-                logger.warning(f"Error occurred when downloading {url}, retry: {i+1}/3")
+                logger.warning(f"Error occurred when downloading {url}, retry: {i+1}/2")
 
     logger.warning("Abort downloading")
     return None
@@ -40,7 +40,7 @@ async def download_resource(
     Try to download resources, json but not images.
     For fonts & copywriting, download and save into files when missing. Otherwise, raise ResourceError.
     """
-    base_url: str = "https://raw.fgit.ml/MinatoAquaCrews/nonebot_plugin_fortune/master/nonebot_plugin_fortune/resource"
+    base_url: str = "https://raw.githubusercontent.com/MinatoAquaCrews/nonebot_plugin_fortune/master/nonebot_plugin_fortune/resource"
 
     if isinstance(_type, str):
         url: str = base_url + "/" + _type + "/" + name

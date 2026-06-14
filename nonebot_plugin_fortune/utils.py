@@ -5,7 +5,7 @@ from typing import List, Optional, Tuple
 
 from PIL import Image, ImageDraw, ImageFont
 
-from .config import fortune_config, themes_flag_config
+from .config import OUT_DIR, fortune_config, themes_flag_config
 
 
 def get_copywriting() -> Tuple[str, str]:
@@ -68,11 +68,11 @@ def drawing(gid: str, uid: str, theme: str, spec_path: Optional[str] = None) -> 
         "text": f"{fortune_config.fortune_path}/font/sakura.ttf",
     }
     ttfront = ImageFont.truetype(fontPath["title"], font_size)
-    font_length = ttfront.getsize(title)
+    font_length = ttfront.getbbox(title)
     draw.text(
         (
-            image_font_center[0] - font_length[0] / 2,
-            image_font_center[1] - font_length[1] / 2,
+            image_font_center[0] - (font_length[2] - font_length[0]) / 2,
+            image_font_center[1] - (font_length[3] - font_length[1]) / 2,
         ),
         title,
         fill=color,
@@ -99,11 +99,10 @@ def drawing(gid: str, uid: str, theme: str, spec_path: Optional[str] = None) -> 
         draw.text((x, y), textVertical, fill=color, font=ttfront)
 
     # Save
-    outDir: Path = fortune_config.fortune_path / "out"
-    if not outDir.exists():
-        outDir.mkdir(exist_ok=True, parents=True)
+    if not OUT_DIR.exists():
+        OUT_DIR.mkdir(exist_ok=True, parents=True)
 
-    outPath = outDir / f"{gid}_{uid}.png"
+    outPath = OUT_DIR / f"{gid}_{uid}.png"
 
     img.save(outPath)
     return outPath
@@ -158,4 +157,4 @@ def theme_flag_check(theme: str) -> bool:
     """
     check wether a theme is enabled in themes_flag_config
     """
-    return themes_flag_config.dict().get(theme + "_flag", False)
+    return themes_flag_config.model_dump().get(theme + "_flag", False)

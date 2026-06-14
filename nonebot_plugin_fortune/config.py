@@ -3,9 +3,12 @@ from datetime import date, datetime
 from pathlib import Path
 from typing import Any, Dict, List, Union
 
-from nonebot import get_driver
+from nonebot import get_driver, require
 from nonebot.log import logger
-from pydantic import BaseModel, Extra, root_validator
+
+require("nonebot_plugin_localstore")
+import nonebot_plugin_localstore as store
+from pydantic import BaseModel, ConfigDict, model_validator
 
 from .download import ResourceError, download_resource
 
@@ -40,15 +43,18 @@ FortuneThemesDict: Dict[str, List[str]] = {
 }
 
 
-class PluginConfig(BaseModel, extra=Extra.ignore):
+class PluginConfig(BaseModel):
+    model_config = ConfigDict(extra="ignore")
     fortune_path: Path = Path(__file__).parent / "resource"
 
 
-class ThemesFlagConfig(BaseModel, extra=Extra.ignore):
+class ThemesFlagConfig(BaseModel):
     """
     Switches of themes only valid in random divination.
     Make sure NOT ALL FALSE!
     """
+
+    model_config = ConfigDict(extra="ignore")
 
     amazing_grace_flag: bool = True
     arknights_flag: bool = True
@@ -73,19 +79,19 @@ class ThemesFlagConfig(BaseModel, extra=Extra.ignore):
     touhou_old_flag: bool = True
     warship_girls_r_flag: bool = True
 
-    @root_validator
-    def check_all_disabled(cls, values) -> None:
+    @model_validator(mode="after")
+    def check_all_disabled(self) -> "ThemesFlagConfig":
         """Check whether all themes are DISABLED"""
         flag: bool = False
-        for theme in values:
-            if values.get(theme, False):
+        for key in self.__dict__:
+            if self.__dict__[key]:
                 flag = True
                 break
 
         if not flag:
             raise ValueError("Fortune themes ALL disabled! Please check!")
 
-        return values
+        return self
 
 
 class FortuneConfig(PluginConfig, ThemesFlagConfig):
@@ -103,8 +109,19 @@ class DateTimeEncoder(json.JSONEncoder):
 
 
 driver = get_driver()
-fortune_config: PluginConfig = PluginConfig.parse_obj(driver.config.dict())
-themes_flag_config: ThemesFlagConfig = ThemesFlagConfig.parse_obj(driver.config.dict())
+fortune_config: PluginConfig = PluginConfig.model_validate(driver.config.model_dump())
+themes_flag_config: ThemesFlagConfig = ThemesFlagConfig.model_validate(
+    driver.config.model_dump()
+)
+
+
+# 运行时产物给 localstore 管理
+# 静态资源留在 resource 内
+_PLUGIN_NAME: str = "nonebot_plugin_fortune"
+USER_DATA_FILE: Path = store.get_data_file(_PLUGIN_NAME, "fortune_data.json")
+GROUP_RULES_FILE: Path = store.get_data_file(_PLUGIN_NAME, "group_rules.json")
+OUT_DIR: Path = store.get_cache_dir(_PLUGIN_NAME) / "out"
+SPECIFIC_RULES_FILE: Path = fortune_config.fortune_path / "specific_rules.json"
 
 
 @driver.on_startup
@@ -132,17 +149,39 @@ async def fortune_check() -> None:
     if not copywriting_path.parent.exists():
         copywriting_path.parent.mkdir(parents=True, exist_ok=True)
 
-    ret = await download_resource(copywriting_path, "copywriting.json", "fortune")
-    if not ret and not copywriting_path.exists():
-        raise ResourceError("Resource copywriting.json is missing! Please check!")
+    # 本地已有文案则不再联网，避免每次启动都因镜像失效而卡住重试
+    if not copywriting_path.exists():
+        ret = await download_resource(copywriting_path, "copywriting.json", "fortune")
+        if not ret:
+            raise ResourceError("Resource copywriting.json is missing! Please check!")
 
     """
 		Check rules and data files
 	"""
-    fortune_data_path: Path = fortune_config.fortune_path / "fortune_data.json"
+    fortune_data_path: Path = USER_DATA_FILE
+    group_rules_path: Path = GROUP_RULES_FILE
     fortune_setting_path: Path = fortune_config.fortune_path / "fortune_setting.json"
-    group_rules_path: Path = fortune_config.fortune_path / "group_rules.json"
-    specific_rules_path: Path = fortune_config.fortune_path / "specific_rules.json"
+    specific_rules_path: Path = SPECIFIC_RULES_FILE
+
+    USER_DATA_FILE.parent.mkdir(parents=True, exist_ok=True)
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    # 一次性迁移
+    for _legacy, _target in (
+        (fortune_config.fortune_path / "fortune_data.json", USER_DATA_FILE),
+        (fortune_config.fortune_path / "group_rules.json", GROUP_RULES_FILE),
+    ):
+        if _target.exists() or not _legacy.exists():
+            continue
+        try:
+            _content = json.loads(_legacy.read_text(encoding="utf-8"))
+        except Exception:
+            _content = {}
+        if _content:
+            _target.write_text(
+                json.dumps(_content, ensure_ascii=False, indent=4), encoding="utf-8"
+            )
+            logger.info(f"已将运行时数据迁移至 localstore 数据目录：{_target}")
 
     if not fortune_data_path.exists():
         logger.warning("Resource fortune_data.json is missing, initialized one...")

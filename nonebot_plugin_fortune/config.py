@@ -23,7 +23,16 @@ FortuneThemesDict: Dict[str, List[str]] = {
     "einstein": ["爱因斯坦携爱敬上", "爱因斯坦", "einstein", "Einstein"],
     "genshin": ["原神", "Genshin Impact", "genshin", "Genshin", "op", "原批"],
     "granblue_fantasy": ["碧蓝幻想", "Granblue Fantasy", "granblue fantasy", "幻想"],
-    "hololive": ["Hololive", "hololive", "Vtb", "vtb", "管人", "Holo", "holo", "管人痴"],
+    "hololive": [
+        "Hololive",
+        "hololive",
+        "Vtb",
+        "vtb",
+        "管人",
+        "Holo",
+        "holo",
+        "管人痴",
+    ],
     "hoshizora": ["星空列车与白的旅行", "星空列车"],
     "liqingge": ["李清歌", "清歌"],
     "onmyoji": ["阴阳师", "yys", "Yys", "痒痒鼠"],
@@ -156,9 +165,9 @@ async def fortune_check() -> None:
         2. Transfer the key "is_divined" to "last_sign_date"
         """
         with open(fortune_data_path, "r", encoding="utf-8") as f:
-            _data: Dict[
-                str, Dict[str, Dict[str, Union[str, bool, int, date]]]
-            ] = json.load(f)
+            _data: Dict[str, Dict[str, Dict[str, Union[str, bool, int, date]]]] = (
+                json.load(f)
+            )
 
         for gid in _data:
             if _data[gid]:
@@ -203,7 +212,9 @@ async def fortune_check() -> None:
             # Try to transfer from the old setting json
             ret = group_rules_transfer(fortune_setting_path, group_rules_path)
             if ret:
-                logger.info("旧版 fortune_setting.json 文件中群聊抽签主题设置已更新至 group_rules.json")
+                logger.info(
+                    "旧版 fortune_setting.json 文件中群聊抽签主题设置已更新至 group_rules.json"
+                )
                 _flag = True
 
         if not _flag:
@@ -211,7 +222,9 @@ async def fortune_check() -> None:
             with group_rules_path.open("w", encoding="utf-8") as f:
                 json.dump(dict(), f, ensure_ascii=False, indent=4)
 
-            logger.info("旧版 fortune_setting.json 文件中群聊抽签主题设置不存在，初始化 group_rules.json")
+            logger.info(
+                "旧版 fortune_setting.json 文件中群聊抽签主题设置不存在，初始化 group_rules.json"
+            )
 
     _flag = False
     if not specific_rules_path.exists():
@@ -223,7 +236,9 @@ async def fortune_check() -> None:
                 # Delete the old fortune_setting json if the transfer is OK
                 fortune_setting_path.unlink()
 
-                logger.info("旧版 fortune_setting.json 文件中签底指定规则已更新至 specific_rules.json")
+                logger.info(
+                    "旧版 fortune_setting.json 文件中签底指定规则已更新至 specific_rules.json"
+                )
                 logger.warning("指定签底抽签功能将在 v0.5.0 弃用")
                 _flag = True
 

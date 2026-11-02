@@ -44,7 +44,9 @@ __plugin_meta__ = PluginMetadata(
     },
 )
 
-general_divine = on_command("今日运势", aliases={"抽签", "运势"}, permission=GROUP, priority=8)
+general_divine = on_command(
+    "今日运势", aliases={"抽签", "运势"}, permission=GROUP, priority=8
+)
 specific_divine = on_regex(r"^[^/]\S+抽签$", permission=GROUP, priority=8)
 limit_setting = on_regex(r"^指定(.*?)签$", permission=GROUP, priority=8)
 change_theme = on_regex(
@@ -91,9 +93,9 @@ async def _(event: GroupMessageEvent, args: Annotated[Message, CommandArg()]):
         await general_divine.finish("今日运势生成出错……")
 
     if not is_first:
-        msg = MessageSegment.text("你今天抽过签了，再给你看一次哦🤗\n") + MessageSegment.image(
-            image_file
-        )
+        msg = MessageSegment.text(
+            "你今天抽过签了，再给你看一次哦🤗\n"
+        ) + MessageSegment.image(image_file)
     else:
         logger.info(f"User {uid} | Group {gid} 占卜了今日运势")
         msg = MessageSegment.text("✨今日运势✨\n") + MessageSegment.image(image_file)
@@ -174,16 +176,18 @@ async def _(event: GroupMessageEvent, limit: Annotated[str, Depends(get_user_arg
     else:
         spec_path = fortune_manager.specific_check(limit)
         if not spec_path:
-            await limit_setting.finish("还不可以指定这种签哦，请确认该签底对应主题开启或图片路径存在~")
+            await limit_setting.finish(
+                "还不可以指定这种签哦，请确认该签底对应主题开启或图片路径存在~"
+            )
         else:
             is_first, image_file = fortune_manager.divine(gid, uid, None, spec_path)
             if image_file is None:
                 await limit_setting.finish("今日运势生成出错……")
 
     if not is_first:
-        msg = MessageSegment.text("你今天抽过签了，再给你看一次哦🤗\n") + MessageSegment.image(
-            image_file
-        )
+        msg = MessageSegment.text(
+            "你今天抽过签了，再给你看一次哦🤗\n"
+        ) + MessageSegment.image(image_file)
     else:
         logger.info(f"User {uid} | Group {gid} 占卜了今日运势")
         msg = MessageSegment.text("✨今日运势✨\n") + MessageSegment.image(image_file)
